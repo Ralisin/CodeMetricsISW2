@@ -11,18 +11,16 @@ import java.util.List;
 
 public class Metrics {
     public static void dataExtraction(String projName) throws IOException, URISyntaxException {
-        ExtractDataFromJira dataFromJira = new ExtractDataFromJira(projName);
+        ExtractDataFromJira jira = new ExtractDataFromJira(projName);
 
-        List<Release> releaseList = dataFromJira.extractReleasesList();
-        List<Ticket> ticketList = dataFromJira.extractTicketsList(releaseList);
+        // Get release list from jira
+        List<Release> releaseList = jira.extractReleasesList();
 
+        // Get ticket list from jira
+        List<Ticket> ticketList = jira.extractTicketsList(releaseList);
         TicketsTool.fixInconsistentTickets(ticketList, releaseList);
         ticketList.sort(Comparator.comparing(Ticket::getCreationDate));
 
-        for (Ticket ticket : ticketList) {
-            System.out.println(ticket);
-        }
-
-        System.out.println(ticketList.toArray().length);
+        Proportion.calculateProportion(releaseList, ticketList);
     }
 }
