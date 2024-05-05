@@ -4,16 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b9736f61-e96d-4747-a412-d2bfb5b24899" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/entities/Release.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/entities/Ticket.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/tools/JsonUtils.java" afterDir="false" />
+    <list default="true" id="b9736f61-e96d-4747-a412-d2bfb5b24899" name="Changes" comment="Get Versions and Tickets from Jira">
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/controller/Metrics.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/controller/Proportion.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/tools/ReleaseTools.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/tools/TicketsTool.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.me" beforeDir="false" afterPath="$PROJECT_DIR$/README.me" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/ralisin/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/ralisin/controller/ExtractDataFromJira.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/controller/ExtractDataFromJira.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/ralisin/controller/ExtractMetrics.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/ralisin/entities/Release.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/entities/Release.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/ralisin/entities/Ticket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/entities/Ticket.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,6 +31,18 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Ralisin&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Ralisin/CodeMetricsISW2.git&quot;,
+    &quot;accountId&quot;: &quot;90aeaf6d-e90d-447d-9035-e51b7d40d637&quot;
+  }
+}</component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 8
 }</component>
@@ -46,7 +59,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/buniy/Downloads/GetVersionsFromJIRA&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/buniy/Downloads/EsempiInClasse-JUnitMockito&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -82,7 +95,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="jdk-21.0.2-openjdk-21.0.2-4caba194b151-4f524021" />
+        <option value="bundled-jdk-9f38398b9061-18abd8497189-intellij.indexing.shared.core-IU-241.14494.240" />
+        <option value="bundled-js-predefined-1d06a55b98c1-74d2a5396914-JavaScript-IU-241.14494.240" />
       </set>
     </attachedChunks>
   </component>
@@ -102,11 +116,32 @@
       <workItem from="1712868796106" duration="5634000" />
       <workItem from="1712906841365" duration="100000" />
       <workItem from="1713199718145" duration="12493000" />
-      <workItem from="1713251916082" duration="4677000" />
+      <workItem from="1713251916082" duration="5808000" />
+      <workItem from="1713278000689" duration="4345000" />
+      <workItem from="1714395078718" duration="521000" />
+      <workItem from="1714462513967" duration="3841000" />
+      <workItem from="1714488655163" duration="14242000" />
+      <workItem from="1714634408055" duration="217000" />
+      <workItem from="1714748023232" duration="1895000" />
+      <workItem from="1714760782435" duration="6390000" />
+      <workItem from="1714908532951" duration="3476000" />
     </task>
+    <task id="LOCAL-00001" summary="Get Versions and Tickets from Jira">
+      <option name="closed" value="true" />
+      <created>1713258376836</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1713258376837</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Get Versions and Tickets from Jira" />
+    <option name="LAST_COMMIT_MESSAGE" value="Get Versions and Tickets from Jira" />
   </component>
 </project>

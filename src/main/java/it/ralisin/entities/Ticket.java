@@ -1,23 +1,25 @@
 package it.ralisin.entities;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Ticket {
     private final String key;
     private final LocalDateTime creationDate;
     private final LocalDateTime resolutionDate;
-    private Release injectedVersion;
-    private final Release openingVersion;
-    private final Release fixedVersion;
-    private List<Release> affectedVersions;
+    private Release IV;
+    private final Release OV;
+    private final Release FV;
+private List<Release> AV;
 
-    public Ticket(String key, LocalDateTime creationDate, LocalDateTime resolutionDate, Release openingVersion, Release fixedVersion) {
+    public Ticket(String key, LocalDateTime creationDate, LocalDateTime resolutionDate, Release OV, Release FV, List<Release> AV) {
         this.key = key;
         this.creationDate = creationDate;
         this.resolutionDate = resolutionDate;
-        this.openingVersion = openingVersion;
-        this.fixedVersion = fixedVersion;
+        this.OV = OV;
+        this.FV = FV;
+        this.AV = AV;
     }
 
     public String getKey() {
@@ -32,30 +34,28 @@ public class Ticket {
         return resolutionDate;
     }
 
-    public Release getInjectedVersion() {
-        return injectedVersion;
+    public Release getIV() {
+        return IV;
     }
 
-    public Release getOpeningVersion() {
-        return openingVersion;
+    public void setIV(Release IV) {
+        this.IV = IV;
     }
 
-    public Release getFixedVersion() {
-        return fixedVersion;
+    public Release getOV() {
+        return OV;
     }
 
-    public List<Release> getAffectedVersions() {
-        return affectedVersions;
+    public Release getFV() {
+        return FV;
     }
 
-    public void setAffectedVersions(List<Release> affectedVersions) {
-        this.affectedVersions = affectedVersions;
-
-        this.injectedVersion = affectedVersions.getFirst();
+    public List<Release> getAVList() {
+        return AV;
     }
 
     @Override
     public String toString() {
-        return String.format("Ticket key: %s, IV: %s, OV: %s, FV: %s", key, injectedVersion, openingVersion, fixedVersion);
+        return String.format("Ticket key: %s, IV: %s, OV: %s, FV: %s, AV: %s, creationDate: %s, resolutionDate: %s", key, IV, OV, FV, AV, creationDate, resolutionDate);
     }
 }

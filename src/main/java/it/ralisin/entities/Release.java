@@ -30,6 +30,6 @@ public class Release {
 
     @Override
     public String toString() {
-        return releaseName + ", " + releaseDate;
+        return releaseName + " - " + releaseDate;
     }
 }
