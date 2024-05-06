@@ -92,7 +92,7 @@ public class Proportion {
         for(OtherProjectNames projectName : OtherProjectNames.values()) {
             Logger.getAnonymousLogger().log(Level.INFO, "ColdStart on project: " + projectName);
 
-            ExtractDataFromJira jira = new ExtractDataFromJira(projectName.toString());
+            JiraDataExtractor jira = new JiraDataExtractor(projectName.toString());
 
             // Get release list from jira
             List<Release> releaseList = jira.extractReleasesList();

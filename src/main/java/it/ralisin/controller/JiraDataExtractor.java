@@ -17,10 +17,10 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class ExtractDataFromJira {
+public class JiraDataExtractor {
     private final String projName;
 
-    public ExtractDataFromJira(String projName) {
+    public JiraDataExtractor(String projName) {
         this.projName = projName.toUpperCase();
     }
 

@@ -1,10 +1,12 @@
 package it.ralisin.tools;
 
 import it.ralisin.entities.Release;
+import org.eclipse.jgit.revwalk.RevCommit;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -47,5 +49,29 @@ public class ReleaseTools {
         affectedVersions.sort(Comparator.comparing(Release::getDate));
 
         return affectedVersions;
+    }
+
+    public static void linkCommitsToRelease(List<RevCommit> revCommitList, List<Release> releaseList) {
+        for (RevCommit commit : revCommitList) {
+            Release commitRelease = getCommitRelease(commit, releaseList);
+
+            if (commitRelease != null) commitRelease.getRevCommitList().add(commit);
+        }
+    }
+
+    private static Release getCommitRelease(RevCommit commit, List<Release> releaseList) {
+        LocalDateTime commitDate = commit.getAuthorIdent().getWhen().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
+
+        Release release = null;
+        for (Release r : releaseList) {
+            if (commitDate.isBefore(r.getDate())) {
+                release = r;
+                break;
+            }
+
+            if (commitDate.isAfter(releaseList.getLast().getDate())) release = releaseList.getLast();
+        }
+
+        return release;
     }
 }
