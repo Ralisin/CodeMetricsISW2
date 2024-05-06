@@ -28,13 +28,12 @@ public class GitCommitsExtractor {
         Path tempDir = Files.createTempDirectory("git_temp_repo");
 
         ProgressMonitor monitor = new TextProgressMonitor(new PrintWriter(System.out));
-        try (Git git = Git.cloneRepository()
-                .setURI(this.repoURL)
-                .setDirectory(tempDir.toFile())
-                .setProgressMonitor(monitor)
-                .call()) {
-            this.git = git;
-        }
+        this.git = Git.cloneRepository()
+                    .setURI(this.repoURL)
+                    .setDirectory(tempDir.toFile())
+                    .setProgressMonitor(monitor)
+                    .call();
+
     }
 
     public List<RevCommit> getAllCommits() throws IOException, GitAPIException {

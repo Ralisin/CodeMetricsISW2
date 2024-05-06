@@ -28,8 +28,6 @@ public class Proportion {
     public static void proportion(List<Release> releaseList, List<Ticket> ticketList) throws IOException, URISyntaxException {
         float pColdStart = coldStartProportion();
 
-        Logger.getAnonymousLogger().log(Level.INFO, "pColdStart" + pColdStart);
-
         List<Ticket> ticketsForEvaluation = new ArrayList<>();
         for(Ticket ticket : ticketList) {
             if (ticket.getIV() != null) ticketsForEvaluation.add(ticket);
@@ -90,7 +88,7 @@ public class Proportion {
         List<Float> projectsProportion = new ArrayList<>();
 
         for(OtherProjectNames projectName : OtherProjectNames.values()) {
-            Logger.getAnonymousLogger().log(Level.INFO, "ColdStart on project: " + projectName);
+            Logger.getAnonymousLogger().log(Level.INFO, "ColdStart proportion on project: " + projectName);
 
             JiraDataExtractor jira = new JiraDataExtractor(projectName.toString());
 
