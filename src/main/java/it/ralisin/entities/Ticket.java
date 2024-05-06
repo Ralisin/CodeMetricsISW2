@@ -1,16 +1,21 @@
 package it.ralisin.entities;
 
+import org.eclipse.jgit.revwalk.RevCommit;
+
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Ticket {
     private final String key;
     private final LocalDateTime creationDate;
     private final LocalDateTime resolutionDate;
-    private Release IV;
     private final Release OV;
     private final Release FV;
-private List<Release> AV;
+    private Release IV;
+    private List<Release> AV;
+
+    private final List<RevCommit> commits = new ArrayList<>();
 
     public Ticket(String key, LocalDateTime creationDate, LocalDateTime resolutionDate, Release OV, Release FV, List<Release> AV) {
         this.key = key;
@@ -55,6 +60,14 @@ private List<Release> AV;
 
     public void setAVList(List<Release> AV) {
         this.AV = AV;
+    }
+
+    public List<RevCommit> getCommitList() {
+        return commits;
+    }
+
+    public void addCommit(RevCommit commits) {
+        this.commits.add(commits);
     }
 
     @Override

@@ -51,7 +51,7 @@ public class ReleaseTools {
         return affectedVersions;
     }
 
-    public static void linkCommitsToRelease(List<RevCommit> revCommitList, List<Release> releaseList) {
+    public static void linkCommits(List<RevCommit> revCommitList, List<Release> releaseList) {
         for (RevCommit commit : revCommitList) {
             Release commitRelease = getCommitRelease(commit, releaseList);
 

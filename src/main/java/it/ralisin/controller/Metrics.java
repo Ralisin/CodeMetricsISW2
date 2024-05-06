@@ -20,10 +20,6 @@ public class Metrics {
         List<Release> releaseList = jira.extractReleasesList();
         // TODO write releases in a csv file
 
-        for (Release r : releaseList) {
-            System.out.println(r);
-        }
-
         // Get ticket list from jira
         List<Ticket> ticketList = jira.extractTicketsList(releaseList);
         TicketsTool.fixInconsistentTickets(ticketList, releaseList);
@@ -34,15 +30,22 @@ public class Metrics {
         // TODO write tickets in a csv file
 
         GitCommitsExtractor gitExtractor = new GitCommitsExtractor(gitHubUrl);
-        List<RevCommit> revCommits = gitExtractor.getAllCommits();
-        ReleaseTools.linkCommitsToRelease(revCommits, releaseList);
+        List<RevCommit> commitList = gitExtractor.getAllCommits();
+
+        ReleaseTools.linkCommits(commitList, releaseList);
+        // Remove releases with empty commit list
+        releaseList.removeIf(release -> release.getRevCommitList().isEmpty());
+        // Reassign release id
+        for(int i = 1; i <= releaseList.size(); i++) releaseList.get(i - 1).setId(i);
 
         for (Release r : releaseList) {
-//            for (RevCommit c : r.getRevCommitList()) {
-//                LocalDateTime commitDate = c.getAuthorIdent().getWhen().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
-//                System.out.println("Commit id: " + c.getId() + ", date: " + commitDate + " - " + r);
-//            }
-            System.out.println(r + " - numCommits: " + r.getRevCommitList().size());
+            System.out.println(r + ", numCommits: " + r.getRevCommitList().size());
+        }
+
+        TicketsTool.linkCommits(ticketList, commitList);
+
+        for (Ticket ticket : ticketList) {
+            System.out.println("numCommits: " + ticket.getCommitList().size() + ", " + ticket);
         }
     }
 }

@@ -2,8 +2,10 @@ package it.ralisin.tools;
 
 import it.ralisin.entities.Release;
 import it.ralisin.entities.Ticket;
+import org.eclipse.jgit.revwalk.RevCommit;
 
 import java.time.LocalDateTime;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
@@ -23,12 +25,12 @@ public class TicketsTool {
 
         // Remove tickets if:
         ticketList.removeIf(ticket ->
-            // date of OV is not after first available release in releaseList
-            !ticket.getOV().getDate().isAfter(releaseList.getFirst().getDate()) ||
-            // date of OV is after date of FV
-            ticket.getOV().getDate().isAfter(ticket.getFV().getDate()) ||
-            // date of OV is the same of first available release in releaseList
-            Objects.equals(ticket.getOV().getName(), releaseList.getFirst().getName())
+                // date of OV is not after first available release in releaseList
+                !ticket.getOV().getDate().isAfter(releaseList.getFirst().getDate()) ||
+                        // date of OV is after date of FV
+                        ticket.getOV().getDate().isAfter(ticket.getFV().getDate()) ||
+                        // date of OV is the same of first available release in releaseList
+                        Objects.equals(ticket.getOV().getName(), releaseList.getFirst().getName())
         );
     }
 
@@ -51,5 +53,18 @@ public class TicketsTool {
         if (Objects.equals(firstAffectedVersion.getName(), openingVersion.getName())) return;
 
         ticket.setIV(firstAffectedVersion);
+    }
+
+    public static void linkCommits(List<Ticket> ticketList, List<RevCommit> revCommitList) {
+        for (Iterator<Ticket> iterator = ticketList.iterator(); iterator.hasNext(); ) {
+            Ticket ticket = iterator.next();
+            for (RevCommit revCommit : revCommitList) {
+                if (revCommit.getFullMessage().contains(ticket.getKey())) ticket.addCommit(revCommit);
+            }
+
+            if (ticket.getCommitList().isEmpty()) {
+                iterator.remove();
+            }
+        }
     }
 }
