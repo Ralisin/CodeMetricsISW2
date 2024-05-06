@@ -33,6 +33,12 @@
             <version>6.7.0.202309050840-r</version>
         </dependency>
 
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.4.12</version>
+        </dependency>
+
     </dependencies>
 
     <properties>
