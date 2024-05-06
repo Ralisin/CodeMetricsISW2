@@ -49,7 +49,7 @@ public class ExtractDataFromJira {
         releaseList.sort(Comparator.comparing(Release::getDate));
 
         // Set release id
-        int i = 1;
+        int i = 0;
         for (Release release : releaseList) {
             release.setId(++i);
         }

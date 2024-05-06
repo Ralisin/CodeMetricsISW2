@@ -4,7 +4,6 @@ import it.ralisin.entities.Release;
 import it.ralisin.entities.Ticket;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 

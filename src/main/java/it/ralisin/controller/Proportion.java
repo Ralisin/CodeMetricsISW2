@@ -7,7 +7,6 @@ import it.ralisin.tools.TicketsTool;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,12 +20,70 @@ public class Proportion {
         ZOOKEEPER
     }
 
+    // From paper page 13, in Proportion_Incremental, (ii)
+    private static final int THRESHOLD = 5;
+
     private Proportion() {}
 
-    public static void calculateProportion(List<Release> releaseList, List<Ticket> ticketList) throws IOException, URISyntaxException {
+    public static void proportion(List<Release> releaseList, List<Ticket> ticketList) throws IOException, URISyntaxException {
         float pColdStart = coldStartProportion();
 
         Logger.getAnonymousLogger().log(Level.INFO, "pColdStart" + pColdStart);
+
+        List<Ticket> ticketsForEvaluation = new ArrayList<>();
+        for(Ticket ticket : ticketList) {
+            if (ticket.getIV() != null) ticketsForEvaluation.add(ticket);
+            else computeTicketProportion(ticket, ticketsForEvaluation, releaseList, pColdStart);
+        }
+    }
+
+    private static void computeTicketProportion(Ticket ticket, List<Ticket> ticketsForEvaluation, List<Release> releaseList, float pColdStart) {
+        float proportion;
+        if (ticketsForEvaluation.size() < THRESHOLD) {
+            proportion = pColdStart;
+        } else {
+            proportion = incrementalProportion(ticketsForEvaluation);
+        }
+
+        setTicketIV(ticket, releaseList, proportion);
+        setTicketAV(ticket, releaseList);
+    }
+
+    private static void setTicketIV(Ticket ticket, List<Release> releaseList, float proportion) {
+        int newIV;
+        if (ticket.getFV().getId() == ticket.getOV().getId()) {
+            newIV = (int) ( ticket.getFV().getId() - proportion);
+        } else {
+            // From paper: IV = (FV − OV) ∗ P_Increment
+            newIV = (int) (ticket.getFV().getId() - (ticket.getFV().getId() - ticket.getOV().getId()) * proportion);
+        }
+
+        if (newIV < 1) newIV = 1;
+
+        if (releaseList.get(newIV-1).getId() == ticket.getOV().getId() && newIV > 1)
+            ticket.setIV(releaseList.get(newIV - 2));
+        else
+            ticket.setIV(releaseList.get(newIV-1));
+    }
+
+    private static void setTicketAV(Ticket ticket, List<Release> releaseList) {
+        List<Release> AVList = new ArrayList<>();
+
+        for (int i = ticket.getIV().getId(); i < ticket.getFV().getId(); i++) {
+            AVList.add(releaseList.get(i-1));
+        }
+
+        ticket.setAVList(AVList);
+    }
+
+    private static float incrementalProportion(List<Ticket> ticketList) {
+        List<Float> proportionList = new ArrayList<>();
+        for (Ticket ticket : ticketList) {
+            Float P = evaluateTicketProportion(ticket);
+            proportionList.add(P);
+        }
+
+        return proportionList.stream().reduce(0f, Float::sum)/proportionList.size();
     }
 
     private static float coldStartProportion() throws IOException, URISyntaxException {
@@ -48,7 +105,7 @@ public class Proportion {
             // Calculate project proportion
             List<Float> proportionList = new ArrayList<>();
             for(Ticket ticket : ticketList) {
-                Float P = computeProportion(ticket);
+                Float P = evaluateTicketProportion(ticket);
                 proportionList.add(P);
             }
 
@@ -58,11 +115,11 @@ public class Proportion {
         return projectsProportion.stream().reduce(0f, Float::sum)/projectsProportion.size();
     }
 
-    private static float computeProportion(Ticket ticket) {
+    private static float evaluateTicketProportion(Ticket ticket) {
         /*
         Formula: P = (FV − IV)/(FV − OV)
 
-        From paper:
+        From paper page 12, in Proportion_ColdStart, (i)
              if FV=OV set FV - OV = 1 -> P = FV - IV
          */
 

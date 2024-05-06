@@ -15,8 +15,6 @@ public class ReleaseTools {
             return null;
         }
 
-        releaseList.sort(Comparator.comparing(Release::getDate));
-
         for (Release release : releaseList) {
             if (!release.getDate().isBefore(date)) {
                 return release;

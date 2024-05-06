@@ -1,7 +1,6 @@
 package it.ralisin.entities;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Ticket {
@@ -52,6 +51,10 @@ private List<Release> AV;
 
     public List<Release> getAVList() {
         return AV;
+    }
+
+    public void setAVList(List<Release> AV) {
+        this.AV = AV;
     }
 
     @Override
