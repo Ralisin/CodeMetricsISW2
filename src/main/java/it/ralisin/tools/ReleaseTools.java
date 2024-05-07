@@ -12,6 +12,8 @@ import java.util.Comparator;
 import java.util.List;
 
 public class ReleaseTools {
+    private ReleaseTools() {}
+
     public static Release getReleaseAfterOrEqualDate(LocalDateTime date, List<Release> releaseList) {
         if (releaseList == null || releaseList.isEmpty()) {
             return null;

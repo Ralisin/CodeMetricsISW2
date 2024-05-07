@@ -4,20 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b9736f61-e96d-4747-a412-d2bfb5b24899" name="Changes" comment="Commit updates info">
-      <change afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/controller/GitExtractor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/entities/JavaClass.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/tools/CSVWriter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/ticketList.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/ralisin/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/ralisin/controller/GitCommitsExtractor.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/ralisin/controller/Metrics.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/controller/Metrics.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/ralisin/entities/Release.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/entities/Release.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/ralisin/tools/ReleaseTools.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/tools/ReleaseTools.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/repo/BOOKKEEPER/tests/backward-compat/recovery-no-password/src/test/groovy/org/apache/bookkeeper/tests/backwardcompat/TestCompatRecoveryNoPassword.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/repo/BOOKKEEPER/tests/backward-compat/recovery-no-password/src/test/groovy/org/apache/bookkeeper/tests/backwardcompat/TestCompatRecoveryNoPassword.groovy" afterDir="false" />
-    </list>
+    <list default="true" id="b9736f61-e96d-4747-a412-d2bfb5b24899" name="Changes" comment="First csv file and working on JavaClass" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -144,7 +131,7 @@
       <workItem from="1714908532951" duration="14710000" />
       <workItem from="1715003504066" duration="13234000" />
       <workItem from="1715067913951" duration="1774000" />
-      <workItem from="1715096748989" duration="10159000" />
+      <workItem from="1715096748989" duration="10753000" />
     </task>
     <task id="LOCAL-00001" summary="Get Versions and Tickets from Jira">
       <option name="closed" value="true" />
@@ -202,7 +189,15 @@
       <option name="project" value="LOCAL" />
       <updated>1715015020145</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="First csv file and working on JavaClass">
+      <option name="closed" value="true" />
+      <created>1715112109735</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1715112109735</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -226,7 +221,8 @@
     <MESSAGE value="Clone project repository and retrieve commits" />
     <MESSAGE value="Link commits to tickets" />
     <MESSAGE value="Commit updates info" />
-    <option name="LAST_COMMIT_MESSAGE" value="Commit updates info" />
+    <MESSAGE value="First csv file and working on JavaClass" />
+    <option name="LAST_COMMIT_MESSAGE" value="First csv file and working on JavaClass" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

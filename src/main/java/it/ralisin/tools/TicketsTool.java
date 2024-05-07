@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Objects;
 
 public class TicketsTool {
+    private TicketsTool() {}
+
     public static void fixInconsistentTickets(List<Ticket> ticketList, List<Release> releaseList) {
         // Filter tickets and setTicketIV for possible tickets
         ticketList.removeIf(ticket -> {
