@@ -55,7 +55,7 @@ public class ReleaseTools {
         for (RevCommit commit : revCommitList) {
             Release commitRelease = getCommitRelease(commit, releaseList);
 
-            if (commitRelease != null) commitRelease.getRevCommitList().add(commit);
+            if (commitRelease != null) commitRelease.getCommitList().add(commit);
         }
     }
 

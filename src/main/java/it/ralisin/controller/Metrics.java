@@ -2,6 +2,7 @@ package it.ralisin.controller;
 
 import it.ralisin.entities.Release;
 import it.ralisin.entities.Ticket;
+import it.ralisin.tools.CSVWriter;
 import it.ralisin.tools.ReleaseTools;
 import it.ralisin.tools.TicketsTool;
 import org.eclipse.jgit.api.errors.GitAPIException;
@@ -16,6 +17,8 @@ import java.util.logging.Logger;
 
 public class Metrics {
     public static void dataExtraction(String projName, String gitHubUrl) throws IOException, URISyntaxException, GitAPIException {
+        CSVWriter csvWriter = new CSVWriter("src/main/resources/" + projName);
+
         JiraDataExtractor jira = new JiraDataExtractor(projName);
 
         // Get release list from jira
@@ -30,16 +33,16 @@ public class Metrics {
         Proportion.proportion(releaseList, ticketList);
         TicketsTool.fixInconsistentTickets(ticketList, releaseList); // Remove inconsistent tickets after the proportion if any
 
-        // TODO write tickets in a csv file
+        csvWriter.csvTicketFile(ticketList);
 
         // Get list of full project commits
         Logger.getAnonymousLogger().log(Level.INFO, "Cloning repository from GitHub " + gitHubUrl);
-        GitCommitsExtractor gitExtractor = new GitCommitsExtractor(gitHubUrl);
+        GitExtractor gitExtractor = new GitExtractor(projName, gitHubUrl);
         List<RevCommit> commitList = gitExtractor.getAllCommits();
 
         // Link commits to release
         ReleaseTools.linkCommits(commitList, releaseList);
-        releaseList.removeIf(release -> release.getRevCommitList().isEmpty()); // Remove releases with empty commit list
+        releaseList.removeIf(release -> release.getCommitList().isEmpty()); // Remove releases with empty commit list
         for(int i = 1; i <= releaseList.size(); i++) releaseList.get(i - 1).setId(i); // Reassign release id
 
         // Remove half releases
@@ -51,6 +54,10 @@ public class Metrics {
         // Link tickets to relative commits
         TicketsTool.linkCommits(ticketList, commitList);
 
+        for (Release release : releaseList) {
+            System.out.println(release.getName() + ": " + release.getCommitList().size());
+        }
 
+        gitExtractor.extractJavaFiles(releaseList);
     }
 }

@@ -5,10 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b9736f61-e96d-4747-a412-d2bfb5b24899" name="Changes" comment="Commit updates info">
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/controller/GitExtractor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/entities/JavaClass.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/tools/CSVWriter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/ticketList.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/ralisin/controller/GitCommitsExtractor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/controller/GitCommitsExtractor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/ralisin/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/ralisin/controller/GitCommitsExtractor.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/ralisin/controller/Metrics.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/controller/Metrics.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/ralisin/controller/Proportion.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/controller/Proportion.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/ralisin/entities/Release.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/entities/Release.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/ralisin/tools/ReleaseTools.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/tools/ReleaseTools.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/repo/BOOKKEEPER/tests/backward-compat/recovery-no-password/src/test/groovy/org/apache/bookkeeper/tests/backwardcompat/TestCompatRecoveryNoPassword.groovy" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/repo/BOOKKEEPER/tests/backward-compat/recovery-no-password/src/test/groovy/org/apache/bookkeeper/tests/backwardcompat/TestCompatRecoveryNoPassword.groovy" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,6 +64,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/buniy/Downloads/EsempiInClasse-JUnitMockito",
     "node.js.detected.package.eslint": "true",
@@ -66,7 +75,7 @@
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable",
+    "settings.editor.selected.configurable": "inlay.hints",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -74,6 +83,11 @@
     <key name="ExtractSuperBase.RECENT_KEYS">
       <recent name="it.ralisin.tools" />
     </key>
+  </component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="Main" />
+    </option>
   </component>
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
@@ -129,6 +143,8 @@
       <workItem from="1714760782435" duration="6390000" />
       <workItem from="1714908532951" duration="14710000" />
       <workItem from="1715003504066" duration="13234000" />
+      <workItem from="1715067913951" duration="1774000" />
+      <workItem from="1715096748989" duration="10159000" />
     </task>
     <task id="LOCAL-00001" summary="Get Versions and Tickets from Jira">
       <option name="closed" value="true" />
@@ -211,5 +227,9 @@
     <MESSAGE value="Link commits to tickets" />
     <MESSAGE value="Commit updates info" />
     <option name="LAST_COMMIT_MESSAGE" value="Commit updates info" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>
