@@ -1,5 +1,6 @@
 package it.ralisin.tools;
 
+import it.ralisin.entities.JavaClass;
 import it.ralisin.entities.Release;
 import it.ralisin.entities.Ticket;
 
@@ -21,6 +22,23 @@ public class CSVWriter {
         if (!Files.exists(tempDir)) Files.createDirectories(tempDir);
 
         this.filePath = filePath;
+    }
+
+    public void csvReleaseFile(List<Release> releaseList) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath + "/releaseList.csv"))) {
+            writer.write("ID, Name, Date");
+            writer.newLine();
+
+            for (Release release : releaseList) {
+                writer.write(release.getId() + ",");
+                writer.write(release.getName() + ",");
+                writer.write(release.getDate().toString());
+
+                writer.newLine();
+            }
+        } catch (Exception e) {
+            Logger.getAnonymousLogger().log(Level.INFO, e.getMessage());
+        }
     }
 
     public void csvTicketFile(List<Ticket> ticketList) {
@@ -48,6 +66,25 @@ public class CSVWriter {
                 writer.write(String.valueOf(AVList));
 
                 writer.newLine();
+            }
+        } catch (Exception e) {
+            Logger.getAnonymousLogger().log(Level.INFO, e.getMessage());
+        }
+    }
+
+    public void csvJavaClassFile(List<Release> releaseList) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath + "/dataset.csv"))) {
+            writer.write("Release ID, Filepath, LOC, ...");
+            writer.newLine();
+
+            for (Release release : releaseList) {
+                for (JavaClass javaClass : release.getJavaClassList()) {
+                    writer.write(release.getId() + ",");
+                    writer.write(javaClass.getClassPath() + ",");
+                    writer.write(javaClass.getLoc() + ",");
+
+                    writer.newLine();
+                }
             }
         } catch (Exception e) {
             Logger.getAnonymousLogger().log(Level.INFO, e.getMessage());

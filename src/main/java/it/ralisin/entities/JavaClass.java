@@ -1,5 +1,3 @@
-package it.ralisin.entities;
-
 /*
 - Size (LOC) (linee di codice): È il numero totale di linee di codice nel file.
 - LOC Touched (linee di codice toccate): È la somma delle linee di codice aggiunte e cancellate durante tutte le revisioni del file. Questo può dare un'idea del grado di modifica del file nel tempo.
@@ -21,8 +19,8 @@ package it.ralisin.entities;
 Come calcolarli:
 * Size (LOC) (linee di codice): calcolo il numero di righe di una classe
 * LOC Touched (linee di codice toccate): |# righe aggiunte| + |# righe tolte|
-* NR (numero di revisioni): per ogni revisione controlla se la classe è stata modificata
-- - Nfix (numero di correzioni di difetti): È il numero totale di volte in cui il file è stato modificato per correggere difetti o bug. Nel nostro caso coincide con NR
+* NR (numero di revisioni): numero di commit che questa ha
+* Nfix (numero di correzioni di difetti): Si calcola prendendo dai ticket solo i commit che hanno effettivamente corretto un ticket e si
 - Nauth (numero di autori): È il numero totale di autori distinti che hanno contribuito al file.
 - LOC Added (linee di codice aggiunte): È la somma delle linee di codice aggiunte durante tutte le revisioni del file.
 - Max LOC Added (massimo delle linee di codice aggiunte): È il massimo numero di linee di codice aggiunte in una singola revisione del file.
@@ -39,16 +37,45 @@ Come calcolarli:
 * Indica le metriche considerate
  */
 
-public class JavaClass {
-    private int loc; // Loc
-    private int touchedLOC; // Sum over revisions of LOC added and deleted
-    private int nRev; // Number of revisions
-    private int nAuth; // Number of authors
-    private int addedLOC; // Sum over revisions of LOC added
-    private int maxAddedLOC; // Maximum over revisions of LOC added
-    private float avgAddedLOC; // Average LOC added per revision
-    private int churn; // Sum over revisions of added and deleted LOC
-    private int maxChurn;
-    private float avgChurn;
+package it.ralisin.entities;
 
+import org.eclipse.jgit.revwalk.RevCommit;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class JavaClass {
+    private final String classPath;
+    private final String classContent;
+    private final List<RevCommit> commitList = new ArrayList<>();
+
+    // Metrics
+    int loc = 0;
+
+    public JavaClass(String classPath, String classContent) {
+        this.classPath = classPath;
+        this.classContent = classContent;
+
+//        this.loc = countLinesOfCode(classContent);
+    }
+
+    public String getClassPath() {
+        return classPath;
+    }
+
+    public List<RevCommit> getCommitList() {
+        return commitList;
+    }
+
+    public void addCommit(RevCommit commit) {
+        commitList.add(commit);
+    }
+
+    public int getLoc() {
+        return loc;
+    }
+
+    private int countLinesOfCode(String content) {
+        return content.split("\r\n|\r|\n").length;
+    }
 }

@@ -41,7 +41,7 @@ public class JiraDataExtractor {
                 releaseName = releaseJsonObj.get("name").toString();
                 releaseDate = releaseJsonObj.get("releaseDate").toString();
 
-                releaseList.add(new Release(releaseName, LocalDate.parse(releaseDate).atStartOfDay()));
+                releaseList.add(new Release(releaseName, LocalDate.parse(releaseDate).atTime(23, 59, 59)));
             }
         }
 

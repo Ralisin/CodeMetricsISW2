@@ -4,7 +4,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b9736f61-e96d-4747-a412-d2bfb5b24899" name="Changes" comment="First csv file and working on JavaClass" />
+    <list default="true" id="b9736f61-e96d-4747-a412-d2bfb5b24899" name="Changes" comment="Couple code smells">
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/tools/GitFactory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/tools/JavaFileMetrics.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/releaseList.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/ticketList.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/ralisin/controller/GitExtractor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/controller/GitExtractor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/ralisin/controller/JiraDataExtractor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/controller/JiraDataExtractor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/ralisin/controller/Metrics.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/controller/Metrics.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/ralisin/entities/JavaClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/entities/JavaClass.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/ralisin/entities/Release.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/entities/Release.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/ralisin/tools/CSVWriter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/tools/CSVWriter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/ticketList.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/ticketList.csv" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -44,28 +58,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Main.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/buniy/Downloads/EsempiInClasse-JUnitMockito",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "inlay.hints",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/buniy/Downloads/EsempiInClasse-JUnitMockito&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;inlay.hints&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="ExtractSuperBase.RECENT_KEYS">
       <recent name="it.ralisin.tools" />
@@ -131,7 +145,15 @@
       <workItem from="1714908532951" duration="14710000" />
       <workItem from="1715003504066" duration="13234000" />
       <workItem from="1715067913951" duration="1774000" />
-      <workItem from="1715096748989" duration="10753000" />
+      <workItem from="1715096748989" duration="11050000" />
+      <workItem from="1715112480602" duration="1966000" />
+      <workItem from="1715171754141" duration="10212000" />
+      <workItem from="1715250339241" duration="933000" />
+      <workItem from="1715283471497" duration="8183000" />
+      <workItem from="1715618009259" duration="1207000" />
+      <workItem from="1715619854717" duration="64000" />
+      <workItem from="1715717135935" duration="7106000" />
+      <workItem from="1715757886882" duration="609000" />
     </task>
     <task id="LOCAL-00001" summary="Get Versions and Tickets from Jira">
       <option name="closed" value="true" />
@@ -197,7 +219,15 @@
       <option name="project" value="LOCAL" />
       <updated>1715112109735</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Couple code smells">
+      <option name="closed" value="true" />
+      <created>1715112322198</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1715112322198</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -222,7 +252,8 @@
     <MESSAGE value="Link commits to tickets" />
     <MESSAGE value="Commit updates info" />
     <MESSAGE value="First csv file and working on JavaClass" />
-    <option name="LAST_COMMIT_MESSAGE" value="First csv file and working on JavaClass" />
+    <MESSAGE value="Couple code smells" />
+    <option name="LAST_COMMIT_MESSAGE" value="Couple code smells" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

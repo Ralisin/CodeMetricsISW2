@@ -11,6 +11,7 @@ public class Release {
     private final String releaseName;
     private final LocalDateTime releaseDate;
     private final List<RevCommit> commitList = new ArrayList<>();
+    private final List<JavaClass> javaClassList = new ArrayList<>();
 
     public Release(String releaseName, LocalDateTime releaseDate) {
         this.releaseName = releaseName;
@@ -31,6 +32,10 @@ public class Release {
 
     public List<RevCommit> getCommitList() {
         return commitList;
+    }
+
+    public List<JavaClass> getJavaClassList() {
+        return javaClassList;
     }
 
     public void setId(int newId) {

@@ -24,6 +24,8 @@ public class Metrics {
         // Get release list from jira
         List<Release> releaseList = jira.extractReleasesList();
 
+        csvWriter.csvReleaseFile(releaseList);
+
         // Get ticket list from jira
         List<Ticket> ticketList = jira.extractTicketsList(releaseList);
         TicketsTool.fixInconsistentTickets(ticketList, releaseList);
@@ -54,10 +56,14 @@ public class Metrics {
         // Link tickets to relative commits
         TicketsTool.linkCommits(ticketList, commitList);
 
+        System.out.println("Commits per release:");
         for (Release release : releaseList) {
             System.out.println(release.getName() + ": " + release.getCommitList().size());
         }
+        System.out.println();
 
         gitExtractor.extractJavaFiles(releaseList);
+
+        csvWriter.csvJavaClassFile(releaseList);
     }
 }
