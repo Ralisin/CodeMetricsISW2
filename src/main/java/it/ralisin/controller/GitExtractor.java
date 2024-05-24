@@ -60,64 +60,6 @@ public class GitExtractor {
         return commitList;
     }
 
-//    public void extractJavaFiles(List<Release> releaseList) throws IOException, GitAPIException {
-//        System.out.println("Extracting Java Files");
-//
-//        int releaseCount = 0;
-//        for (Release release : releaseList) {
-//            System.out.print("\r\rRelease (" + releaseCount + ", " + releaseList.size() + ")");
-//            System.out.println();
-//            releaseCount++;
-//
-//            List<JavaClass> touchedJavaClassList = release.getJavaClassList();
-//            Set<String> classPathSet = new HashSet<>();
-//
-//            int commitCount = 0;
-//            for (RevCommit commit : release.getCommitList()) {
-//                System.out.print("\r\tRevCommit (" + commitCount + ", " + release.getCommitList().size() + ")");
-//                commitCount++;
-//
-//                ObjectId treeId = commit.getTree();
-//                try (TreeWalk treeWalk = new TreeWalk(gitFactory.getGit().getRepository())) {
-//                    treeWalk.reset(treeId);
-//                    treeWalk.setRecursive(true);
-//                    while (treeWalk.next()) {
-//                        String classPath = treeWalk.getPathString();
-//
-//                        if (classPath.endsWith(".java") && !classPath.contains("/test/")) {
-//                            if (classPathSet.add(classPath)) {
-//                                String fileContent = getFileContent(commit, classPath);
-//
-//                                JavaClass javaClass = new JavaClass(classPath, fileContent);
-//
-//                                if (checkCommitTouchesClass(commit, classPath))
-//                                    javaClass.addCommit(commit);
-//
-//                                touchedJavaClassList.add(javaClass);
-//                            } else {
-//                                // Add commit to a javaClass that already exist
-//                                for (JavaClass javaClass : touchedJavaClassList) {
-//                                    if (javaClass.getClassPath().equals(classPath) && checkCommitTouchesClass(commit, classPath)) {
-//                                        javaClass.addCommit(commit);
-//                                        break;
-//                                    }
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//
-//            System.out.println("Number of different class touched per release " + release + ": " + classPathSet.size());
-//            int counter = 0;
-//            for (JavaClass jc : touchedJavaClassList) {
-//                System.out.println(release.getName() + ", javaClassPath: " + jc.getClassPath() + ", commits: " + jc.getCommitList().size());
-//                counter++;
-//            }
-//            System.out.println("counter: " + counter);
-//        }
-//    }
-
     public void extractJavaFiles(List<Release> releaseList) throws IOException, GitAPIException {
         System.out.println("Extracting Java Files");
 
