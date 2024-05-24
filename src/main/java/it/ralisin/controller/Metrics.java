@@ -16,7 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Metrics {
-    public static void dataExtraction(String projName, String gitHubUrl) throws IOException, URISyntaxException, GitAPIException {
+    public static void dataExtraction(String projName, String gitHubUrl) throws IOException, URISyntaxException, GitAPIException, InterruptedException {
         CSVWriter csvWriter = new CSVWriter("src/main/resources/" + projName);
 
         JiraDataExtractor jira = new JiraDataExtractor(projName);

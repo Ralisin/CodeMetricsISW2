@@ -18,6 +18,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -60,29 +63,26 @@ public class GitExtractor {
         return commitList;
     }
 
-    public void extractJavaFiles(List<Release> releaseList) throws IOException, GitAPIException {
+    public void extractJavaFiles(List<Release> releaseList) throws InterruptedException {
+        ExecutorService executor = Executors.newFixedThreadPool(releaseList.size());
+        List<Callable<Void>> tasks = new ArrayList<>();
+
         System.out.println("Extracting Java Files");
 
-        int releaseCount = 0;
-        for (Release release : releaseList) {
-            System.out.print("\r\rRelease (" + releaseCount + ", " + releaseList.size() + ")");
-            System.out.println();
-            releaseCount++;
+        for(Release release : releaseList) {
 
-            List<JavaClass> touchedJavaClassList = release.getJavaClassList();
-            Set<String> classPathSet = new HashSet<>();
+            tasks.add(() -> {
+                List<JavaClass> touchedJavaClassList = release.getJavaClassList();
+                Set<String> classPathSet = new HashSet<>();
 
-            processCommitsForRelease(release, touchedJavaClassList, classPathSet);
+                processCommitsForRelease(release, touchedJavaClassList, classPathSet);
 
-            System.out.println("Number of different class touched per release " + release + ": " + classPathSet.size());
-
-            int counter = 0;
-            for (JavaClass jc : touchedJavaClassList) {
-                System.out.println(release.getName() + ", javaClassPath: " + jc.getClassPath() + ", commits: " + jc.getCommitList().size());
-                counter++;
-            }
-            System.out.println("counter: " + counter);
+                return null;
+            });
         }
+
+        executor.invokeAll(tasks);
+        executor.shutdown();
     }
 
     private void processCommitsForRelease(Release release, List<JavaClass> touchedJavaClassList, Set<String> classPathSet) throws IOException, GitAPIException {
@@ -121,15 +121,6 @@ public class GitExtractor {
         }
     }
 
-    private void addCommitToExistingClass(List<JavaClass> touchedJavaClassList, RevCommit commit, String classPath) throws GitAPIException, IOException {
-        for (JavaClass javaClass : touchedJavaClassList) {
-            if (javaClass.getClassPath().equals(classPath) && checkCommitTouchesClass(commit, classPath)) {
-                javaClass.addCommit(commit);
-                break;
-            }
-        }
-    }
-
     private String getFileContent(RevCommit commit, String filePath) throws IOException, GitAPIException {
         Git git = gitFactory.getGit();
 
@@ -150,6 +141,15 @@ public class GitExtractor {
         return "";
     }
 
+    private void addCommitToExistingClass(List<JavaClass> touchedJavaClassList, RevCommit commit, String classPath) throws GitAPIException, IOException {
+        for (JavaClass javaClass : touchedJavaClassList) {
+            if (javaClass.getClassPath().equals(classPath) && checkCommitTouchesClass(commit, classPath)) {
+                javaClass.addCommit(commit);
+                break;
+            }
+        }
+    }
+
     private boolean checkCommitTouchesClass(RevCommit commit, String classFilePath) throws IOException, GitAPIException {
         try (Repository repository = gitFactory.getGit().getRepository();
              Git git = new Git(repository);
@@ -157,19 +157,19 @@ public class GitExtractor {
 
             RevCommit parentCommit = revWalk.parseCommit(commit.getParent(0).getId());
 
-            // Prendi i tree parser per il commit e il suo genitore
+            // Get treeParser for the commit and his parent
             CanonicalTreeParser oldTreeParser = new CanonicalTreeParser();
             oldTreeParser.reset(repository.newObjectReader(), parentCommit.getTree().getId());
             CanonicalTreeParser newTreeParser = new CanonicalTreeParser();
             newTreeParser.reset(repository.newObjectReader(), commit.getTree().getId());
 
-            // Ottieni la lista delle differenze tra il commit e il suo genitore
+            // Get difference list through commit and his parent
             List<DiffEntry> diffs = git.diff()
                     .setOldTree(oldTreeParser)
                     .setNewTree(newTreeParser)
                     .call();
 
-            // Controlla se una delle differenze coinvolge il file della classe
+            // Check if any of the differences involve the class file
             for (DiffEntry diff : diffs) {
                 if (diff.getNewPath().equals(classFilePath)) {
                     return true;

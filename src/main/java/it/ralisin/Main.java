@@ -7,7 +7,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 
 public class Main {
-    public static void main(String[] args) throws IOException, URISyntaxException, GitAPIException {
+    public static void main(String[] args) throws IOException, URISyntaxException, GitAPIException, InterruptedException {
         Metrics.dataExtraction("BOOKKEEPER", "https://github.com/Ralisin/bookkeeper");
 //        Metrics.dataExtraction("STORM", "https://github.com/Ralisin/storm");
     }
