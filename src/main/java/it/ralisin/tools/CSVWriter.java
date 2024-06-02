@@ -74,14 +74,38 @@ public class CSVWriter {
 
     public void csvJavaClassFile(List<Release> releaseList) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath + "/dataset.csv"))) {
-            writer.write("Release ID, Filepath, LOC, ...");
+            writer.write("Release ID, Filepath, Size, LOC Touched, NR, NFix, NAuth, LOC Added, Max LOC Added, Average LOC Added, Churn, Max Churn, Average Churn");
             writer.newLine();
 
             for (Release release : releaseList) {
                 for (JavaClass javaClass : release.getJavaClassList()) {
+                    // Release ID
                     writer.write(release.getId() + ",");
+                    // Filepath
                     writer.write(javaClass.getClassPath() + ",");
-                    writer.write(javaClass.getLoc() + ",");
+                    // LOC
+                    writer.write(javaClass.getSize() + ",");
+                    // locTouched
+                    writer.write(javaClass.getLocTouched() + ",");
+                    // nr
+                    writer.write(javaClass.getNr() + ",");
+                    // nFix
+                    writer.write(javaClass.getNFix() + ",");
+                    // nAuth
+                    writer.write(javaClass.getNAuth() + ",");
+                    // locAdded
+                    writer.write(javaClass.getLocAdded() + ",");
+                    // maxLocAdded
+                    writer.write(javaClass.getMaxLocAdded() + ",");
+                    // averageLocAdded
+                    writer.write(javaClass.getAverageLocAdded() + ",");
+                    // churn
+                    writer.write(javaClass.getChurn() + ",");
+                    // maxChurn
+                    writer.write(javaClass.getMaxChurn() + ",");
+                    // averageChurn
+                    writer.write(javaClass.getAverageChurn() + "");
+
 
                     writer.newLine();
                 }

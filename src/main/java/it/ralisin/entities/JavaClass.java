@@ -42,21 +42,34 @@ package it.ralisin.entities;
 import org.eclipse.jgit.revwalk.RevCommit;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+/*
 public class JavaClass {
     private final String classPath;
     private final String classContent;
     private final List<RevCommit> commitList = new ArrayList<>();
 
     // Metrics
-    int loc = 0;
+    int size = 0; // LOC
+    int locTouched = 0; // Sum over revisions of LOC added and deleted. |added| + |deleted|
+    int nr = 0; // Number of commit that touched the class
+    int nFix = 0; // Number of commit related to a fix
+    int nAuth = 0; // Number of authors
+    int locAdded = 0; // Sum over revisions of LOC added
+    int maxLocAdded = 0; // Maximum over revisions of LOC added
+    List<Integer> listLocAdded = new ArrayList<Integer>(); // List of loc added
+    double averageLocAdded = 0; // Average LOC added per revision
+    int churn = 0; // Sum of LOC added less LOC deleted
+    int maxChurn = 0; // Max churn in a single commit
+    List<Integer> listOfChurn = new ArrayList<>();
+    double averageChurn = 0; //
 
     public JavaClass(String classPath, String classContent) {
         this.classPath = classPath;
         this.classContent = classContent;
-
-//        this.loc = countLinesOfCode(classContent);
     }
 
     public String getClassPath() {
@@ -71,11 +84,113 @@ public class JavaClass {
         commitList.add(commit);
     }
 
-    public int getLoc() {
-        return loc;
+    public int getSize() {
+        return size;
+    }
+}
+*/
+
+public class JavaClass {
+    private final String classPath;
+    private final List<RevCommit> commitList = new ArrayList<>();
+
+    // Metrics
+    private int size = 0; // LOC
+    private int locTouched = 0; // Sum over revisions of LOC added and deleted. |added| + |deleted|
+    private int locAdded = 0; // Sum over revisions of LOC added
+    private int maxLocAdded = 0; // Maximum over revisions of LOC added
+    private final List<Integer> listLocAdded = new ArrayList<>(); // List of loc added
+    private double averageLocAdded = 0; // Average LOC added per revision
+    private int churn = 0; // Sum of LOC added less LOC deleted
+    private int maxChurn = 0; // Max churn in a single commit
+    private final List<Integer> listOfChurn = new ArrayList<>();
+    private double averageChurn = 0;
+    private int nr = 0; // Number of commit that touched the class
+    private int nFix = 0; // Number of commit related to a fix
+    private final Set<String> authors = new HashSet<>();  // Set of authors
+
+    public JavaClass(String classPath, String classContent) {
+        this.classPath = classPath;
+        this.size = calculateSize(classContent);
     }
 
-    private int countLinesOfCode(String content) {
+    public String getClassPath() {
+        return classPath;
+    }
+
+    public void addCommit(RevCommit commit, int linesAdded, int linesDeleted, boolean isFix, String author) {
+        commitList.add(commit);
+
+        locTouched += (linesAdded + linesDeleted);
+        locAdded += linesAdded;
+        maxLocAdded = Math.max(maxLocAdded, linesAdded);
+        listLocAdded.add(linesAdded);
+
+        churn += linesAdded - linesDeleted;
+        maxChurn = Math.max(maxChurn, linesAdded - linesDeleted);
+        listOfChurn.add(linesAdded - linesDeleted);
+
+        nr++;
+        if (isFix) nFix++;
+        authors.add(author);
+
+        // Recalculate averages
+        int sumLocs = 0;
+        for (Integer loc : listLocAdded) sumLocs += loc;
+        averageLocAdded = sumLocs / (double) listLocAdded.size();
+
+        int sumChurn = 0;
+        for (Integer churn : listOfChurn) sumChurn += churn;
+        averageChurn = sumChurn / (double) listOfChurn.size();
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    // This method calculates the number of lines of code (LOC) in the class content
+    private int calculateSize(String content) {
         return content.split("\r\n|\r|\n").length;
+    }
+
+    // Other getters for the metrics can be added as needed
+    public int getLocTouched() {
+        return locTouched;
+    }
+
+    public int getNr() {
+        return nr;
+    }
+
+    public int getNFix() {
+        return nFix;
+    }
+
+    public int getLocAdded() {
+        return locAdded;
+    }
+
+    public int getMaxLocAdded() {
+        return maxLocAdded;
+    }
+
+    public double getAverageLocAdded() {
+        return averageLocAdded;
+    }
+
+    public int getChurn() {
+        return churn;
+    }
+
+    public int getMaxChurn() {
+        return maxChurn;
+    }
+
+    public double getAverageChurn() {
+        return averageChurn;
+    }
+
+    public int getNAuth() {
+        return authors.size();
     }
 }

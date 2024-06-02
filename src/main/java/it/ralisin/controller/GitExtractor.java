@@ -6,6 +6,9 @@ import it.ralisin.tools.GitFactory;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.diff.DiffEntry;
+import org.eclipse.jgit.diff.DiffFormatter;
+import org.eclipse.jgit.diff.Edit;
+import org.eclipse.jgit.diff.EditList;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -105,17 +108,43 @@ public class GitExtractor {
             String classPath = treeWalk.getPathString();
 
             if (classPath.endsWith(".java") && !classPath.contains("/test/")) {
+                int addedLines = 0;
+                int deletedLines = 0;
+                boolean isFix = isFixed(commit);
+                String author = commit.getAuthorIdent().getName();
+
+                JavaClass javaClass;
+                RevCommit prevCommit;
                 if (classPathSet.add(classPath)) {
                     String fileContent = getFileContent(commit, classPath);
-                    JavaClass javaClass = new JavaClass(classPath, fileContent);
+                    javaClass = new JavaClass(classPath, fileContent);
 
                     if (checkCommitTouchesClass(commit, classPath)) {
-                        javaClass.addCommit(commit);
+                        prevCommit = getPreviousCommit(commit.getName(), classPath);
+                        if (prevCommit != null) {
+                            // Conta le righe aggiunte e tolte
+                            int[] counts = countAddedAndDeletedLines(gitFactory.getGit().getRepository(), prevCommit, commit, classPath);
+                            addedLines = counts[0];
+                            deletedLines = counts[1];
+                        }
+
+                        javaClass.addCommit(commit, addedLines, deletedLines, isFix, author);
                     }
 
                     touchedJavaClassList.add(javaClass);
                 } else {
-                    addCommitToExistingClass(touchedJavaClassList, commit, classPath);
+                    javaClass = getExistingJavaClass(touchedJavaClassList, commit, classPath);
+
+                    prevCommit = getPreviousCommit(commit.getName(), classPath);
+                    if (prevCommit != null) {
+                        // Conta le righe aggiunte e tolte
+                        int[] counts = countAddedAndDeletedLines(gitFactory.getGit().getRepository(), prevCommit, commit, classPath);
+                        addedLines = counts[0];
+                        deletedLines = counts[1];
+                    }
+
+                    if (javaClass != null)
+                        javaClass.addCommit(commit, addedLines, deletedLines, isFix, author);
                 }
             }
         }
@@ -141,13 +170,18 @@ public class GitExtractor {
         return "";
     }
 
-    private void addCommitToExistingClass(List<JavaClass> touchedJavaClassList, RevCommit commit, String classPath) throws GitAPIException, IOException {
+    private JavaClass getExistingJavaClass(List<JavaClass> touchedJavaClassList, RevCommit commit, String classPath) throws GitAPIException, IOException {
         for (JavaClass javaClass : touchedJavaClassList) {
             if (javaClass.getClassPath().equals(classPath) && checkCommitTouchesClass(commit, classPath)) {
-                javaClass.addCommit(commit);
+                if (checkCommitTouchesClass(commit, classPath)) {
+                    return javaClass;
+                }
+
                 break;
             }
         }
+
+        return null;
     }
 
     private boolean checkCommitTouchesClass(RevCommit commit, String classFilePath) throws IOException, GitAPIException {
@@ -178,5 +212,73 @@ public class GitExtractor {
         }
 
         return false;
+    }
+
+    public RevCommit getPreviousCommit(String commitId, String filePath) throws IOException {
+        try (Git git = gitFactory.getGit()) {
+            Repository repository = git.getRepository();
+
+            ObjectId commitObjectId = repository.resolve(commitId);
+            if (commitObjectId == null) return null;
+
+            try (RevWalk revWalk = new RevWalk(repository)) {
+                RevCommit targetCommit = revWalk.parseCommit(commitObjectId);
+                revWalk.markStart(targetCommit);
+
+                // Aggiungi un filtro per il percorso specifico
+                revWalk.setTreeFilter(PathFilter.create(filePath));
+
+                RevCommit previousCommit = null;
+                for (RevCommit commit : revWalk) {
+                    if (commit.equals(targetCommit)) continue;
+
+                    ByteArrayOutputStream out = new ByteArrayOutputStream();
+                    try (DiffFormatter diffFormatter = new DiffFormatter(out)) {
+                        diffFormatter.setRepository(repository);
+                        List<DiffEntry> diffs = diffFormatter.scan(commit.getTree(), targetCommit.getTree());
+
+                        for (DiffEntry diff : diffs) {
+                            if (diff.getNewPath().equals(filePath) || diff.getOldPath().equals(filePath)) {
+                                previousCommit = commit;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (previousCommit != null) break;
+                }
+
+                return previousCommit;
+            }
+        } catch (GitAPIException e) {
+            return null;
+        }
+    }
+
+    private static int[] countAddedAndDeletedLines(Repository repository, RevCommit oldCommit, RevCommit newCommit, String filePath) throws IOException {
+        int addedLines = 0;
+        int deletedLines = 0;
+
+        try (DiffFormatter diffFormatter = new DiffFormatter(new ByteArrayOutputStream())) {
+            diffFormatter.setRepository(repository);
+
+            List<DiffEntry> diffs = diffFormatter.scan(oldCommit.getTree(), newCommit.getTree());
+            for (DiffEntry diff : diffs) {
+                if (diff.getNewPath().equals(filePath) || diff.getOldPath().equals(filePath)) {
+                    EditList editList = diffFormatter.toFileHeader(diff).toEditList();
+                    for (Edit edit : editList) {
+                        addedLines += edit.getEndB() - edit.getBeginB();
+                        deletedLines += edit.getEndA() - edit.getBeginA();
+                    }
+                }
+            }
+        }
+
+        return new int[]{addedLines, deletedLines};
+    }
+
+    public boolean isFixed(RevCommit commit) {
+        String commitMessage = commit.getFullMessage().toLowerCase();
+        return commitMessage.contains("fix");
     }
 }

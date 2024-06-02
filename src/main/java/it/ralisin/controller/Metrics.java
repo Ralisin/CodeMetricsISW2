@@ -51,8 +51,6 @@ public class Metrics {
         int halfReleases = releaseList.size() / 2;
         releaseList.removeIf(release -> release.getId() > halfReleases);
 
-        // TODO write releases in a csv file
-
         // Link tickets to relative commits
         TicketsTool.linkCommits(ticketList, commitList);
 
@@ -63,6 +61,12 @@ public class Metrics {
         System.out.println();
 
         gitExtractor.extractJavaFiles(releaseList);
+
+//        for(Release release : releaseList) {
+//            for(JavaClass javaClass : release.getJavaClassList()) {
+//                JavaClassMetrics.setMetrics(javaClass);
+//            }
+//        }
 
         csvWriter.csvJavaClassFile(releaseList);
     }

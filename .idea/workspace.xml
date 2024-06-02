@@ -4,12 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b9736f61-e96d-4747-a412-d2bfb5b24899" name="Changes" comment="Reduce code complexity">
-      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+    <list default="true" id="b9736f61-e96d-4747-a412-d2bfb5b24899" name="Changes" comment="Multithreading on extractJavaFiles">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/ralisin/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/ralisin/controller/GitExtractor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/controller/GitExtractor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/ralisin/controller/Metrics.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/controller/Metrics.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/ralisin/entities/JavaClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/entities/JavaClass.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/ralisin/tools/CSVWriter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/tools/CSVWriter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/ralisin/tools/JavaFileMetrics.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/tools/JavaClassMetrics.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,12 +33,12 @@
     &quot;assignee&quot;: &quot;Ralisin&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/Ralisin/CodeMetricsISW2.git",
-    "accountId": "30f88312-d8af-4d52-9576-11155cb5020c"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/Ralisin/CodeMetricsISW2.git&quot;,
+    &quot;accountId&quot;: &quot;30f88312-d8af-4d52-9576-11155cb5020c&quot;
   }
-}]]></component>
+}</component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
@@ -147,7 +148,12 @@
       <workItem from="1715717135935" duration="7106000" />
       <workItem from="1715757886882" duration="609000" />
       <workItem from="1716545312264" duration="1829000" />
-      <workItem from="1716555242247" duration="2103000" />
+      <workItem from="1716555242247" duration="4145000" />
+      <workItem from="1716980445462" duration="9000" />
+      <workItem from="1717068904062" duration="5000" />
+      <workItem from="1717156905478" duration="6501000" />
+      <workItem from="1717171500453" duration="4402000" />
+      <workItem from="1717319974558" duration="767000" />
     </task>
     <task id="LOCAL-00001" summary="Get Versions and Tickets from Jira">
       <option name="closed" value="true" />
@@ -229,7 +235,15 @@
       <option name="project" value="LOCAL" />
       <updated>1716546007799</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Multithreading on extractJavaFiles">
+      <option name="closed" value="true" />
+      <created>1716557717335</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1716557717335</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -256,7 +270,8 @@
     <MESSAGE value="First csv file and working on JavaClass" />
     <MESSAGE value="Couple code smells" />
     <MESSAGE value="Reduce code complexity" />
-    <option name="LAST_COMMIT_MESSAGE" value="Reduce code complexity" />
+    <MESSAGE value="Multithreading on extractJavaFiles" />
+    <option name="LAST_COMMIT_MESSAGE" value="Multithreading on extractJavaFiles" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
