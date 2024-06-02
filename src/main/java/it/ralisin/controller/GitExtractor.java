@@ -18,36 +18,19 @@ import org.eclipse.jgit.treewalk.TreeWalk;
 import org.eclipse.jgit.treewalk.filter.PathFilter;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class GitExtractor {
     final GitFactory gitFactory;
+    final Repository repository;
 
-    public GitExtractor(String projName, String repoURL) {
+    public GitExtractor(String projName, String repoURL) throws GitAPIException, IOException {
         this.gitFactory = new GitFactory(projName, repoURL);
-    }
-
-    public void deleteDirectory(File directory) {
-        if (directory.isDirectory()) {
-            File[] files = directory.listFiles();
-            if (files != null) {
-                for (File file : files) {
-                    deleteDirectory(file);
-                }
-            }
-        }
-        boolean deleted = directory.delete();
-        if (!deleted) {
-            // Log failure to delete the directory
-            Logger.getAnonymousLogger().log(Level.INFO, "Could not delete " + directory);
-        }
+        this.repository = gitFactory.getGit().getRepository();
     }
 
     public List<RevCommit> getAllCommits() throws IOException, GitAPIException {
@@ -56,7 +39,7 @@ public class GitExtractor {
         Git git = gitFactory.getGit();
 
         // Get all commits
-        try (Repository ignored = git.getRepository()) {
+        try (Repository ignored = repository) {
             Iterable<RevCommit> allCommits = git.log().all().call();
             for (RevCommit commit : allCommits) {
                 commitList.add(commit);
@@ -95,60 +78,13 @@ public class GitExtractor {
             commitCount++;
 
             ObjectId treeId = commit.getTree();
-            try (TreeWalk treeWalk = new TreeWalk(gitFactory.getGit().getRepository())) {
+            try (TreeWalk treeWalk = new TreeWalk(repository)) {
                 treeWalk.reset(treeId);
                 treeWalk.setRecursive(true);
                 processTreeWalk(treeWalk, commit, touchedJavaClassList, classPathSet);
             }
         }
     }
-
-//    private void processTreeWalk(TreeWalk treeWalk, RevCommit commit, List<JavaClass> touchedJavaClassList, Set<String> classPathSet) throws IOException, GitAPIException {
-//        while (treeWalk.next()) {
-//            String classPath = treeWalk.getPathString();
-//
-//            if (classPath.endsWith(".java") && !classPath.contains("/test/")) {
-//                int addedLines = 0;
-//                int deletedLines = 0;
-//                boolean isFix = isFixed(commit);
-//                String author = commit.getAuthorIdent().getName();
-//
-//                JavaClass javaClass;
-//                RevCommit prevCommit;
-//                if (classPathSet.add(classPath)) {
-//                    String fileContent = getFileContent(commit, classPath);
-//                    javaClass = new JavaClass(classPath, fileContent);
-//
-//                    if (checkCommitTouchesClass(commit, classPath)) {
-//                        prevCommit = getPreviousCommit(commit.getName(), classPath);
-//                        if (prevCommit != null) {
-//                            // Conta le righe aggiunte e tolte
-//                            int[] counts = countAddedAndDeletedLines(gitFactory.getGit().getRepository(), prevCommit, commit, classPath);
-//                            addedLines = counts[0];
-//                            deletedLines = counts[1];
-//                        }
-//
-//                        javaClass.addCommit(commit, addedLines, deletedLines, isFix, author);
-//                    }
-//
-//                    touchedJavaClassList.add(javaClass);
-//                } else {
-//                    javaClass = getExistingJavaClass(touchedJavaClassList, commit, classPath);
-//
-//                    prevCommit = getPreviousCommit(commit.getName(), classPath);
-//                    if (prevCommit != null) {
-//                        // Conta le righe aggiunte e tolte
-//                        int[] counts = countAddedAndDeletedLines(gitFactory.getGit().getRepository(), prevCommit, commit, classPath);
-//                        addedLines = counts[0];
-//                        deletedLines = counts[1];
-//                    }
-//
-//                    if (javaClass != null)
-//                        javaClass.addCommit(commit, addedLines, deletedLines, isFix, author);
-//                }
-//            }
-//        }
-//    }
 
     private void processTreeWalk(TreeWalk treeWalk, RevCommit commit, List<JavaClass> touchedJavaClassList, Set<String> classPathSet) throws IOException, GitAPIException {
         while (treeWalk.next()) {
@@ -182,16 +118,16 @@ public class GitExtractor {
         return javaClass;
     }
 
-    private void updateExistingJavaClass(JavaClass javaClass, RevCommit commit, String classPath) throws IOException, GitAPIException {
+    private void updateExistingJavaClass(JavaClass javaClass, RevCommit commit, String classPath) throws IOException {
         if (javaClass != null) {
             addCommitToJavaClass(javaClass, commit, classPath);
         }
     }
 
-    private void addCommitToJavaClass(JavaClass javaClass, RevCommit commit, String classPath) throws IOException, GitAPIException {
+    private void addCommitToJavaClass(JavaClass javaClass, RevCommit commit, String classPath) throws IOException {
         RevCommit prevCommit = getPreviousCommit(commit.getName(), classPath);
         if (prevCommit != null) {
-            int[] counts = countAddedAndDeletedLines(gitFactory.getGit().getRepository(), prevCommit, commit, classPath);
+            int[] counts = countAddedAndDeletedLines(repository, prevCommit, commit, classPath);
             int addedLines = counts[0];
             int deletedLines = counts[1];
 
@@ -202,17 +138,15 @@ public class GitExtractor {
         }
     }
 
-    private String getFileContent(RevCommit commit, String filePath) throws IOException, GitAPIException {
-        Git git = gitFactory.getGit();
-
+    private String getFileContent(RevCommit commit, String filePath) throws IOException {
         try (ByteArrayOutputStream out = new ByteArrayOutputStream();
-             TreeWalk treeWalk = new TreeWalk(git.getRepository())) {
+             TreeWalk treeWalk = new TreeWalk(repository)) {
             treeWalk.addTree(commit.getTree());
             treeWalk.setRecursive(true);
             treeWalk.setFilter(PathFilter.create(filePath));
             while (treeWalk.next()) {
                 if (!treeWalk.isSubtree() && treeWalk.getPathString().equals(filePath)) {
-                    git.getRepository().open(treeWalk.getObjectId(0)).copyTo(out);
+                    repository.open(treeWalk.getObjectId(0)).copyTo(out);
 
                     return out.toString();
                 }
@@ -237,8 +171,7 @@ public class GitExtractor {
     }
 
     private boolean checkCommitTouchesClass(RevCommit commit, String classFilePath) throws IOException, GitAPIException {
-        try (Repository repository = gitFactory.getGit().getRepository();
-             Git git = new Git(repository);
+        try (Git git = new Git(repository);
              RevWalk revWalk = new RevWalk(repository)) {
 
             RevCommit parentCommit = revWalk.parseCommit(commit.getParent(0).getId());
@@ -267,43 +200,37 @@ public class GitExtractor {
     }
 
     public RevCommit getPreviousCommit(String commitId, String filePath) throws IOException {
-        try (Git git = gitFactory.getGit()) {
-            Repository repository = git.getRepository();
+        ObjectId commitObjectId = repository.resolve(commitId);
+        if (commitObjectId == null) return null;
 
-            ObjectId commitObjectId = repository.resolve(commitId);
-            if (commitObjectId == null) return null;
+        try (RevWalk revWalk = new RevWalk(repository)) {
+            RevCommit targetCommit = revWalk.parseCommit(commitObjectId);
+            revWalk.markStart(targetCommit);
 
-            try (RevWalk revWalk = new RevWalk(repository)) {
-                RevCommit targetCommit = revWalk.parseCommit(commitObjectId);
-                revWalk.markStart(targetCommit);
+            // Aggiungi un filtro per il percorso specifico
+            revWalk.setTreeFilter(PathFilter.create(filePath));
 
-                // Aggiungi un filtro per il percorso specifico
-                revWalk.setTreeFilter(PathFilter.create(filePath));
+            RevCommit previousCommit = null;
+            for (RevCommit commit : revWalk) {
+                if (commit.equals(targetCommit)) continue;
 
-                RevCommit previousCommit = null;
-                for (RevCommit commit : revWalk) {
-                    if (commit.equals(targetCommit)) continue;
+                ByteArrayOutputStream out = new ByteArrayOutputStream();
+                try (DiffFormatter diffFormatter = new DiffFormatter(out)) {
+                    diffFormatter.setRepository(repository);
+                    List<DiffEntry> diffs = diffFormatter.scan(commit.getTree(), targetCommit.getTree());
 
-                    ByteArrayOutputStream out = new ByteArrayOutputStream();
-                    try (DiffFormatter diffFormatter = new DiffFormatter(out)) {
-                        diffFormatter.setRepository(repository);
-                        List<DiffEntry> diffs = diffFormatter.scan(commit.getTree(), targetCommit.getTree());
-
-                        for (DiffEntry diff : diffs) {
-                            if (diff.getNewPath().equals(filePath) || diff.getOldPath().equals(filePath)) {
-                                previousCommit = commit;
-                                break;
-                            }
+                    for (DiffEntry diff : diffs) {
+                        if (diff.getNewPath().equals(filePath) || diff.getOldPath().equals(filePath)) {
+                            previousCommit = commit;
+                            break;
                         }
                     }
-
-                    if (previousCommit != null) break;
                 }
 
-                return previousCommit;
+                if (previousCommit != null) break;
             }
-        } catch (GitAPIException e) {
-            return null;
+
+            return previousCommit;
         }
     }
 

@@ -62,12 +62,6 @@ public class Metrics {
 
         gitExtractor.extractJavaFiles(releaseList);
 
-//        for(Release release : releaseList) {
-//            for(JavaClass javaClass : release.getJavaClassList()) {
-//                JavaClassMetrics.setMetrics(javaClass);
-//            }
-//        }
-
         csvWriter.csvJavaClassFile(releaseList);
     }
 }
