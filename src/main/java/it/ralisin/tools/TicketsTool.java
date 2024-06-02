@@ -64,6 +64,7 @@ public class TicketsTool {
                 if (revCommit.getFullMessage().contains(ticket.getKey())) ticket.addCommit(revCommit);
             }
 
+            // Remove ticket without any assigned commit
             if (ticket.getCommitList().isEmpty()) {
                 iterator.remove();
             }

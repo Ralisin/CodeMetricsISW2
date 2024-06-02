@@ -1,8 +1,10 @@
 package it.ralisin.controller;
 
+import it.ralisin.entities.JavaClass;
 import it.ralisin.entities.Release;
 import it.ralisin.entities.Ticket;
 import it.ralisin.tools.CSVWriter;
+import it.ralisin.tools.CommitTool;
 import it.ralisin.tools.ReleaseTools;
 import it.ralisin.tools.TicketsTool;
 import org.eclipse.jgit.api.errors.GitAPIException;
@@ -10,13 +12,14 @@ import org.eclipse.jgit.revwalk.RevCommit;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Metrics {
-    public static void dataExtraction(String projName, String gitHubUrl) throws IOException, URISyntaxException, GitAPIException, InterruptedException {
+    public static void dataExtraction(String projName, String gitHubUrl) throws IOException, URISyntaxException, GitAPIException {
         CSVWriter csvWriter = new CSVWriter("src/main/resources/" + projName);
 
         JiraDataExtractor jira = new JiraDataExtractor(projName);
@@ -49,19 +52,30 @@ public class Metrics {
 
         // Remove half releases
         int halfReleases = releaseList.size() / 2;
-        releaseList.removeIf(release -> release.getId() > halfReleases);
+        List<Release> halfReleaseList = new ArrayList<>(releaseList);
+        halfReleaseList.removeIf(release -> release.getId() > halfReleases);
 
         // Link tickets to relative commits
         TicketsTool.linkCommits(ticketList, commitList);
 
-        System.out.println("Commits per release:");
-        for (Release release : releaseList) {
-            System.out.println(release.getName() + ": " + release.getCommitList().size());
-        }
-        System.out.println();
+        // Set JavaClasses for every release
+        gitExtractor.getClasses(releaseList);
 
-        gitExtractor.extractJavaFiles(releaseList);
+        for (Release release : releaseList) {
+            gitExtractor.linkCommitsToClasses(release.getJavaClassList(), commitList, releaseList);
+        }
+
+        List<RevCommit> commitInTicketList = CommitTool.getCommitsInTicketList(commitList, ticketList);
+
+        for (Release release : releaseList) {
+            for (JavaClass javaClass : release.getJavaClassList()) {
+                MetricEvaluator compMetrics = new MetricEvaluator(javaClass, commitInTicketList, gitExtractor.repository);
+                compMetrics.evaluateMetrics();
+            }
+        }
 
         csvWriter.csvJavaClassFile(releaseList);
+
+
     }
 }

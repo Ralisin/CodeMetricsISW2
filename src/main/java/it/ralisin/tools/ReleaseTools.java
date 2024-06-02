@@ -55,25 +55,20 @@ public class ReleaseTools {
 
     public static void linkCommits(List<RevCommit> revCommitList, List<Release> releaseList) {
         for (RevCommit commit : revCommitList) {
-            Release commitRelease = getCommitRelease(commit, releaseList);
+            Release commitRelease = getCommitsRelease(commit, releaseList);
 
             if (commitRelease != null) commitRelease.getCommitList().add(commit);
         }
     }
 
-    private static Release getCommitRelease(RevCommit commit, List<Release> releaseList) {
+    private static Release getCommitsRelease(RevCommit commit, List<Release> releaseList) {
         LocalDateTime commitDate = commit.getAuthorIdent().getWhen().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
 
-        Release release = null;
         for (Release r : releaseList) {
-            if (commitDate.isBefore(r.getDate())) {
-                release = r;
-                break;
-            }
-
-            if (commitDate.isAfter(releaseList.getLast().getDate())) release = releaseList.getLast();
+            if (commitDate.isBefore(r.getDate())) return r;
+            else if (commitDate.isAfter(releaseList.getLast().getDate())) return releaseList.getLast();
         }
 
-        return release;
+        return null;
     }
 }

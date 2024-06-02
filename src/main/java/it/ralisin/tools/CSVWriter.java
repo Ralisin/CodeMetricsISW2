@@ -98,13 +98,13 @@ public class CSVWriter {
                     // maxLocAdded
                     writer.write(javaClass.getMaxLocAdded() + ",");
                     // averageLocAdded
-                    writer.write(javaClass.getAverageLocAdded() + ",");
+                    writer.write(javaClass.getAvgLocAdded() + ",");
                     // churn
                     writer.write(javaClass.getChurn() + ",");
                     // maxChurn
                     writer.write(javaClass.getMaxChurn() + ",");
                     // averageChurn
-                    writer.write(javaClass.getAverageChurn() + "");
+                    writer.write(javaClass.getAvgChurn() + "");
 
 
                     writer.newLine();
