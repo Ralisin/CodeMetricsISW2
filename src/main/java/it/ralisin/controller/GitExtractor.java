@@ -103,50 +103,102 @@ public class GitExtractor {
         }
     }
 
+//    private void processTreeWalk(TreeWalk treeWalk, RevCommit commit, List<JavaClass> touchedJavaClassList, Set<String> classPathSet) throws IOException, GitAPIException {
+//        while (treeWalk.next()) {
+//            String classPath = treeWalk.getPathString();
+//
+//            if (classPath.endsWith(".java") && !classPath.contains("/test/")) {
+//                int addedLines = 0;
+//                int deletedLines = 0;
+//                boolean isFix = isFixed(commit);
+//                String author = commit.getAuthorIdent().getName();
+//
+//                JavaClass javaClass;
+//                RevCommit prevCommit;
+//                if (classPathSet.add(classPath)) {
+//                    String fileContent = getFileContent(commit, classPath);
+//                    javaClass = new JavaClass(classPath, fileContent);
+//
+//                    if (checkCommitTouchesClass(commit, classPath)) {
+//                        prevCommit = getPreviousCommit(commit.getName(), classPath);
+//                        if (prevCommit != null) {
+//                            // Conta le righe aggiunte e tolte
+//                            int[] counts = countAddedAndDeletedLines(gitFactory.getGit().getRepository(), prevCommit, commit, classPath);
+//                            addedLines = counts[0];
+//                            deletedLines = counts[1];
+//                        }
+//
+//                        javaClass.addCommit(commit, addedLines, deletedLines, isFix, author);
+//                    }
+//
+//                    touchedJavaClassList.add(javaClass);
+//                } else {
+//                    javaClass = getExistingJavaClass(touchedJavaClassList, commit, classPath);
+//
+//                    prevCommit = getPreviousCommit(commit.getName(), classPath);
+//                    if (prevCommit != null) {
+//                        // Conta le righe aggiunte e tolte
+//                        int[] counts = countAddedAndDeletedLines(gitFactory.getGit().getRepository(), prevCommit, commit, classPath);
+//                        addedLines = counts[0];
+//                        deletedLines = counts[1];
+//                    }
+//
+//                    if (javaClass != null)
+//                        javaClass.addCommit(commit, addedLines, deletedLines, isFix, author);
+//                }
+//            }
+//        }
+//    }
+
     private void processTreeWalk(TreeWalk treeWalk, RevCommit commit, List<JavaClass> touchedJavaClassList, Set<String> classPathSet) throws IOException, GitAPIException {
         while (treeWalk.next()) {
             String classPath = treeWalk.getPathString();
 
-            if (classPath.endsWith(".java") && !classPath.contains("/test/")) {
-                int addedLines = 0;
-                int deletedLines = 0;
-                boolean isFix = isFixed(commit);
-                String author = commit.getAuthorIdent().getName();
-
+            if (shouldProcessClass(classPath)) {
                 JavaClass javaClass;
-                RevCommit prevCommit;
                 if (classPathSet.add(classPath)) {
-                    String fileContent = getFileContent(commit, classPath);
-                    javaClass = new JavaClass(classPath, fileContent);
-
-                    if (checkCommitTouchesClass(commit, classPath)) {
-                        prevCommit = getPreviousCommit(commit.getName(), classPath);
-                        if (prevCommit != null) {
-                            // Conta le righe aggiunte e tolte
-                            int[] counts = countAddedAndDeletedLines(gitFactory.getGit().getRepository(), prevCommit, commit, classPath);
-                            addedLines = counts[0];
-                            deletedLines = counts[1];
-                        }
-
-                        javaClass.addCommit(commit, addedLines, deletedLines, isFix, author);
-                    }
-
+                    javaClass = processNewJavaClass(commit, classPath);
                     touchedJavaClassList.add(javaClass);
                 } else {
                     javaClass = getExistingJavaClass(touchedJavaClassList, commit, classPath);
-
-                    prevCommit = getPreviousCommit(commit.getName(), classPath);
-                    if (prevCommit != null) {
-                        // Conta le righe aggiunte e tolte
-                        int[] counts = countAddedAndDeletedLines(gitFactory.getGit().getRepository(), prevCommit, commit, classPath);
-                        addedLines = counts[0];
-                        deletedLines = counts[1];
-                    }
-
-                    if (javaClass != null)
-                        javaClass.addCommit(commit, addedLines, deletedLines, isFix, author);
+                    updateExistingJavaClass(javaClass, commit, classPath);
                 }
             }
+        }
+    }
+
+    private boolean shouldProcessClass(String classPath) {
+        return classPath.endsWith(".java") && !classPath.contains("/test/");
+    }
+
+    private JavaClass processNewJavaClass(RevCommit commit, String classPath) throws IOException, GitAPIException {
+        String fileContent = getFileContent(commit, classPath);
+        JavaClass javaClass = new JavaClass(classPath, fileContent);
+
+        if (checkCommitTouchesClass(commit, classPath)) {
+            addCommitToJavaClass(javaClass, commit, classPath);
+        }
+
+        return javaClass;
+    }
+
+    private void updateExistingJavaClass(JavaClass javaClass, RevCommit commit, String classPath) throws IOException, GitAPIException {
+        if (javaClass != null) {
+            addCommitToJavaClass(javaClass, commit, classPath);
+        }
+    }
+
+    private void addCommitToJavaClass(JavaClass javaClass, RevCommit commit, String classPath) throws IOException, GitAPIException {
+        RevCommit prevCommit = getPreviousCommit(commit.getName(), classPath);
+        if (prevCommit != null) {
+            int[] counts = countAddedAndDeletedLines(gitFactory.getGit().getRepository(), prevCommit, commit, classPath);
+            int addedLines = counts[0];
+            int deletedLines = counts[1];
+
+            boolean isFix = isFixed(commit);
+            String author = commit.getAuthorIdent().getName();
+
+            javaClass.addCommit(commit, addedLines, deletedLines, isFix, author);
         }
     }
 
