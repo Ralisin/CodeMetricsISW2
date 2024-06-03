@@ -4,31 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b9736f61-e96d-4747-a412-d2bfb5b24899" name="Changes" comment="Code metrics">
-      <change afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/controller/BugginessEvaluator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/controller/WalkForward.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/info/releaseList.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/info/ticketList.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/testing/csv/BOOKKEEPERtestingSet_2.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/testing/csv/BOOKKEEPERtestingSet_3.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/testing/csv/BOOKKEEPERtestingSet_4.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/testing/csv/BOOKKEEPERtestingSet_5.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/training/csv/BOOKKEEPERtrainingSet_2.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/training/csv/BOOKKEEPERtrainingSet_3.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/training/csv/BOOKKEEPERtrainingSet_4.csv" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/training/csv/BOOKKEEPERtrainingSet_5.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/ralisin/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/ralisin/controller/Metrics.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/controller/Metrics.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/ralisin/entities/JavaClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/entities/JavaClass.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/ralisin/tools/CSVWriter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/tools/CSVWriter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/dataset.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/releaseList.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/ticketList.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/STORM/releaseList.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/STORM/ticketList.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/logback.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/logback.xml" afterDir="false" />
-    </list>
+    <list default="true" id="b9736f61-e96d-4747-a412-d2bfb5b24899" name="Changes" comment="Training and testing set" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -174,7 +150,7 @@
       <workItem from="1717156905478" duration="6501000" />
       <workItem from="1717171500453" duration="4402000" />
       <workItem from="1717319974558" duration="767000" />
-      <workItem from="1717420668639" duration="8686000" />
+      <workItem from="1717420668639" duration="9015000" />
     </task>
     <task id="LOCAL-00001" summary="Get Versions and Tickets from Jira">
       <option name="closed" value="true" />
@@ -272,7 +248,15 @@
       <option name="project" value="LOCAL" />
       <updated>1717343500157</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Training and testing set">
+      <option name="closed" value="true" />
+      <created>1717429830493</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1717429830493</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -313,7 +297,8 @@
     <MESSAGE value="Reduce code complexity" />
     <MESSAGE value="Multithreading on extractJavaFiles" />
     <MESSAGE value="Code metrics" />
-    <option name="LAST_COMMIT_MESSAGE" value="Code metrics" />
+    <MESSAGE value="Training and testing set" />
+    <option name="LAST_COMMIT_MESSAGE" value="Training and testing set" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

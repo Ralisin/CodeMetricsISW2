@@ -38,8 +38,13 @@ public class CSVWriter {
 
         try {
             Files.createDirectories(Paths.get(filePath).getParent());
-            BufferedWriter writer = new BufferedWriter(new FileWriter(filePath));
+        } catch (IOException e) {
+            Logger.getAnonymousLogger().log(Level.INFO, e.getMessage());
 
+            return;
+        }
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
             writer.write("ID, Name, Date");
             writer.newLine();
 
@@ -60,8 +65,13 @@ public class CSVWriter {
 
         try {
             Files.createDirectories(Paths.get(filePath).getParent());
-            BufferedWriter writer = new BufferedWriter(new FileWriter(filePath));
+        } catch (IOException e) {
+            Logger.getAnonymousLogger().log(Level.INFO, e.getMessage());
 
+            return;
+        }
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
             writer.write("KEY, IV, OV, FV, AV List");
             writer.newLine();
 
