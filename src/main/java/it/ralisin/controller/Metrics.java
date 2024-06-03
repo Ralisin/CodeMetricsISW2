@@ -13,14 +13,17 @@ import org.eclipse.jgit.revwalk.RevCommit;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Metrics {
+    private Metrics() {}
+
     public static void dataExtraction(String projName, String gitHubUrl) throws IOException, URISyntaxException, GitAPIException {
-        CSVWriter csvWriter = new CSVWriter("src/main/resources/" + projName);
+        CSVWriter csvWriter = new CSVWriter(projName, "src/main/resources/" + projName);
 
         JiraDataExtractor jira = new JiraDataExtractor(projName);
 
@@ -46,6 +49,7 @@ public class Metrics {
         List<RevCommit> commitList = gitExtractor.getAllCommits();
 
         // Link commits to release
+        Logger.getAnonymousLogger().log(Level.INFO, "Linking commits to releases");
         ReleaseTools.linkCommits(commitList, releaseList);
         releaseList.removeIf(release -> release.getCommitList().isEmpty()); // Remove releases with empty commit list
         for(int i = 1; i <= releaseList.size(); i++) releaseList.get(i - 1).setId(i); // Reassign release id
@@ -59,14 +63,16 @@ public class Metrics {
         TicketsTool.linkCommits(ticketList, commitList);
 
         // Set JavaClasses for every release
+        Logger.getAnonymousLogger().log(Level.INFO, "Extracting JavaClasses from Git");
         gitExtractor.getClasses(releaseList);
 
-        for (Release release : releaseList) {
+        Logger.getAnonymousLogger().log(Level.INFO, "Linking commits to relative javaClass");
+        for (Release release : releaseList)
             gitExtractor.linkCommitsToClasses(release.getJavaClassList(), commitList, releaseList);
-        }
 
         List<RevCommit> commitInTicketList = CommitTool.getCommitsInTicketList(commitList, ticketList);
 
+        Logger.getAnonymousLogger().log(Level.INFO, "Evaluating metrics for every javaClass");
         for (Release release : releaseList) {
             for (JavaClass javaClass : release.getJavaClassList()) {
                 MetricEvaluator compMetrics = new MetricEvaluator(javaClass, commitInTicketList, gitExtractor.repository);
@@ -74,8 +80,22 @@ public class Metrics {
             }
         }
 
-        csvWriter.csvJavaClassFile(releaseList);
+        // Walk forward
+        BugginessEvaluator bugEval = new BugginessEvaluator(gitExtractor.repository);
+        for (int i = 2; i <= halfReleaseList.size(); i++) {
+            int limitReleaseId = i;
 
+            List<Release> walkRelease = halfReleaseList.stream().filter(release -> release.getId() <= limitReleaseId).toList();
+            List<Ticket> walkTicket = ticketList.stream().filter(ticket -> ticket.getFV().getId() <= walkRelease.getLast().getId()).toList();
+
+            bugEval.evaluateBagginess(walkRelease, walkTicket);
+            csvWriter.csvDatasetFile(walkRelease, limitReleaseId, true);
+
+            List<Release> testingRelease = Collections.singletonList(releaseList.get(limitReleaseId));
+
+            bugEval.evaluateBagginess(releaseList, ticketList);
+            csvWriter.csvDatasetFile(testingRelease, limitReleaseId, false);
+        }
 
     }
 }

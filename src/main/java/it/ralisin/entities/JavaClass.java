@@ -63,6 +63,8 @@ public class JavaClass {
     private int nFix = 0; // Number of commit related to a fix
     private final Set<String> authors = new HashSet<>();  // Set of authors
 
+    private boolean bugginess = false;
+
     public JavaClass(String classPath, String classContent) {
         this.classPath = classPath;
         this.classContent = classContent;
@@ -120,6 +122,10 @@ public class JavaClass {
         this.maxChurn = maxChurn;
     }
 
+    public void setBugginess(boolean bugginess) {
+        this.bugginess = bugginess;
+    }
+
     public int getSize() {
         return size;
     }
@@ -163,5 +169,9 @@ public class JavaClass {
 
     public int getNAuth() {
         return authors.size();
+    }
+
+    public boolean getBuggyness() {
+        return bugginess;
     }
 }

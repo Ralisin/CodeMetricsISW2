@@ -15,17 +15,31 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class CSVWriter {
-    final String filePath;
+    final String projName;
+    final String dirPath;
 
-    public CSVWriter(String filePath) throws IOException {
+    final String TRAINING = "/training/";
+    final String TESTING = "/testing/";
+    final String INFO = "/info/";
+
+    final String CSV = "/csv/";
+
+    public CSVWriter(String projName, String filePath) throws IOException {
+        this.projName = projName;
+
         Path tempDir = Paths.get(filePath);
         if (!Files.exists(tempDir)) Files.createDirectories(tempDir);
 
-        this.filePath = filePath;
+        this.dirPath = filePath;
     }
 
     public void csvReleaseFile(List<Release> releaseList) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath + "/releaseList.csv"))) {
+        String filePath = dirPath + INFO + "/releaseList.csv";
+
+        try {
+            Files.createDirectories(Paths.get(filePath).getParent());
+            BufferedWriter writer = new BufferedWriter(new FileWriter(filePath));
+
             writer.write("ID, Name, Date");
             writer.newLine();
 
@@ -42,7 +56,12 @@ public class CSVWriter {
     }
 
     public void csvTicketFile(List<Ticket> ticketList) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath + "/ticketList.csv"))) {
+        String filePath = dirPath + INFO + "/ticketList.csv";
+
+        try {
+            Files.createDirectories(Paths.get(filePath).getParent());
+            BufferedWriter writer = new BufferedWriter(new FileWriter(filePath));
+
             writer.write("KEY, IV, OV, FV, AV List");
             writer.newLine();
 
@@ -72,45 +91,78 @@ public class CSVWriter {
         }
     }
 
-    public void csvJavaClassFile(List<Release> releaseList) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath + "/dataset.csv"))) {
-            writer.write("Release ID, Filepath, Size, LOC Touched, NR, NFix, NAuth, LOC Added, Max LOC Added, Average LOC Added, Churn, Max Churn, Average Churn");
-            writer.newLine();
+    public void csvDatasetFile(List<Release> releaseList, int walk, boolean isTraining) {
+        FileWriter fileWriter = null;
+
+        String filePath;
+
+        if(isTraining)
+                filePath = dirPath + TRAINING + CSV + projName + "trainingSet_" + walk + ".csv";
+        else
+            filePath = dirPath + TESTING + CSV + projName + "testingSet_" + walk + ".csv";
+
+        try {
+            // Create directory if it doesn't exist
+            Files.createDirectories(Paths.get(filePath).getParent());
+
+            fileWriter = new FileWriter(filePath);
+            fileWriter.append("Release ID, Filepath, Size, LOC Touched, NR, NFix, NAuth, LOC Added, Max LOC Added, Average LOC Added, Churn, Max Churn, Average Churn, Bugginess");
+            fileWriter.append("\n");
 
             for (Release release : releaseList) {
-                for (JavaClass javaClass : release.getJavaClassList()) {
-                    // Release ID
-                    writer.write(release.getId() + ",");
-                    // Filepath
-                    writer.write(javaClass.getClassPath() + ",");
-                    // LOC
-                    writer.write(javaClass.getSize() + ",");
-                    // locTouched
-                    writer.write(javaClass.getLocTouched() + ",");
-                    // nr
-                    writer.write(javaClass.getNr() + ",");
-                    // nFix
-                    writer.write(javaClass.getNFix() + ",");
-                    // nAuth
-                    writer.write(javaClass.getNAuth() + ",");
-                    // locAdded
-                    writer.write(javaClass.getLocAdded() + ",");
-                    // maxLocAdded
-                    writer.write(javaClass.getMaxLocAdded() + ",");
-                    // averageLocAdded
-                    writer.write(javaClass.getAvgLocAdded() + ",");
-                    // churn
-                    writer.write(javaClass.getChurn() + ",");
-                    // maxChurn
-                    writer.write(javaClass.getMaxChurn() + ",");
-                    // averageChurn
-                    writer.write(javaClass.getAvgChurn() + "");
-
-
-                    writer.newLine();
-                }
+                for (JavaClass javaClass : release.getJavaClassList())
+                    writeJavaClass(fileWriter, release.getId(), javaClass);
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
+            Logger.getAnonymousLogger().log(Level.INFO, e.getMessage());
+        } finally {
+            closeFileWrite(fileWriter);
+        }
+    }
+
+    private void writeJavaClass(FileWriter fileWriter, int releaseId, JavaClass javaClass) throws IOException {
+        String str;
+
+        // Release ID
+        str = releaseId + ",";
+        // Filepath
+        str += javaClass.getClassPath() + ",";
+        // LOC
+        str += javaClass.getSize() + ",";
+        // locTouched
+        str += javaClass.getLocTouched() + ",";
+        // nr
+        str += javaClass.getNr() + ",";
+        // nFix
+        str += javaClass.getNFix() + ",";
+        // nAuth
+        str += javaClass.getNAuth() + ",";
+        // locAdded
+        str += javaClass.getLocAdded() + ",";
+        // maxLocAdded
+        str += javaClass.getMaxLocAdded() + ",";
+        // averageLocAdded
+        str += javaClass.getAvgLocAdded() + ",";
+        // churn
+        str += javaClass.getChurn() + ",";
+        // maxChurn
+        str += javaClass.getMaxChurn() + ",";
+        // averageChurn
+        str += javaClass.getAvgChurn() + ",";
+        // bugginess
+        str += javaClass.getBuggyness();
+
+        fileWriter.append(str);
+        fileWriter.append("\n");
+    }
+
+    private void closeFileWrite(FileWriter fileWriter) {
+        if (fileWriter == null) return;
+
+        try {
+            fileWriter.flush();
+            fileWriter.close();
+        } catch (IOException e) {
             Logger.getAnonymousLogger().log(Level.INFO, e.getMessage());
         }
     }
