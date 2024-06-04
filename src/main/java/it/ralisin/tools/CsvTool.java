@@ -14,17 +14,17 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class CSVWriter {
+public class CsvTool {
     final String projName;
     final String dirPath;
+
+    final String CSV = "/csv/";
 
     final String TRAINING = "/training/";
     final String TESTING = "/testing/";
     final String INFO = "/info/";
 
-    final String CSV = "/csv/";
-
-    public CSVWriter(String projName, String filePath) throws IOException {
+    public CsvTool(String projName, String filePath) throws IOException {
         this.projName = projName;
 
         Path tempDir = Paths.get(filePath);
