@@ -8,12 +8,8 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Proportion {
-    private static final Logger logger = Logger.getLogger(Proportion.class.getName());
-
     private enum OtherProjectNames {
         AVRO,
         SYNCOPE,
@@ -90,8 +86,6 @@ public class Proportion {
         List<Float> projectsProportion = new ArrayList<>();
 
         for(OtherProjectNames projectName : OtherProjectNames.values()) {
-            logger.log(Level.INFO,"ColdStart proportion on project: {}", projectName);
-
             JiraDataExtractor jira = new JiraDataExtractor(projectName.toString());
 
             // Get release list from jira

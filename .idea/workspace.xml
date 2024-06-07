@@ -8,7 +8,6 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/ralisin/controller/Metrics.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/controller/Metrics.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/ralisin/controller/Proportion.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/controller/Proportion.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/ralisin/tools/CsvTool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/tools/CsvTool.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -167,7 +166,7 @@
       <workItem from="1717677599159" duration="2221000" />
       <workItem from="1717750860986" duration="2600000" />
       <workItem from="1717768882275" duration="9296000" />
-      <workItem from="1717778425589" duration="1322000" />
+      <workItem from="1717778425589" duration="1918000" />
     </task>
     <task id="LOCAL-00001" summary="Get Versions and Tickets from Jira">
       <option name="closed" value="true" />
@@ -305,7 +304,47 @@
       <option name="project" value="LOCAL" />
       <updated>1717779547479</updated>
     </task>
-    <option name="localTasksCounter" value="18" />
+    <task id="LOCAL-00018" summary="Code smells">
+      <option name="closed" value="true" />
+      <created>1717779806086</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1717779806086</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Code smells">
+      <option name="closed" value="true" />
+      <created>1717779880843</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1717779880843</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Code smells">
+      <option name="closed" value="true" />
+      <created>1717779996117</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1717779996118</updated>
+    </task>
+    <task id="LOCAL-00021" summary="Code smells">
+      <option name="closed" value="true" />
+      <created>1717780052194</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1717780052194</updated>
+    </task>
+    <task id="LOCAL-00022" summary="Code smells">
+      <option name="closed" value="true" />
+      <created>1717780100810</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1717780100810</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
