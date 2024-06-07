@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Metrics {
@@ -41,7 +42,7 @@ public class Metrics {
         csvTool.csvTicketFile(ticketList);
 
         // Get list of full project commits
-        logger.info(String.format("Cloning repository from GitHub %s", gitHubUrl));
+        logger.log(Level.INFO, "Cloning repository from GitHub %s", gitHubUrl);
         GitExtractor gitExtractor = new GitExtractor(projName, gitHubUrl);
         List<RevCommit> commitList = gitExtractor.getAllCommits();
 

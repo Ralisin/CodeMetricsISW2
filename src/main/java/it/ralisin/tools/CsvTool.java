@@ -19,7 +19,7 @@ public class CsvTool {
     final String projName;
     final String dirPath;
 
-    final String CSV = "/csv/";
+    static final String CSV = "/csv/";
 
     static final String TRAINING = "/training/";
     static final String TESTING = "/testing/";

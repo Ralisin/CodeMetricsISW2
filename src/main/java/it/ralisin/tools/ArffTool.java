@@ -1,6 +1,5 @@
 package it.ralisin.tools;
 
-import it.ralisin.controller.Proportion;
 import weka.core.Instances;
 import weka.core.converters.ArffSaver;
 import weka.core.converters.CSVLoader;
@@ -13,7 +12,7 @@ import java.nio.file.*;
 import java.util.logging.Logger;
 
 public class ArffTool {
-    private static final Logger logger = Logger.getLogger(Proportion.class.getName());
+    private static final Logger logger = Logger.getLogger(ArffTool.class.getName());
 
     final String projName;
     final String dirPath;

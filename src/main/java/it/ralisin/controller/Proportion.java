@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Proportion {
@@ -89,7 +90,7 @@ public class Proportion {
         List<Float> projectsProportion = new ArrayList<>();
 
         for(OtherProjectNames projectName : OtherProjectNames.values()) {
-            logger.info(String.format("ColdStart proportion on project: %s", projectName));
+            logger.log(Level.INFO,"ColdStart proportion on project: %s", projectName);
 
             JiraDataExtractor jira = new JiraDataExtractor(projectName.toString());
 

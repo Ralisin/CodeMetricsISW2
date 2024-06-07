@@ -4,19 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b9736f61-e96d-4747-a412-d2bfb5b24899" name="Changes" comment="Weka result">
+    <list default="true" id="b9736f61-e96d-4747-a412-d2bfb5b24899" name="Changes" comment="Code smells">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/ralisin/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/ralisin/controller/Metrics.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/controller/Metrics.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/ralisin/controller/Proportion.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/controller/Proportion.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/ralisin/controller/Weka.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/controller/Weka.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/ralisin/entities/ClassifierEvaluation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/entities/ClassifierEvaluation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/ralisin/entities/Ticket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/entities/Ticket.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/ralisin/tools/ArffTool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/tools/ArffTool.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/ralisin/tools/CsvTool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/tools/CsvTool.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/ralisin/tools/GitFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/tools/GitFactory.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/ralisin/tools/JavaClassTool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/tools/JavaClassTool.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/ralisin/tools/TicketsTool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/tools/TicketsTool.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -175,7 +167,7 @@
       <workItem from="1717677599159" duration="2221000" />
       <workItem from="1717750860986" duration="2600000" />
       <workItem from="1717768882275" duration="9296000" />
-      <workItem from="1717778425589" duration="848000" />
+      <workItem from="1717778425589" duration="1322000" />
     </task>
     <task id="LOCAL-00001" summary="Get Versions and Tickets from Jira">
       <option name="closed" value="true" />
@@ -305,7 +297,15 @@
       <option name="project" value="LOCAL" />
       <updated>1717778485960</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="Code smells">
+      <option name="closed" value="true" />
+      <created>1717779547479</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1717779547479</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -335,10 +335,10 @@
     <MESSAGE value="Multithreading on extractJavaFiles" />
     <MESSAGE value="Code metrics" />
     <MESSAGE value="Training and testing set" />
-    <MESSAGE value="Code smells" />
     <MESSAGE value="CSV to ARFF conversion" />
     <MESSAGE value="Weka result" />
-    <option name="LAST_COMMIT_MESSAGE" value="Weka result" />
+    <MESSAGE value="Code smells" />
+    <option name="LAST_COMMIT_MESSAGE" value="Code smells" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
