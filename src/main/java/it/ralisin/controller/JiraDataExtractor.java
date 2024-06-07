@@ -59,7 +59,8 @@ public class JiraDataExtractor {
 
     public List<Ticket> extractTicketsList(List<Release> releaseList) throws IOException, URISyntaxException {
         final int maxResults = 1000;
-        int i = 0, j, total;
+        int i = 0;
+        int j, total;
 
         List<Ticket> ticketList = new ArrayList<>();
 
