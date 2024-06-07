@@ -8,10 +8,11 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Proportion {
+    private static final Logger logger = Logger.getLogger(Proportion.class.getName());
+
     private enum OtherProjectNames {
         AVRO,
         SYNCOPE,
@@ -65,20 +66,20 @@ public class Proportion {
     }
 
     private static void setTicketAV(Ticket ticket, List<Release> releaseList) {
-        List<Release> AVList = new ArrayList<>();
+        List<Release> avList = new ArrayList<>();
 
         for (int i = ticket.getIV().getId(); i < ticket.getFV().getId(); i++) {
-            AVList.add(releaseList.get(i-1));
+            avList.add(releaseList.get(i-1));
         }
 
-        ticket.setAVList(AVList);
+        ticket.setAVList(avList);
     }
 
     private static float incrementalProportion(List<Ticket> ticketList) {
         List<Float> proportionList = new ArrayList<>();
         for (Ticket ticket : ticketList) {
-            Float P = evaluateTicketProportion(ticket);
-            proportionList.add(P);
+            Float ticketProportion = evaluateTicketProportion(ticket);
+            proportionList.add(ticketProportion);
         }
 
         return proportionList.stream().reduce(0f, Float::sum)/proportionList.size();
@@ -88,7 +89,7 @@ public class Proportion {
         List<Float> projectsProportion = new ArrayList<>();
 
         for(OtherProjectNames projectName : OtherProjectNames.values()) {
-            Logger.getAnonymousLogger().log(Level.INFO, "ColdStart proportion on project: " + projectName);
+            logger.info(String.format("ColdStart proportion on project: %s", projectName));
 
             JiraDataExtractor jira = new JiraDataExtractor(projectName.toString());
 
@@ -103,8 +104,8 @@ public class Proportion {
             // Calculate project proportion
             List<Float> proportionList = new ArrayList<>();
             for(Ticket ticket : ticketList) {
-                Float P = evaluateTicketProportion(ticket);
-                proportionList.add(P);
+                Float ticketProportion = evaluateTicketProportion(ticket);
+                proportionList.add(ticketProportion);
             }
 
             projectsProportion.add(proportionList.stream().reduce(0f, Float::sum)/proportionList.size());

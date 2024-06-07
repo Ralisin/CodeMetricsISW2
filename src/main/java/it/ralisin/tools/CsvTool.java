@@ -21,11 +21,11 @@ public class CsvTool {
 
     final String CSV = "/csv/";
 
-    final String TRAINING = "/training/";
-    final String TESTING = "/testing/";
-    final String INFO = "/info/";
-    final String ACUME = "/acume/";
-    final String WEKA = "/weka/";
+    static final String TRAINING = "/training/";
+    static final String TESTING = "/testing/";
+    static final String INFO = "/info/";
+    static final String ACUME = "/acume/";
+    static final String WEKA = "/weka/";
 
     public CsvTool(String projName, String filePath) throws IOException {
         this.projName = projName;
@@ -84,18 +84,18 @@ public class CsvTool {
                 writer.write(ticket.getOV().getName() + ",");
                 writer.write(ticket.getFV().getName() + ",");
 
-                StringBuilder AVList = new StringBuilder("\"{");
+                StringBuilder affectedVersions = new StringBuilder("\"{");
                 int size = ticket.getAVList().size();
                 for (int i = 0; i < size; i++) {
                     Release release = ticket.getAVList().get(i);
-                    AVList.append(release.getName());
+                    affectedVersions.append(release.getName());
                     if (i < size - 1) {
-                        AVList.append(", ");
+                        affectedVersions.append(", ");
                     }
                 }
-                AVList.append("}\"");
+                affectedVersions.append("}\"");
 
-                writer.write(String.valueOf(AVList));
+                writer.write(String.valueOf(affectedVersions));
 
                 writer.newLine();
             }
@@ -105,7 +105,7 @@ public class CsvTool {
     }
 
     public void csvAcume(List<JavaClass> javaClassList, String classifier, String filters, int index) {
-        String filePath = dirPath + ACUME + "/" + classifier + "_" + filters + "_" + index + ".csv";
+        String filePath = dirPath + ACUME + classifier + "_" + filters + "_" + index + ".csv";
 
         try {
             Files.createDirectories(Paths.get(filePath).getParent());

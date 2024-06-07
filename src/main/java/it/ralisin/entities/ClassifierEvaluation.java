@@ -91,16 +91,16 @@ public class ClassifierEvaluation {
         this.costSensitive = costSensitive;
     }
 
-    public void setTruePositives(double TP) {
-        this.truePositives = TP;
+    public void setTruePositives(double truePositives) {
+        this.truePositives = truePositives;
     }
 
     public void setFalsePositives(double falsePositives) {
         this.falsePositives = falsePositives;
     }
 
-    public void setTrueNegatives(double TP) {
-        this.trueNegatives = TP;
+    public void setTrueNegatives(double trueNegatives) {
+        this.trueNegatives = trueNegatives;
     }
 
     public void setFalseNegatives(double falseNegatives) {

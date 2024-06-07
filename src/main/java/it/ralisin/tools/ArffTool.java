@@ -1,5 +1,6 @@
 package it.ralisin.tools;
 
+import it.ralisin.controller.Proportion;
 import weka.core.Instances;
 import weka.core.converters.ArffSaver;
 import weka.core.converters.CSVLoader;
@@ -9,18 +10,19 @@ import weka.filters.unsupervised.attribute.Remove;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.*;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ArffTool {
+    private static final Logger logger = Logger.getLogger(Proportion.class.getName());
+
     final String projName;
     final String dirPath;
 
-    final String TRAINING = "/training/";
-    final String TESTING = "/testing/";
+    static final String TRAINING = "/training/";
+    static final String TESTING = "/testing/";
 
-    final String CSV = "/csv/";
-    final String ARFF = "arff";
+    static final String CSV = "/csv/";
+    static final String ARFF = "arff";
 
     public ArffTool(String projName, String dirPath) throws IOException {
         this.projName = projName;
@@ -54,7 +56,7 @@ public class ArffTool {
                 }
             }
         } catch (Exception e) {
-            Logger.getAnonymousLogger().log(Level.INFO, "Error converting csv to arff: " + e.getMessage());
+            logger.info(String.format( "Error converting csv to arff: %s", e.getMessage()));
         }
     }
 

@@ -10,20 +10,20 @@ public class Ticket {
     private final String key;
     private final LocalDateTime creationDate;
     private final LocalDateTime resolutionDate;
-    private final Release OV;
-    private final Release FV;
-    private Release IV;
-    private List<Release> AV;
+    private final Release openingVersion;
+    private final Release fixedVersion;
+    private Release injectedVersion;
+    private List<Release> affectedVersions;
 
     private final List<RevCommit> commits = new ArrayList<>();
 
-    public Ticket(String key, LocalDateTime creationDate, LocalDateTime resolutionDate, Release OV, Release FV, List<Release> AV) {
+    public Ticket(String key, LocalDateTime creationDate, LocalDateTime resolutionDate, Release openingVersion, Release fixedVersion, List<Release> affectedVersions) {
         this.key = key;
         this.creationDate = creationDate;
         this.resolutionDate = resolutionDate;
-        this.OV = OV;
-        this.FV = FV;
-        this.AV = AV;
+        this.openingVersion = openingVersion;
+        this.fixedVersion = fixedVersion;
+        this.affectedVersions = affectedVersions;
     }
 
     public String getKey() {
@@ -39,27 +39,27 @@ public class Ticket {
     }
 
     public Release getIV() {
-        return IV;
+        return injectedVersion;
     }
 
-    public void setIV(Release IV) {
-        this.IV = IV;
+    public void setIV(Release injectedVersion) {
+        this.injectedVersion = injectedVersion;
     }
 
     public Release getOV() {
-        return OV;
+        return openingVersion;
     }
 
     public Release getFV() {
-        return FV;
+        return fixedVersion;
     }
 
     public List<Release> getAVList() {
-        return AV;
+        return affectedVersions;
     }
 
-    public void setAVList(List<Release> AV) {
-        this.AV = AV;
+    public void setAVList(List<Release> affectedVersions) {
+        this.affectedVersions = affectedVersions;
     }
 
     public List<RevCommit> getCommitList() {
@@ -72,6 +72,6 @@ public class Ticket {
 
     @Override
     public String toString() {
-        return String.format("Ticket key: %s, IV: %s, OV: %s, FV: %s, AV: %s, creationDate: %s, resolutionDate: %s", key, IV, OV, FV, AV, creationDate, resolutionDate);
+        return String.format("Ticket key: %s, IV: %s, OV: %s, FV: %s, AV: %s, creationDate: %s, resolutionDate: %s", key, injectedVersion, openingVersion, fixedVersion, affectedVersions, creationDate, resolutionDate);
     }
 }

@@ -131,8 +131,6 @@ public class Weka {
         }
 
         csvTool.csvWekaResult(classifierEvaluations);
-
-        System.out.println(classifierEvaluations.size() + " classifier evaluations");
     }
 
     public static FilteredClassifier createFilteredClassifier(Classifier baseClassifier, Filter... filters) {

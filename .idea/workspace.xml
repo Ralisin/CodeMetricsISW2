@@ -4,46 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b9736f61-e96d-4747-a412-d2bfb5b24899" name="Changes" comment="CSV to ARFF conversion">
-      <change afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/controller/Weka.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/entities/ClassifierEvaluation.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/testing/arff/BOOKKEEPER_testingSet_2.arff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/testing/arff/BOOKKEEPER_testingSet_3.arff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/testing/arff/BOOKKEEPER_testingSet_4.arff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/testing/arff/BOOKKEEPER_testingSet_5.arff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/testing/arff/BOOKKEEPER_testingSet_6.arff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/training/arff/BOOKKEEPER_trainingSet_2.arff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/training/arff/BOOKKEEPER_trainingSet_3.arff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/training/arff/BOOKKEEPER_trainingSet_4.arff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/training/arff/BOOKKEEPER_trainingSet_5.arff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/training/arff/BOOKKEEPER_trainingSet_6.arff" afterDir="false" />
+    <list default="true" id="b9736f61-e96d-4747-a412-d2bfb5b24899" name="Changes" comment="Weka result">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/ralisin/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/ralisin/controller/Metrics.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/controller/Metrics.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/ralisin/entities/JavaClass.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/entities/JavaClass.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/ralisin/controller/Proportion.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/controller/Proportion.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/ralisin/controller/Weka.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/controller/Weka.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/ralisin/entities/ClassifierEvaluation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/entities/ClassifierEvaluation.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/ralisin/entities/Ticket.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/entities/Ticket.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/ralisin/tools/ArffTool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/tools/ArffTool.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/ralisin/tools/CsvTool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/tools/CsvTool.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/testing/arff/BOOKKEEPERtestingSet_2.arff" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/testing/arff/BOOKKEEPERtestingSet_3.arff" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/testing/arff/BOOKKEEPERtestingSet_4.arff" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/testing/arff/BOOKKEEPERtestingSet_5.arff" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/testing/arff/BOOKKEEPERtestingSet_6.arff" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/testing/csv/BOOKKEEPERtestingSet_2.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/testing/csv/BOOKKEEPER_testingSet_2.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/testing/csv/BOOKKEEPERtestingSet_3.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/testing/csv/BOOKKEEPER_testingSet_3.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/testing/csv/BOOKKEEPERtestingSet_4.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/testing/csv/BOOKKEEPER_testingSet_4.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/testing/csv/BOOKKEEPERtestingSet_5.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/testing/csv/BOOKKEEPER_testingSet_5.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/testing/csv/BOOKKEEPERtestingSet_6.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/testing/csv/BOOKKEEPER_testingSet_6.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/training/arff/BOOKKEEPERtrainingSet_2.arff" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/training/arff/BOOKKEEPERtrainingSet_3.arff" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/training/arff/BOOKKEEPERtrainingSet_4.arff" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/training/arff/BOOKKEEPERtrainingSet_5.arff" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/training/arff/BOOKKEEPERtrainingSet_6.arff" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/training/csv/BOOKKEEPERtrainingSet_2.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/training/csv/BOOKKEEPER_trainingSet_2.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/training/csv/BOOKKEEPERtrainingSet_3.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/training/csv/BOOKKEEPER_trainingSet_3.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/training/csv/BOOKKEEPERtrainingSet_4.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/training/csv/BOOKKEEPER_trainingSet_4.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/training/csv/BOOKKEEPERtrainingSet_5.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/training/csv/BOOKKEEPER_trainingSet_5.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/training/csv/BOOKKEEPERtrainingSet_6.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/training/csv/BOOKKEEPER_trainingSet_6.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/ralisin/tools/GitFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/tools/GitFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/ralisin/tools/JavaClassTool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/tools/JavaClassTool.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/ralisin/tools/TicketsTool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/tools/TicketsTool.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -202,6 +175,7 @@
       <workItem from="1717677599159" duration="2221000" />
       <workItem from="1717750860986" duration="2600000" />
       <workItem from="1717768882275" duration="9296000" />
+      <workItem from="1717778425589" duration="848000" />
     </task>
     <task id="LOCAL-00001" summary="Get Versions and Tickets from Jira">
       <option name="closed" value="true" />
@@ -323,7 +297,15 @@
       <option name="project" value="LOCAL" />
       <updated>1717539535399</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Weka result">
+      <option name="closed" value="true" />
+      <created>1717778485960</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1717778485960</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -355,7 +337,8 @@
     <MESSAGE value="Training and testing set" />
     <MESSAGE value="Code smells" />
     <MESSAGE value="CSV to ARFF conversion" />
-    <option name="LAST_COMMIT_MESSAGE" value="CSV to ARFF conversion" />
+    <MESSAGE value="Weka result" />
+    <option name="LAST_COMMIT_MESSAGE" value="Weka result" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

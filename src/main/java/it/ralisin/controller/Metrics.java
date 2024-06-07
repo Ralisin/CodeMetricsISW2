@@ -15,7 +15,7 @@ import java.util.logging.Logger;
 public class Metrics {
     private static final Logger logger = Logger.getLogger(Metrics.class.getName());
 
-    private final static String SRC_DIR = "src/main/resources/";
+    private static final String SRC_DIR = "src/main/resources/";
 
     private Metrics() {}
 
@@ -41,7 +41,7 @@ public class Metrics {
         csvTool.csvTicketFile(ticketList);
 
         // Get list of full project commits
-        logger.info("Cloning repository from GitHub " + gitHubUrl);
+        logger.info(String.format("Cloning repository from GitHub %s", gitHubUrl));
         GitExtractor gitExtractor = new GitExtractor(projName, gitHubUrl);
         List<RevCommit> commitList = gitExtractor.getAllCommits();
 
@@ -104,6 +104,7 @@ public class Metrics {
         String testingFolder = SRC_DIR + projName + "/testing/arff/";
 
         // Train machine learning models
+        logger.info("Weka");
         Weka weka = new Weka(trainingFolder, testingFolder, releaseList, csvTool);
         weka.wekaAnalyses();
     }
