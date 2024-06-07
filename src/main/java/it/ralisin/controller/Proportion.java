@@ -90,7 +90,7 @@ public class Proportion {
         List<Float> projectsProportion = new ArrayList<>();
 
         for(OtherProjectNames projectName : OtherProjectNames.values()) {
-            logger.log(Level.INFO,"ColdStart proportion on project: %s", projectName);
+            logger.log(Level.INFO,"ColdStart proportion on project: ", projectName);
 
             JiraDataExtractor jira = new JiraDataExtractor(projectName.toString());
 
