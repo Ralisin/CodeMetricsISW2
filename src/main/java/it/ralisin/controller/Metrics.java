@@ -42,7 +42,7 @@ public class Metrics {
         csvTool.csvTicketFile(ticketList);
 
         // Get list of full project commits
-        logger.log(Level.INFO, "Cloning repository from GitHub ", gitHubUrl);
+        logger.log(Level.INFO, "Cloning repository from GitHub {}", gitHubUrl);
         GitExtractor gitExtractor = new GitExtractor(projName, gitHubUrl);
         List<RevCommit> commitList = gitExtractor.getAllCommits();
 
