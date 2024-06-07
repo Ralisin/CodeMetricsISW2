@@ -63,7 +63,9 @@ public class JavaClass {
     private int nFix = 0; // Number of commit related to a fix
     private final Set<String> authors = new HashSet<>();  // Set of authors
 
-    private boolean bugginess = false;
+    private String bugginess = "no";
+
+    private double predicted = 0;
 
     public JavaClass(String classPath, String classContent) {
         this.classPath = classPath;
@@ -123,7 +125,12 @@ public class JavaClass {
     }
 
     public void setBugginess(boolean bugginess) {
-        this.bugginess = bugginess;
+        if (bugginess) this.bugginess = "yes";
+        else this.bugginess = "no";
+    }
+
+    public void setPredicted(double predicted) {
+        this.predicted = predicted;
     }
 
     public int getSize() {
@@ -171,7 +178,11 @@ public class JavaClass {
         return authors.size();
     }
 
-    public boolean getBuggyness() {
+    public String getBuggyness() {
         return bugginess;
+    }
+
+    public double getPredicted() {
+        return predicted;
     }
 }

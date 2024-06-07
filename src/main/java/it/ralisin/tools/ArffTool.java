@@ -3,6 +3,7 @@ package it.ralisin.tools;
 import weka.core.Instances;
 import weka.core.converters.ArffSaver;
 import weka.core.converters.CSVLoader;
+import weka.filters.Filter;
 import weka.filters.unsupervised.attribute.Remove;
 
 import java.io.File;
@@ -67,10 +68,11 @@ public class ArffTool {
         Remove remove = new Remove();
         remove.setAttributeIndices("1,2");
         remove.setInputFormat(data);
+        Instances newData = Filter.useFilter(data, remove);
 
         // Save ARFF
         ArffSaver saver = new ArffSaver();
-        saver.setInstances(data);
+        saver.setInstances(newData);
         saver.setFile(new File(destFile));
         saver.writeBatch();
     }

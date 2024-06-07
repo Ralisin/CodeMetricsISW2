@@ -1,0 +1,254 @@
+Index: src/main/java/it/ralisin/controller/GitExtractor.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package it.ralisin.controller;\r\n\r\nimport it.ralisin.entities.JavaClass;\r\nimport it.ralisin.entities.Release;\r\nimport it.ralisin.tools.GitFactory;\r\nimport org.eclipse.jgit.api.Git;\r\nimport org.eclipse.jgit.api.errors.GitAPIException;\r\nimport org.eclipse.jgit.diff.DiffEntry;\r\nimport org.eclipse.jgit.lib.ObjectId;\r\nimport org.eclipse.jgit.lib.Repository;\r\nimport org.eclipse.jgit.revwalk.RevCommit;\r\nimport org.eclipse.jgit.revwalk.RevWalk;\r\nimport org.eclipse.jgit.treewalk.CanonicalTreeParser;\r\nimport org.eclipse.jgit.treewalk.TreeWalk;\r\nimport org.eclipse.jgit.treewalk.filter.PathFilter;\r\n\r\nimport java.io.ByteArrayOutputStream;\r\nimport java.io.File;\r\nimport java.io.IOException;\r\nimport java.util.*;\r\nimport java.util.logging.Level;\r\nimport java.util.logging.Logger;\r\n\r\npublic class GitExtractor {\r\n    final GitFactory gitFactory;\r\n\r\n    public GitExtractor(String projName, String repoURL) {\r\n        this.gitFactory = new GitFactory(projName, repoURL);\r\n    }\r\n\r\n    public void deleteDirectory(File directory) {\r\n        if (directory.isDirectory()) {\r\n            File[] files = directory.listFiles();\r\n            if (files != null) {\r\n                for (File file : files) {\r\n                    deleteDirectory(file);\r\n                }\r\n            }\r\n        }\r\n        boolean deleted = directory.delete();\r\n        if (!deleted) {\r\n            // Log failure to delete the directory\r\n            Logger.getAnonymousLogger().log(Level.INFO, \"Could not delete \" + directory);\r\n        }\r\n    }\r\n\r\n    public List<RevCommit> getAllCommits() throws IOException, GitAPIException {\r\n        List<RevCommit> commitList = new ArrayList<>();\r\n\r\n        Git git = gitFactory.getGit();\r\n\r\n        // Get all commits\r\n        try (Repository ignored = git.getRepository()) {\r\n            Iterable<RevCommit> allCommits = git.log().all().call();\r\n            for (RevCommit commit : allCommits) {\r\n                commitList.add(commit);\r\n            }\r\n        }\r\n\r\n        return commitList;\r\n    }\r\n\r\n    public void extractJavaFiles(List<Release> releaseList) throws IOException, GitAPIException {\r\n        System.out.println(\"Extracting Java Files\");\r\n\r\n        int releaseCount = 0;\r\n        for (Release release : releaseList) {\r\n            System.out.print(\"\\r\\rRelease (\" + releaseCount + \", \" + releaseList.size() + \")\");\r\n            System.out.println();\r\n            releaseCount++;\r\n\r\n            List<JavaClass> touchedJavaClassList = release.getJavaClassList();\r\n            Set<String> classPathSet = new HashSet<>();\r\n\r\n            processCommitsForRelease(release, touchedJavaClassList, classPathSet);\r\n\r\n            System.out.println(\"Number of different class touched per release \" + release + \": \" + classPathSet.size());\r\n\r\n            int counter = 0;\r\n            for (JavaClass jc : touchedJavaClassList) {\r\n                System.out.println(release.getName() + \", javaClassPath: \" + jc.getClassPath() + \", commits: \" + jc.getCommitList().size());\r\n                counter++;\r\n            }\r\n            System.out.println(\"counter: \" + counter);\r\n        }\r\n    }\r\n\r\n    private void processCommitsForRelease(Release release, List<JavaClass> touchedJavaClassList, Set<String> classPathSet) throws IOException, GitAPIException {\r\n        int commitCount = 0;\r\n        for (RevCommit commit : release.getCommitList()) {\r\n            System.out.print(\"\\r\\tRevCommit (\" + commitCount + \", \" + release.getCommitList().size() + \")\");\r\n            commitCount++;\r\n\r\n            ObjectId treeId = commit.getTree();\r\n            try (TreeWalk treeWalk = new TreeWalk(gitFactory.getGit().getRepository())) {\r\n                treeWalk.reset(treeId);\r\n                treeWalk.setRecursive(true);\r\n                processTreeWalk(treeWalk, commit, touchedJavaClassList, classPathSet);\r\n            }\r\n        }\r\n    }\r\n\r\n    private void processTreeWalk(TreeWalk treeWalk, RevCommit commit, List<JavaClass> touchedJavaClassList, Set<String> classPathSet) throws IOException, GitAPIException {\r\n        while (treeWalk.next()) {\r\n            String classPath = treeWalk.getPathString();\r\n\r\n            if (classPath.endsWith(\".java\") && !classPath.contains(\"/test/\")) {\r\n                if (classPathSet.add(classPath)) {\r\n                    String fileContent = getFileContent(commit, classPath);\r\n                    JavaClass javaClass = new JavaClass(classPath, fileContent);\r\n\r\n                    if (checkCommitTouchesClass(commit, classPath)) {\r\n                        javaClass.addCommit(commit);\r\n                    }\r\n\r\n                    touchedJavaClassList.add(javaClass);\r\n                } else {\r\n                    addCommitToExistingClass(touchedJavaClassList, commit, classPath);\r\n                }\r\n            }\r\n        }\r\n    }\r\n\r\n    private void addCommitToExistingClass(List<JavaClass> touchedJavaClassList, RevCommit commit, String classPath) throws GitAPIException, IOException {\r\n        for (JavaClass javaClass : touchedJavaClassList) {\r\n            if (javaClass.getClassPath().equals(classPath) && checkCommitTouchesClass(commit, classPath)) {\r\n                javaClass.addCommit(commit);\r\n                break;\r\n            }\r\n        }\r\n    }\r\n\r\n    private String getFileContent(RevCommit commit, String filePath) throws IOException, GitAPIException {\r\n        Git git = gitFactory.getGit();\r\n\r\n        try (ByteArrayOutputStream out = new ByteArrayOutputStream();\r\n             TreeWalk treeWalk = new TreeWalk(git.getRepository())) {\r\n            treeWalk.addTree(commit.getTree());\r\n            treeWalk.setRecursive(true);\r\n            treeWalk.setFilter(PathFilter.create(filePath));\r\n            while (treeWalk.next()) {\r\n                if (!treeWalk.isSubtree() && treeWalk.getPathString().equals(filePath)) {\r\n                    git.getRepository().open(treeWalk.getObjectId(0)).copyTo(out);\r\n\r\n                    return out.toString();\r\n                }\r\n            }\r\n        }\r\n\r\n        return \"\";\r\n    }\r\n\r\n    private boolean checkCommitTouchesClass(RevCommit commit, String classFilePath) throws IOException, GitAPIException {\r\n        try (Repository repository = gitFactory.getGit().getRepository();\r\n             Git git = new Git(repository);\r\n             RevWalk revWalk = new RevWalk(repository)) {\r\n\r\n            RevCommit parentCommit = revWalk.parseCommit(commit.getParent(0).getId());\r\n\r\n            // Prendi i tree parser per il commit e il suo genitore\r\n            CanonicalTreeParser oldTreeParser = new CanonicalTreeParser();\r\n            oldTreeParser.reset(repository.newObjectReader(), parentCommit.getTree().getId());\r\n            CanonicalTreeParser newTreeParser = new CanonicalTreeParser();\r\n            newTreeParser.reset(repository.newObjectReader(), commit.getTree().getId());\r\n\r\n            // Ottieni la lista delle differenze tra il commit e il suo genitore\r\n            List<DiffEntry> diffs = git.diff()\r\n                    .setOldTree(oldTreeParser)\r\n                    .setNewTree(newTreeParser)\r\n                    .call();\r\n\r\n            // Controlla se una delle differenze coinvolge il file della classe\r\n            for (DiffEntry diff : diffs) {\r\n                if (diff.getNewPath().equals(classFilePath)) {\r\n                    return true;\r\n                }\r\n            }\r\n        }\r\n\r\n        return false;\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/it/ralisin/controller/GitExtractor.java b/src/main/java/it/ralisin/controller/GitExtractor.java
+--- a/src/main/java/it/ralisin/controller/GitExtractor.java	(revision 0c3ec88e31fe51afcb0434d70e0bb1b4aea51dee)
++++ b/src/main/java/it/ralisin/controller/GitExtractor.java	(date 1716548407029)
+@@ -18,6 +18,10 @@
+ import java.io.File;
+ import java.io.IOException;
+ import java.util.*;
++import java.util.concurrent.Callable;
++import java.util.concurrent.ExecutorService;
++import java.util.concurrent.Executors;
++import java.util.concurrent.Future;
+ import java.util.logging.Level;
+ import java.util.logging.Logger;
+ 
+@@ -60,29 +64,54 @@
+         return commitList;
+     }
+ 
+-    public void extractJavaFiles(List<Release> releaseList) throws IOException, GitAPIException {
++    public void extractJavaFiles(List<Release> releaseList) throws IOException, GitAPIException, InterruptedException {
++        ExecutorService executor = Executors.newFixedThreadPool(releaseList.size());
++        List<Callable<Void>> tasks = new ArrayList<>();
++
+         System.out.println("Extracting Java Files");
+ 
+-        int releaseCount = 0;
+         for (Release release : releaseList) {
+-            System.out.print("\r\rRelease (" + releaseCount + ", " + releaseList.size() + ")");
+-            System.out.println();
+-            releaseCount++;
++            tasks.add(() -> {
++//                System.out.print("\r\rRelease (" + releaseCount1 + ", " + releaseList.size() + ")");
++//                System.out.println();
+ 
+-            List<JavaClass> touchedJavaClassList = release.getJavaClassList();
+-            Set<String> classPathSet = new HashSet<>();
++                List<JavaClass> touchedJavaClassList = release.getJavaClassList();
++                Set<String> classPathSet = new HashSet<>();
+ 
+-            processCommitsForRelease(release, touchedJavaClassList, classPathSet);
++                processCommitsForRelease(release, touchedJavaClassList, classPathSet);
+ 
+-            System.out.println("Number of different class touched per release " + release + ": " + classPathSet.size());
++                System.out.println("Number of different class touched per release " + release + ": " + classPathSet.size());
+ 
+-            int counter = 0;
+-            for (JavaClass jc : touchedJavaClassList) {
+-                System.out.println(release.getName() + ", javaClassPath: " + jc.getClassPath() + ", commits: " + jc.getCommitList().size());
+-                counter++;
+-            }
+-            System.out.println("counter: " + counter);
++                return null;
++            });
+         }
++
++        List<Future<Void>> results = executor.invokeAll(tasks);
++
++        executor.shutdown();
++
++//        System.out.println("Extracting Java Files");
++//
++//        int releaseCount = 0;
++//        for (Release release : releaseList) {
++//            System.out.print("\r\rRelease (" + releaseCount + ", " + releaseList.size() + ")");
++//            System.out.println();
++//            releaseCount++;
++//
++//            List<JavaClass> touchedJavaClassList = release.getJavaClassList();
++//            Set<String> classPathSet = new HashSet<>();
++//
++//            processCommitsForRelease(release, touchedJavaClassList, classPathSet);
++//
++//            System.out.println("Number of different class touched per release " + release + ": " + classPathSet.size());
++//
++//            int counter = 0;
++//            for (JavaClass jc : touchedJavaClassList) {
++//                System.out.println(release.getName() + ", javaClassPath: " + jc.getClassPath() + ", commits: " + jc.getCommitList().size());
++//                counter++;
++//            }
++//            System.out.println("counter: " + counter);
++//        }
+     }
+ 
+     private void processCommitsForRelease(Release release, List<JavaClass> touchedJavaClassList, Set<String> classPathSet) throws IOException, GitAPIException {
+@@ -180,3 +209,4 @@
+         return false;
+     }
+ }
++
+Index: src/main/java/it/ralisin/Main.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package it.ralisin;\r\n\r\nimport it.ralisin.controller.Metrics;\r\nimport org.eclipse.jgit.api.errors.GitAPIException;\r\n\r\nimport java.io.IOException;\r\nimport java.net.URISyntaxException;\r\n\r\npublic class Main {\r\n    public static void main(String[] args) throws IOException, URISyntaxException, GitAPIException {\r\n        Metrics.dataExtraction(\"BOOKKEEPER\", \"https://github.com/Ralisin/bookkeeper\");\r\n//        Metrics.dataExtraction(\"STORM\", \"https://github.com/Ralisin/storm\");\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/it/ralisin/Main.java b/src/main/java/it/ralisin/Main.java
+--- a/src/main/java/it/ralisin/Main.java	(revision 0c3ec88e31fe51afcb0434d70e0bb1b4aea51dee)
++++ b/src/main/java/it/ralisin/Main.java	(date 1716548432282)
+@@ -7,7 +7,7 @@
+ import java.net.URISyntaxException;
+ 
+ public class Main {
+-    public static void main(String[] args) throws IOException, URISyntaxException, GitAPIException {
++    public static void main(String[] args) throws IOException, URISyntaxException, GitAPIException, InterruptedException {
+         Metrics.dataExtraction("BOOKKEEPER", "https://github.com/Ralisin/bookkeeper");
+ //        Metrics.dataExtraction("STORM", "https://github.com/Ralisin/storm");
+     }
+Index: src/main/java/it/ralisin/controller/Metrics.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package it.ralisin.controller;\r\n\r\nimport it.ralisin.entities.Release;\r\nimport it.ralisin.entities.Ticket;\r\nimport it.ralisin.tools.CSVWriter;\r\nimport it.ralisin.tools.ReleaseTools;\r\nimport it.ralisin.tools.TicketsTool;\r\nimport org.eclipse.jgit.api.errors.GitAPIException;\r\nimport org.eclipse.jgit.revwalk.RevCommit;\r\n\r\nimport java.io.IOException;\r\nimport java.net.URISyntaxException;\r\nimport java.util.Comparator;\r\nimport java.util.List;\r\nimport java.util.logging.Level;\r\nimport java.util.logging.Logger;\r\n\r\npublic class Metrics {\r\n    public static void dataExtraction(String projName, String gitHubUrl) throws IOException, URISyntaxException, GitAPIException {\r\n        CSVWriter csvWriter = new CSVWriter(\"src/main/resources/\" + projName);\r\n\r\n        JiraDataExtractor jira = new JiraDataExtractor(projName);\r\n\r\n        // Get release list from jira\r\n        List<Release> releaseList = jira.extractReleasesList();\r\n\r\n        csvWriter.csvReleaseFile(releaseList);\r\n\r\n        // Get ticket list from jira\r\n        List<Ticket> ticketList = jira.extractTicketsList(releaseList);\r\n        TicketsTool.fixInconsistentTickets(ticketList, releaseList);\r\n        ticketList.sort(Comparator.comparing(Ticket::getCreationDate));\r\n\r\n        // Do proportion on tickets\r\n        Proportion.proportion(releaseList, ticketList);\r\n        TicketsTool.fixInconsistentTickets(ticketList, releaseList); // Remove inconsistent tickets after the proportion if any\r\n\r\n        csvWriter.csvTicketFile(ticketList);\r\n\r\n        // Get list of full project commits\r\n        Logger.getAnonymousLogger().log(Level.INFO, \"Cloning repository from GitHub \" + gitHubUrl);\r\n        GitExtractor gitExtractor = new GitExtractor(projName, gitHubUrl);\r\n        List<RevCommit> commitList = gitExtractor.getAllCommits();\r\n\r\n        // Link commits to release\r\n        ReleaseTools.linkCommits(commitList, releaseList);\r\n        releaseList.removeIf(release -> release.getCommitList().isEmpty()); // Remove releases with empty commit list\r\n        for(int i = 1; i <= releaseList.size(); i++) releaseList.get(i - 1).setId(i); // Reassign release id\r\n\r\n        // Remove half releases\r\n        int halfReleases = releaseList.size() / 2;\r\n        releaseList.removeIf(release -> release.getId() > halfReleases);\r\n\r\n        // TODO write releases in a csv file\r\n\r\n        // Link tickets to relative commits\r\n        TicketsTool.linkCommits(ticketList, commitList);\r\n\r\n        System.out.println(\"Commits per release:\");\r\n        for (Release release : releaseList) {\r\n            System.out.println(release.getName() + \": \" + release.getCommitList().size());\r\n        }\r\n        System.out.println();\r\n\r\n        gitExtractor.extractJavaFiles(releaseList);\r\n\r\n        csvWriter.csvJavaClassFile(releaseList);\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/it/ralisin/controller/Metrics.java b/src/main/java/it/ralisin/controller/Metrics.java
+--- a/src/main/java/it/ralisin/controller/Metrics.java	(revision 0c3ec88e31fe51afcb0434d70e0bb1b4aea51dee)
++++ b/src/main/java/it/ralisin/controller/Metrics.java	(date 1716548424869)
+@@ -16,7 +16,7 @@
+ import java.util.logging.Logger;
+ 
+ public class Metrics {
+-    public static void dataExtraction(String projName, String gitHubUrl) throws IOException, URISyntaxException, GitAPIException {
++    public static void dataExtraction(String projName, String gitHubUrl) throws IOException, URISyntaxException, GitAPIException, InterruptedException {
+         CSVWriter csvWriter = new CSVWriter("src/main/resources/" + projName);
+ 
+         JiraDataExtractor jira = new JiraDataExtractor(projName);
+Index: .idea/inspectionProfiles/Project_Default.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><component name=\"InspectionProjectProfileManager\">\r\n  <profile version=\"1.0\">\r\n    <option name=\"myName\" value=\"Project Default\" />\r\n    <inspection_tool class=\"AutoCloseableResource\" enabled=\"true\" level=\"WARNING\" enabled_by_default=\"true\">\r\n      <option name=\"METHOD_MATCHER_CONFIG\" value=\"java.util.Formatter,format,java.io.Writer,append,com.google.common.base.Preconditions,checkNotNull,org.hibernate.Session,close,java.io.PrintWriter,printf,java.io.PrintStream,printf,org.eclipse.jgit.api.CloneCommand,call\" />\r\n    </inspection_tool>\r\n  </profile>\r\n</component>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/inspectionProfiles/Project_Default.xml b/.idea/inspectionProfiles/Project_Default.xml
+--- a/.idea/inspectionProfiles/Project_Default.xml	(revision 0c3ec88e31fe51afcb0434d70e0bb1b4aea51dee)
++++ b/.idea/inspectionProfiles/Project_Default.xml	(date 1716548093719)
+@@ -2,7 +2,7 @@
+   <profile version="1.0">
+     <option name="myName" value="Project Default" />
+     <inspection_tool class="AutoCloseableResource" enabled="true" level="WARNING" enabled_by_default="true">
+-      <option name="METHOD_MATCHER_CONFIG" value="java.util.Formatter,format,java.io.Writer,append,com.google.common.base.Preconditions,checkNotNull,org.hibernate.Session,close,java.io.PrintWriter,printf,java.io.PrintStream,printf,org.eclipse.jgit.api.CloneCommand,call" />
++      <option name="METHOD_MATCHER_CONFIG" value="java.util.Formatter,format,java.io.Writer,append,com.google.common.base.Preconditions,checkNotNull,org.hibernate.Session,close,java.io.PrintWriter,printf,java.io.PrintStream,printf,org.eclipse.jgit.api.CloneCommand,call,java.util.concurrent.Executors,newFixedThreadPool" />
+     </inspection_tool>
+   </profile>
+ </component>
+\ No newline at end of file
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"AutoImportSettings\">\r\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"b9736f61-e96d-4747-a412-d2bfb5b24899\" name=\"Changes\" comment=\"Reduce code complexity\">\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Class\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"GitHubPullRequestSearchHistory\">{\r\n  &quot;lastFilter&quot;: {\r\n    &quot;state&quot;: &quot;OPEN&quot;,\r\n    &quot;assignee&quot;: &quot;Ralisin&quot;\r\n  }\r\n}</component>\r\n  <component name=\"GithubPullRequestsUISettings\">{\r\n  &quot;selectedUrlAndAccountId&quot;: {\r\n    &quot;url&quot;: &quot;https://github.com/Ralisin/CodeMetricsISW2.git&quot;,\r\n    &quot;accountId&quot;: &quot;90aeaf6d-e90d-447d-9035-e51b7d40d637&quot;\r\n  }\r\n}</component>\r\n  <component name=\"ProblemsViewState\">\r\n    <option name=\"selectedTabId\" value=\"CurrentFile\" />\r\n  </component>\r\n  <component name=\"ProjectColorInfo\">{\r\n  &quot;associatedIndex&quot;: 8\r\n}</component>\r\n  <component name=\"ProjectId\" id=\"2egQOlGkGicCoAxXq9jnwLmMrPl\" />\r\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\"><![CDATA[{\r\n  \"keyToString\": {\r\n    \"Application.Main.executor\": \"Run\",\r\n    \"RunOnceActivity.OpenProjectViewOnStart\": \"true\",\r\n    \"RunOnceActivity.ShowReadmeOnStart\": \"true\",\r\n    \"SHARE_PROJECT_CONFIGURATION_FILES\": \"true\",\r\n    \"git-widget-placeholder\": \"master\",\r\n    \"ignore.virus.scanning.warn.message\": \"true\",\r\n    \"kotlin-language-version-configured\": \"true\",\r\n    \"last_opened_file_path\": \"C:/Users/buniy/Downloads/EsempiInClasse-JUnitMockito\",\r\n    \"node.js.detected.package.eslint\": \"true\",\r\n    \"node.js.detected.package.tslint\": \"true\",\r\n    \"node.js.selected.package.eslint\": \"(autodetect)\",\r\n    \"node.js.selected.package.tslint\": \"(autodetect)\",\r\n    \"nodejs_package_manager_path\": \"npm\",\r\n    \"project.structure.last.edited\": \"Project\",\r\n    \"project.structure.proportion\": \"0.0\",\r\n    \"project.structure.side.proportion\": \"0.2\",\r\n    \"settings.editor.selected.configurable\": \"org.jetbrains.plugins.github.ui.GithubSettingsConfigurable\",\r\n    \"vue.rearranger.settings.migration\": \"true\"\r\n  }\r\n}]]></component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"ExtractSuperBase.RECENT_KEYS\">\r\n      <recent name=\"it.ralisin.tools\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"RunAnythingCache\">\r\n    <option name=\"myCommands\">\r\n      <command value=\"Main\" />\r\n    </option>\r\n  </component>\r\n  <component name=\"RunManager\">\r\n    <configuration name=\"Main\" type=\"Application\" factoryName=\"Application\" temporary=\"true\" nameIsGenerated=\"true\">\r\n      <option name=\"MAIN_CLASS_NAME\" value=\"it.ralisin.Main\" />\r\n      <module name=\"CodeMetrics\" />\r\n      <extension name=\"coverage\">\r\n        <pattern>\r\n          <option name=\"PATTERN\" value=\"it.ralisin.*\" />\r\n          <option name=\"ENABLED\" value=\"true\" />\r\n        </pattern>\r\n      </extension>\r\n      <method v=\"2\">\r\n        <option name=\"Make\" enabled=\"true\" />\r\n      </method>\r\n    </configuration>\r\n    <recent_temporary>\r\n      <list>\r\n        <item itemvalue=\"Application.Main\" />\r\n      </list>\r\n    </recent_temporary>\r\n  </component>\r\n  <component name=\"SharedIndexes\">\r\n    <attachedChunks>\r\n      <set>\r\n        <option value=\"bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.17011.79\" />\r\n        <option value=\"bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-IU-241.17011.79\" />\r\n      </set>\r\n    </attachedChunks>\r\n  </component>\r\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"b9736f61-e96d-4747-a412-d2bfb5b24899\" name=\"Changes\" comment=\"\" />\r\n      <created>1712323712064</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1712323712064</updated>\r\n      <workItem from=\"1712323713227\" duration=\"130000\" />\r\n      <workItem from=\"1712323855945\" duration=\"2775000\" />\r\n      <workItem from=\"1712326651850\" duration=\"82000\" />\r\n      <workItem from=\"1712326746976\" duration=\"1837000\" />\r\n      <workItem from=\"1712328716273\" duration=\"1783000\" />\r\n      <workItem from=\"1712868796106\" duration=\"5634000\" />\r\n      <workItem from=\"1712906841365\" duration=\"100000\" />\r\n      <workItem from=\"1713199718145\" duration=\"12493000\" />\r\n      <workItem from=\"1713251916082\" duration=\"5808000\" />\r\n      <workItem from=\"1713278000689\" duration=\"4345000\" />\r\n      <workItem from=\"1714395078718\" duration=\"521000\" />\r\n      <workItem from=\"1714462513967\" duration=\"3841000\" />\r\n      <workItem from=\"1714488655163\" duration=\"14242000\" />\r\n      <workItem from=\"1714634408055\" duration=\"217000\" />\r\n      <workItem from=\"1714748023232\" duration=\"1895000\" />\r\n      <workItem from=\"1714760782435\" duration=\"6390000\" />\r\n      <workItem from=\"1714908532951\" duration=\"14710000\" />\r\n      <workItem from=\"1715003504066\" duration=\"13234000\" />\r\n      <workItem from=\"1715067913951\" duration=\"1774000\" />\r\n      <workItem from=\"1715096748989\" duration=\"11050000\" />\r\n      <workItem from=\"1715112480602\" duration=\"1966000\" />\r\n      <workItem from=\"1715171754141\" duration=\"10212000\" />\r\n      <workItem from=\"1715250339241\" duration=\"933000\" />\r\n      <workItem from=\"1715283471497\" duration=\"8183000\" />\r\n      <workItem from=\"1715618009259\" duration=\"1207000\" />\r\n      <workItem from=\"1715619854717\" duration=\"64000\" />\r\n      <workItem from=\"1715717135935\" duration=\"7106000\" />\r\n      <workItem from=\"1715757886882\" duration=\"609000\" />\r\n      <workItem from=\"1716545312264\" duration=\"1829000\" />\r\n    </task>\r\n    <task id=\"LOCAL-00001\" summary=\"Get Versions and Tickets from Jira\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1713258376836</created>\r\n      <option name=\"number\" value=\"00001\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1713258376837</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00002\" summary=\"Get Versions and Tickets from Jira\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1714919852628</created>\r\n      <option name=\"number\" value=\"00002\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1714919852628</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00003\" summary=\"Evaluate ColdStart\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1714921667950</created>\r\n      <option name=\"number\" value=\"00003\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00003\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1714921667950</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00004\" summary=\"Proportion\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1715003697209</created>\r\n      <option name=\"number\" value=\"00004\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00004\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1715003697209</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00005\" summary=\"Clone project repository and retrieve commits\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1715008776259</created>\r\n      <option name=\"number\" value=\"00005\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00005\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1715008776259</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00006\" summary=\"Link commits to tickets\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1715010694949</created>\r\n      <option name=\"number\" value=\"00006\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00006\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1715010694949</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00007\" summary=\"Commit updates info\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1715015020144</created>\r\n      <option name=\"number\" value=\"00007\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00007\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1715015020145</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00008\" summary=\"First csv file and working on JavaClass\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1715112109735</created>\r\n      <option name=\"number\" value=\"00008\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00008\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1715112109735</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00009\" summary=\"Couple code smells\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1715112322198</created>\r\n      <option name=\"number\" value=\"00009\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00009\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1715112322198</updated>\r\n    </task>\r\n    <task id=\"LOCAL-00010\" summary=\"Reduce code complexity\">\r\n      <option name=\"closed\" value=\"true\" />\r\n      <created>1716546007799</created>\r\n      <option name=\"number\" value=\"00010\" />\r\n      <option name=\"presentableId\" value=\"LOCAL-00010\" />\r\n      <option name=\"project\" value=\"LOCAL\" />\r\n      <updated>1716546007799</updated>\r\n    </task>\r\n    <option name=\"localTasksCounter\" value=\"11\" />\r\n    <servers />\r\n  </component>\r\n  <component name=\"TypeScriptGeneratedFilesManager\">\r\n    <option name=\"version\" value=\"3\" />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n  </component>\r\n  <component name=\"VcsManagerConfiguration\">\r\n    <MESSAGE value=\"Get Versions and Tickets from Jira\" />\r\n    <MESSAGE value=\"Evaluate ColdStart\" />\r\n    <MESSAGE value=\"Proportion\" />\r\n    <MESSAGE value=\"Clone project repository and retrieve commits\" />\r\n    <MESSAGE value=\"Link commits to tickets\" />\r\n    <MESSAGE value=\"Commit updates info\" />\r\n    <MESSAGE value=\"First csv file and working on JavaClass\" />\r\n    <MESSAGE value=\"Couple code smells\" />\r\n    <MESSAGE value=\"Reduce code complexity\" />\r\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"Reduce code complexity\" />\r\n  </component>\r\n  <component name=\"XSLT-Support.FileAssociations.UIState\">\r\n    <expand />\r\n    <select />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 0c3ec88e31fe51afcb0434d70e0bb1b4aea51dee)
++++ b/.idea/workspace.xml	(date 1716881856470)
+@@ -5,7 +5,11 @@
+   </component>
+   <component name="ChangeListManager">
+     <list default="true" id="b9736f61-e96d-4747-a412-d2bfb5b24899" name="Changes" comment="Reduce code complexity">
++      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/it/ralisin/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/Main.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/it/ralisin/controller/GitExtractor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/controller/GitExtractor.java" afterDir="false" />
++      <change beforePath="$PROJECT_DIR$/src/main/java/it/ralisin/controller/Metrics.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/controller/Metrics.java" afterDir="false" />
+     </list>
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+@@ -46,28 +50,28 @@
+     <option name="hideEmptyMiddlePackages" value="true" />
+     <option name="showLibraryContents" value="true" />
+   </component>
+-  <component name="PropertiesComponent"><![CDATA[{
+-  "keyToString": {
+-    "Application.Main.executor": "Run",
+-    "RunOnceActivity.OpenProjectViewOnStart": "true",
+-    "RunOnceActivity.ShowReadmeOnStart": "true",
+-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+-    "git-widget-placeholder": "master",
+-    "ignore.virus.scanning.warn.message": "true",
+-    "kotlin-language-version-configured": "true",
+-    "last_opened_file_path": "C:/Users/buniy/Downloads/EsempiInClasse-JUnitMockito",
+-    "node.js.detected.package.eslint": "true",
+-    "node.js.detected.package.tslint": "true",
+-    "node.js.selected.package.eslint": "(autodetect)",
+-    "node.js.selected.package.tslint": "(autodetect)",
+-    "nodejs_package_manager_path": "npm",
+-    "project.structure.last.edited": "Project",
+-    "project.structure.proportion": "0.0",
+-    "project.structure.side.proportion": "0.2",
+-    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable",
+-    "vue.rearranger.settings.migration": "true"
++  <component name="PropertiesComponent">{
++  &quot;keyToString&quot;: {
++    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
++    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
++    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
++    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
++    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
++    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
++    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
++    &quot;last_opened_file_path&quot;: &quot;C:/Users/buniy/Downloads/EsempiInClasse-JUnitMockito&quot;,
++    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
++    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
++    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
++    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
++    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
++    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
++    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
++    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
++    &quot;settings.editor.selected.configurable&quot;: &quot;org.jetbrains.plugins.github.ui.GithubSettingsConfigurable&quot;,
++    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+   }
+-}]]></component>
++}</component>
+   <component name="RecentsManager">
+     <key name="ExtractSuperBase.RECENT_KEYS">
+       <recent name="it.ralisin.tools" />
+@@ -142,7 +146,9 @@
+       <workItem from="1715619854717" duration="64000" />
+       <workItem from="1715717135935" duration="7106000" />
+       <workItem from="1715757886882" duration="609000" />
+-      <workItem from="1716545312264" duration="1829000" />
++      <workItem from="1716545312264" duration="2945000" />
++      <workItem from="1716713778538" duration="23000" />
++      <workItem from="1716881850738" duration="7000" />
+     </task>
+     <task id="LOCAL-00001" summary="Get Versions and Tickets from Jira">
+       <option name="closed" value="true" />
+@@ -224,7 +230,15 @@
+       <option name="project" value="LOCAL" />
+       <updated>1716546007799</updated>
+     </task>
+-    <option name="localTasksCounter" value="11" />
++    <task id="LOCAL-00011" summary="Reduce code complexity">
++      <option name="closed" value="true" />
++      <created>1716547204093</created>
++      <option name="number" value="00011" />
++      <option name="presentableId" value="LOCAL-00011" />
++      <option name="project" value="LOCAL" />
++      <updated>1716547204093</updated>
++    </task>
++    <option name="localTasksCounter" value="12" />
+     <servers />
+   </component>
+   <component name="TypeScriptGeneratedFilesManager">

@@ -1,5 +1,6 @@
 package it.ralisin.tools;
 
+import it.ralisin.entities.ClassifierEvaluation;
 import it.ralisin.entities.JavaClass;
 import it.ralisin.entities.Release;
 import it.ralisin.entities.Ticket;
@@ -23,6 +24,8 @@ public class CsvTool {
     final String TRAINING = "/training/";
     final String TESTING = "/testing/";
     final String INFO = "/info/";
+    final String ACUME = "/acume/";
+    final String WEKA = "/weka/";
 
     public CsvTool(String projName, String filePath) throws IOException {
         this.projName = projName;
@@ -101,15 +104,85 @@ public class CsvTool {
         }
     }
 
+    public void csvAcume(List<JavaClass> javaClassList, String classifier, String filters, int index) {
+        String filePath = dirPath + ACUME + "/" + classifier + "_" + filters + "_" + index + ".csv";
+
+        try {
+            Files.createDirectories(Paths.get(filePath).getParent());
+        } catch (IOException e) {
+            Logger.getAnonymousLogger().log(Level.INFO, e.getMessage());
+
+            return;
+        }
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+            writer.write("ID, Size, Predicted, Actual");
+            writer.newLine();
+
+            int id = 1;
+            for (JavaClass javaClass : javaClassList) {
+                writer.write(id + ",");
+                writer.write(javaClass.getSize() + ",");
+                writer.write(javaClass.getPredicted() + ",");
+                writer.write(javaClass.getBuggyness());
+
+                writer.newLine();
+
+                id++;
+            }
+        } catch (Exception e) {
+            Logger.getAnonymousLogger().log(Level.INFO, e.getMessage());
+        }
+    }
+
+    public void csvWekaResult(List<ClassifierEvaluation> classifierEvaluationList) {
+        String filePath = dirPath + WEKA + "/wekaResult.csv";
+
+        try {
+            Files.createDirectories(Paths.get(filePath).getParent());
+        } catch (IOException e) {
+            Logger.getAnonymousLogger().log(Level.INFO, e.getMessage());
+
+            return;
+        }
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+            writer.write("ProjName, Classifier Name, Training%, Feature Selection, Sampling, Cost Sensitive, Precision, Recall, Kappa, TP, FP, TN, FN, areaUnderROC, fMeasure");
+            writer.newLine();
+
+            for (ClassifierEvaluation ce : classifierEvaluationList) {
+                writer.write(projName + ",");
+                writer.write(ce.getClassifierName() + ",");
+                writer.write(ce.getTrainingPerc() + ",");
+                writer.write(ce.getFeatureSelection() + ",");
+                writer.write(ce.getSampling() + ",");
+                writer.write(ce.getCostSensitive() + ",");
+                writer.write(ce.getPrecision() + ",");
+                writer.write(ce.getRecall() + ",");
+                writer.write(ce.getKappa() + ",");
+                writer.write(ce.getTruePositives() + ",");
+                writer.write(ce.getTrueNegatives() + ",");
+                writer.write(ce.getFalsePositives() + ",");
+                writer.write(ce.getFalseNegatives() + ",");
+                writer.write(ce.getAreaUnderROC() + ",");
+                writer.write(String.valueOf(ce.getfMeasure()));
+
+                writer.newLine();
+            }
+        } catch (Exception e) {
+            Logger.getAnonymousLogger().log(Level.INFO, e.getMessage());
+        }
+    }
+
     public void csvDatasetFile(List<Release> releaseList, int walk, boolean isTraining) {
         FileWriter fileWriter = null;
 
         String filePath;
 
         if(isTraining)
-                filePath = dirPath + TRAINING + CSV + projName + "trainingSet_" + walk + ".csv";
+                filePath = dirPath + TRAINING + CSV + projName + "_trainingSet_" + walk + ".csv";
         else
-            filePath = dirPath + TESTING + CSV + projName + "testingSet_" + walk + ".csv";
+            filePath = dirPath + TESTING + CSV + projName + "_testingSet_" + walk + ".csv";
 
         try {
             // Create directory if it doesn't exist
