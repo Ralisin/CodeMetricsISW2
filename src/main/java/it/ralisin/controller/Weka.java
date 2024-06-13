@@ -127,8 +127,8 @@ public class Weka {
 
             while ((line = reader.readNext()) != null) {
                 WekaObject wekaJavaClass = new WekaObject();
-                wekaJavaClass.size = Integer.parseInt(line[2]);
-                wekaJavaClass.buggyness = line[line.length-1];
+                wekaJavaClass.setSize(Integer.parseInt(line[2]));
+                wekaJavaClass.setBuggyness(line[line.length-1]);
 
                 wekaJavaClassList.add(wekaJavaClass);
             }
@@ -275,7 +275,7 @@ public class Weka {
             double[] predictionDistribution = classifier.distributionForInstance(testing.instance(i));
 
             // Take index 1 that is prediction label "yes"
-            javaClassList.get(i).prediction = predictionDistribution[1];
+            javaClassList.get(i).setPrediction(predictionDistribution[1]);
         }
 
         csvTool.csvAcume(javaClassList, classifierName, filters, index + 2);

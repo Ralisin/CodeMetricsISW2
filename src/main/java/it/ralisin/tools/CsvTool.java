@@ -119,9 +119,9 @@ public class CsvTool {
             int id = 1;
             for (WekaObject wekaObject : javaClassList) {
                 writer.write(id + ",");
-                writer.write(wekaObject.size + ",");
-                writer.write(wekaObject.prediction + ",");
-                writer.write(wekaObject.buggyness);
+                writer.write(wekaObject.getSize() + ",");
+                writer.write(wekaObject.getPrediction() + ",");
+                writer.write(wekaObject.getBuggyness());
 
                 writer.newLine();
 
