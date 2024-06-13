@@ -28,9 +28,9 @@ import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -305,7 +305,7 @@ public class Weka {
         classifier.buildClassifier(training);
 
         Evaluation eval = new Evaluation(training);
-        eval.crossValidateModel(classifier, testing, 10, new Random(1));
+        eval.crossValidateModel(classifier, testing, 10, new SecureRandom());
 
         return eval;
     }
