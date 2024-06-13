@@ -30,6 +30,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -57,7 +58,7 @@ public class Weka {
 
         int numFilesTraining = filesInFolder(trainingDirStr);
         int numFilesTesting = filesInFolder(testingDirStr);
-        if(numFilesTraining != numFilesTesting) throw new IOException("Given training and testing set are different");
+        if(numFilesTraining != numFilesTesting) throw new IOException("Given training and testing folders are different");
 
         getInstances(projName, trainingDirStr, numFilesTraining, "trainingSet", trainingList);
         getInstances(projName, testingDirStr, numFilesTesting, "testingSet", testingList);
@@ -83,7 +84,10 @@ public class Weka {
 
             try {
                 Instances data = loadARFF(file);
-                data.setClassIndex(data.numAttributes() - 1);
+
+                if (data.classIndex() == -1) {
+                    data.setClassIndex(data.numAttributes() - 1);
+                }
 
                 instancesList.add(data);
             } catch (Exception e) {
@@ -300,8 +304,8 @@ public class Weka {
     private Evaluation trainAndEvaluate(Classifier classifier, Instances training, Instances testing) throws Exception {
         classifier.buildClassifier(training);
 
-        Evaluation eval = new Evaluation(testing);
-        eval.evaluateModel(classifier, testing);
+        Evaluation eval = new Evaluation(training);
+        eval.crossValidateModel(classifier, testing, 10, new Random(1));
 
         return eval;
     }
