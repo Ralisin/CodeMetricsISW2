@@ -4,10 +4,441 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b9736f61-e96d-4747-a412-d2bfb5b24899" name="Changes" comment="Code smells">
+    <list default="true" id="b9736f61-e96d-4747-a412-d2bfb5b24899" name="Changes" comment="Speedup code execution">
+      <change afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/entities/WekaObject.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acumeResult/EAM_NEAM_output.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk__10.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk__11.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk__12.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk__13.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk__14.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk__15.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk__2.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk__3.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk__4.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk__5.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk__6.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk__7.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk__8.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk__9.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk_costSensitive_10.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk_costSensitive_11.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk_costSensitive_12.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk_costSensitive_13.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk_costSensitive_14.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk_costSensitive_15.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk_costSensitive_2.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk_costSensitive_3.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk_costSensitive_4.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk_costSensitive_5.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk_costSensitive_6.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk_costSensitive_7.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk_costSensitive_8.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk_costSensitive_9.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk_featureSelection_10.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk_featureSelection_11.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk_featureSelection_12.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk_featureSelection_13.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk_featureSelection_14.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk_featureSelection_15.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk_featureSelection_2.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk_featureSelection_3.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk_featureSelection_4.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk_featureSelection_5.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk_featureSelection_6.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk_featureSelection_7.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk_featureSelection_8.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk_featureSelection_9.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk_featureSelection_costSensitive_10.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk_featureSelection_costSensitive_11.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk_featureSelection_costSensitive_12.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk_featureSelection_costSensitive_13.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk_featureSelection_costSensitive_14.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk_featureSelection_costSensitive_15.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk_featureSelection_costSensitive_2.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk_featureSelection_costSensitive_3.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk_featureSelection_costSensitive_4.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk_featureSelection_costSensitive_5.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk_featureSelection_costSensitive_6.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk_featureSelection_costSensitive_7.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk_featureSelection_costSensitive_8.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk_featureSelection_costSensitive_9.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk_featureSelection_sampling_10.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk_featureSelection_sampling_11.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk_featureSelection_sampling_12.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk_featureSelection_sampling_13.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk_featureSelection_sampling_14.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk_featureSelection_sampling_15.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk_featureSelection_sampling_2.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk_featureSelection_sampling_3.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk_featureSelection_sampling_4.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk_featureSelection_sampling_5.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk_featureSelection_sampling_6.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk_featureSelection_sampling_7.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk_featureSelection_sampling_8.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk_featureSelection_sampling_9.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk_sampling_10.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk_sampling_11.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk_sampling_12.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk_sampling_13.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk_sampling_14.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk_sampling_15.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk_sampling_2.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk_sampling_3.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk_sampling_4.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk_sampling_5.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk_sampling_6.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk_sampling_7.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk_sampling_8.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/IBk_sampling_9.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes__10.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes__11.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes__12.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes__13.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes__14.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes__15.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes__2.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes__3.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes__4.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes__5.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes__6.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes__7.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes__8.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes__9.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes_costSensitive_10.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes_costSensitive_11.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes_costSensitive_12.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes_costSensitive_13.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes_costSensitive_14.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes_costSensitive_15.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes_costSensitive_2.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes_costSensitive_3.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes_costSensitive_4.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes_costSensitive_5.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes_costSensitive_6.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes_costSensitive_7.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes_costSensitive_8.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes_costSensitive_9.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes_featureSelection_10.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes_featureSelection_11.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes_featureSelection_12.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes_featureSelection_13.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes_featureSelection_14.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes_featureSelection_15.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes_featureSelection_2.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes_featureSelection_3.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes_featureSelection_4.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes_featureSelection_5.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes_featureSelection_6.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes_featureSelection_7.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes_featureSelection_8.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes_featureSelection_9.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes_featureSelection_costSensitive_10.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes_featureSelection_costSensitive_11.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes_featureSelection_costSensitive_12.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes_featureSelection_costSensitive_13.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes_featureSelection_costSensitive_14.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes_featureSelection_costSensitive_15.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes_featureSelection_costSensitive_2.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes_featureSelection_costSensitive_3.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes_featureSelection_costSensitive_4.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes_featureSelection_costSensitive_5.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes_featureSelection_costSensitive_6.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes_featureSelection_costSensitive_7.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes_featureSelection_costSensitive_8.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes_featureSelection_costSensitive_9.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes_featureSelection_sampling_10.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes_featureSelection_sampling_11.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes_featureSelection_sampling_12.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes_featureSelection_sampling_13.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes_featureSelection_sampling_14.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes_featureSelection_sampling_15.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes_featureSelection_sampling_2.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes_featureSelection_sampling_3.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes_featureSelection_sampling_4.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes_featureSelection_sampling_5.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes_featureSelection_sampling_6.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes_featureSelection_sampling_7.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes_featureSelection_sampling_8.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes_featureSelection_sampling_9.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes_sampling_10.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes_sampling_11.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes_sampling_12.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes_sampling_13.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes_sampling_14.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes_sampling_15.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes_sampling_2.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes_sampling_3.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes_sampling_4.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes_sampling_5.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes_sampling_6.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes_sampling_7.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes_sampling_8.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/NaiveBayes_sampling_9.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest__10.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest__11.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest__12.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest__13.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest__14.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest__15.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest__2.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest__3.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest__4.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest__5.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest__6.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest__7.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest__8.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest__9.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest_costSensitive_10.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest_costSensitive_11.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest_costSensitive_12.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest_costSensitive_13.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest_costSensitive_14.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest_costSensitive_15.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest_costSensitive_2.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest_costSensitive_3.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest_costSensitive_4.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest_costSensitive_5.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest_costSensitive_6.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest_costSensitive_7.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest_costSensitive_8.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest_costSensitive_9.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest_featureSelection_10.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest_featureSelection_11.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest_featureSelection_12.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest_featureSelection_13.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest_featureSelection_14.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest_featureSelection_15.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest_featureSelection_2.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest_featureSelection_3.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest_featureSelection_4.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest_featureSelection_5.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest_featureSelection_6.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest_featureSelection_7.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest_featureSelection_8.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest_featureSelection_9.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest_featureSelection_costSensitive_10.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest_featureSelection_costSensitive_11.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest_featureSelection_costSensitive_12.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest_featureSelection_costSensitive_13.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest_featureSelection_costSensitive_14.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest_featureSelection_costSensitive_15.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest_featureSelection_costSensitive_2.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest_featureSelection_costSensitive_3.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest_featureSelection_costSensitive_4.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest_featureSelection_costSensitive_5.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest_featureSelection_costSensitive_6.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest_featureSelection_costSensitive_7.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest_featureSelection_costSensitive_8.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest_featureSelection_costSensitive_9.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest_featureSelection_sampling_10.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest_featureSelection_sampling_11.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest_featureSelection_sampling_12.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest_featureSelection_sampling_13.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest_featureSelection_sampling_14.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest_featureSelection_sampling_15.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest_featureSelection_sampling_2.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest_featureSelection_sampling_3.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest_featureSelection_sampling_4.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest_featureSelection_sampling_5.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest_featureSelection_sampling_6.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest_featureSelection_sampling_7.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest_featureSelection_sampling_8.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest_featureSelection_sampling_9.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest_sampling_10.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest_sampling_11.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest_sampling_12.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest_sampling_13.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest_sampling_14.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest_sampling_15.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest_sampling_2.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest_sampling_3.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest_sampling_4.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest_sampling_5.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest_sampling_6.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest_sampling_7.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest_sampling_8.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/acume/RandomForest_sampling_9.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/testing/arff/STORM_testingSet_10.arff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/testing/arff/STORM_testingSet_11.arff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/testing/arff/STORM_testingSet_12.arff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/testing/arff/STORM_testingSet_13.arff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/testing/arff/STORM_testingSet_14.arff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/testing/arff/STORM_testingSet_15.arff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/testing/arff/STORM_testingSet_16.arff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/testing/arff/STORM_testingSet_3.arff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/testing/arff/STORM_testingSet_4.arff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/testing/arff/STORM_testingSet_5.arff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/testing/arff/STORM_testingSet_6.arff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/testing/arff/STORM_testingSet_7.arff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/testing/arff/STORM_testingSet_8.arff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/testing/arff/STORM_testingSet_9.arff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/testing/csv/STORM_testingSet_10.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/testing/csv/STORM_testingSet_11.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/testing/csv/STORM_testingSet_12.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/testing/csv/STORM_testingSet_13.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/testing/csv/STORM_testingSet_14.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/testing/csv/STORM_testingSet_15.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/testing/csv/STORM_testingSet_16.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/testing/csv/STORM_testingSet_3.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/testing/csv/STORM_testingSet_4.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/testing/csv/STORM_testingSet_5.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/testing/csv/STORM_testingSet_6.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/testing/csv/STORM_testingSet_7.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/testing/csv/STORM_testingSet_8.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/testing/csv/STORM_testingSet_9.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/training/arff/STORM_trainingSet_10.arff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/training/arff/STORM_trainingSet_11.arff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/training/arff/STORM_trainingSet_12.arff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/training/arff/STORM_trainingSet_13.arff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/training/arff/STORM_trainingSet_14.arff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/training/arff/STORM_trainingSet_15.arff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/training/arff/STORM_trainingSet_16.arff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/training/arff/STORM_trainingSet_3.arff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/training/arff/STORM_trainingSet_4.arff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/training/arff/STORM_trainingSet_5.arff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/training/arff/STORM_trainingSet_6.arff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/training/arff/STORM_trainingSet_7.arff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/training/arff/STORM_trainingSet_8.arff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/training/arff/STORM_trainingSet_9.arff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/training/csv/STORM_trainingSet_10.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/training/csv/STORM_trainingSet_11.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/training/csv/STORM_trainingSet_12.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/training/csv/STORM_trainingSet_13.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/training/csv/STORM_trainingSet_14.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/training/csv/STORM_trainingSet_15.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/training/csv/STORM_trainingSet_16.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/training/csv/STORM_trainingSet_3.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/training/csv/STORM_trainingSet_4.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/training/csv/STORM_trainingSet_5.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/training/csv/STORM_trainingSet_6.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/training/csv/STORM_trainingSet_7.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/training/csv/STORM_trainingSet_8.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/training/csv/STORM_trainingSet_9.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/STORM/weka/wekaResult.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/repo/BOOKKEEPER" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/repo/STORM" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/ralisin/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/ralisin/controller/GitExtractor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/controller/GitExtractor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/ralisin/controller/MetricEvaluator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/controller/MetricEvaluator.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/ralisin/controller/Metrics.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/controller/Metrics.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/it/ralisin/controller/Proportion.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/controller/Proportion.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/ralisin/controller/Weka.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/controller/Weka.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/ralisin/tools/CsvTool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/tools/CsvTool.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/IBk__2.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/IBk__3.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/IBk__4.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/IBk__5.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/IBk__6.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/IBk_costSensitive_2.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/IBk_costSensitive_3.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/IBk_costSensitive_4.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/IBk_costSensitive_5.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/IBk_costSensitive_6.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/IBk_featureSelection_2.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/IBk_featureSelection_3.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/IBk_featureSelection_4.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/IBk_featureSelection_5.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/IBk_featureSelection_6.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/IBk_featureSelection_costSensitive_2.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/IBk_featureSelection_costSensitive_3.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/IBk_featureSelection_costSensitive_4.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/IBk_featureSelection_costSensitive_5.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/IBk_featureSelection_costSensitive_6.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/IBk_featureSelection_sampling_2.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/IBk_featureSelection_sampling_3.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/IBk_featureSelection_sampling_4.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/IBk_featureSelection_sampling_5.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/IBk_featureSelection_sampling_6.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/IBk_sampling_2.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/IBk_sampling_3.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/IBk_sampling_4.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/IBk_sampling_5.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/IBk_sampling_6.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/NaiveBayes__2.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/NaiveBayes__3.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/NaiveBayes__4.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/NaiveBayes__5.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/NaiveBayes__6.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/NaiveBayes_costSensitive_2.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/NaiveBayes_costSensitive_3.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/NaiveBayes_costSensitive_4.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/NaiveBayes_costSensitive_5.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/NaiveBayes_costSensitive_6.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/NaiveBayes_featureSelection_2.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/NaiveBayes_featureSelection_3.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/NaiveBayes_featureSelection_4.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/NaiveBayes_featureSelection_5.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/NaiveBayes_featureSelection_6.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/NaiveBayes_featureSelection_costSensitive_2.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/NaiveBayes_featureSelection_costSensitive_3.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/NaiveBayes_featureSelection_costSensitive_4.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/NaiveBayes_featureSelection_costSensitive_5.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/NaiveBayes_featureSelection_costSensitive_6.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/NaiveBayes_featureSelection_sampling_2.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/NaiveBayes_featureSelection_sampling_3.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/NaiveBayes_featureSelection_sampling_4.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/NaiveBayes_featureSelection_sampling_5.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/NaiveBayes_featureSelection_sampling_6.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/NaiveBayes_sampling_2.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/NaiveBayes_sampling_3.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/NaiveBayes_sampling_4.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/NaiveBayes_sampling_5.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/NaiveBayes_sampling_6.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/RandomForest__2.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/RandomForest__3.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/RandomForest__4.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/RandomForest__5.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/RandomForest__6.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/RandomForest_costSensitive_2.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/RandomForest_costSensitive_3.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/RandomForest_costSensitive_4.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/RandomForest_costSensitive_5.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/RandomForest_costSensitive_6.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/RandomForest_featureSelection_2.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/RandomForest_featureSelection_3.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/RandomForest_featureSelection_4.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/RandomForest_featureSelection_5.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/RandomForest_featureSelection_6.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/RandomForest_featureSelection_costSensitive_2.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/RandomForest_featureSelection_costSensitive_3.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/RandomForest_featureSelection_costSensitive_4.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/RandomForest_featureSelection_costSensitive_5.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/RandomForest_featureSelection_costSensitive_6.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/RandomForest_featureSelection_sampling_2.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/RandomForest_featureSelection_sampling_3.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/RandomForest_featureSelection_sampling_4.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/RandomForest_featureSelection_sampling_5.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/RandomForest_featureSelection_sampling_6.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/RandomForest_sampling_2.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/RandomForest_sampling_3.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/RandomForest_sampling_4.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/RandomForest_sampling_5.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/RandomForest_sampling_6.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/info/ticketList.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/info/ticketList.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/testing/arff/BOOKKEEPER_testingSet_2.arff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/testing/arff/BOOKKEEPER_testingSet_3.arff" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/testing/arff/BOOKKEEPER_testingSet_3.arff" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/testing/arff/BOOKKEEPER_testingSet_4.arff" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/testing/arff/BOOKKEEPER_testingSet_4.arff" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/testing/arff/BOOKKEEPER_testingSet_5.arff" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/testing/arff/BOOKKEEPER_testingSet_5.arff" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/testing/arff/BOOKKEEPER_testingSet_6.arff" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/testing/arff/BOOKKEEPER_testingSet_6.arff" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/testing/csv/BOOKKEEPER_testingSet_2.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/testing/csv/BOOKKEEPER_testingSet_3.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/testing/csv/BOOKKEEPER_testingSet_3.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/testing/csv/BOOKKEEPER_testingSet_4.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/testing/csv/BOOKKEEPER_testingSet_4.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/testing/csv/BOOKKEEPER_testingSet_5.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/testing/csv/BOOKKEEPER_testingSet_5.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/testing/csv/BOOKKEEPER_testingSet_6.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/testing/csv/BOOKKEEPER_testingSet_6.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/training/arff/BOOKKEEPER_trainingSet_2.arff" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/training/arff/BOOKKEEPER_trainingSet_3.arff" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/training/arff/BOOKKEEPER_trainingSet_3.arff" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/training/arff/BOOKKEEPER_trainingSet_4.arff" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/training/arff/BOOKKEEPER_trainingSet_4.arff" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/training/arff/BOOKKEEPER_trainingSet_5.arff" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/training/arff/BOOKKEEPER_trainingSet_5.arff" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/training/arff/BOOKKEEPER_trainingSet_6.arff" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/training/arff/BOOKKEEPER_trainingSet_6.arff" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/training/csv/BOOKKEEPER_trainingSet_2.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/training/csv/BOOKKEEPER_trainingSet_3.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/training/csv/BOOKKEEPER_trainingSet_3.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/training/csv/BOOKKEEPER_trainingSet_4.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/training/csv/BOOKKEEPER_trainingSet_4.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/training/csv/BOOKKEEPER_trainingSet_5.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/training/csv/BOOKKEEPER_trainingSet_5.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/training/csv/BOOKKEEPER_trainingSet_6.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/training/csv/BOOKKEEPER_trainingSet_6.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/weka/wekaResult.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/STORM/info/ticketList.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/STORM/info/ticketList.csv" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,8 +454,6 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-    <option name="ROOT_SYNC" value="SYNC" />
-    <option name="UPDATE_TYPE" value="REBASE" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
@@ -34,8 +463,8 @@
 }</component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
-    &quot;url&quot;: &quot;https://github.com/Ralisin/CodeMetricsISW2&quot;,
-    &quot;accountId&quot;: &quot;0ee87b8f-e7b9-4f7a-bdb0-c9464a2eb8c8&quot;
+    &quot;url&quot;: &quot;https://github.com/Ralisin/CodeMetricsISW2.git&quot;,
+    &quot;accountId&quot;: &quot;30f88312-d8af-4d52-9576-11155cb5020c&quot;
   }
 }</component>
   <component name="ProblemsViewState">
@@ -45,39 +474,45 @@
   &quot;associatedIndex&quot;: 8
 }</component>
   <component name="ProjectId" id="2egQOlGkGicCoAxXq9jnwLmMrPl" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/buniy/Desktop/temp&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;inlay.hints&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "Application.Main.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/home/ralisin/Desktop/CodeMetricsISW2/src/main/resources/BOOKKEEPER/acumeResult",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
-    <key name="CreateClassDialog.RecentsKey">
-      <recent name="it.ralisin.controller" />
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acumeResult" />
     </key>
     <key name="ExtractSuperBase.RECENT_KEYS">
       <recent name="it.ralisin.tools" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="it.ralisin.controller" />
     </key>
   </component>
   <component name="RunAnythingCache">
@@ -109,8 +544,8 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.17011.79" />
-        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-IU-241.17011.79" />
+        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.15989.150" />
+        <option value="bundled-js-predefined-1d06a55b98c1-91d5c284f522-JavaScript-IU-241.15989.150" />
       </set>
     </attachedChunks>
   </component>
@@ -157,16 +592,9 @@
       <workItem from="1717156905478" duration="6501000" />
       <workItem from="1717171500453" duration="4402000" />
       <workItem from="1717319974558" duration="767000" />
-      <workItem from="1717420668639" duration="9387000" />
-      <workItem from="1717534745162" duration="7255000" />
-      <workItem from="1717570361041" duration="2133000" />
-      <workItem from="1717587560955" duration="18838000" />
-      <workItem from="1717665457521" duration="50000" />
-      <workItem from="1717665547501" duration="52000" />
-      <workItem from="1717677599159" duration="2221000" />
-      <workItem from="1717750860986" duration="2600000" />
-      <workItem from="1717768882275" duration="9296000" />
-      <workItem from="1717778425589" duration="1918000" />
+      <workItem from="1718197414389" duration="33283000" />
+      <workItem from="1718269118121" duration="962000" />
+      <workItem from="1718271021311" duration="1204000" />
     </task>
     <task id="LOCAL-00001" summary="Get Versions and Tickets from Jira">
       <option name="closed" value="true" />
@@ -256,112 +684,60 @@
       <option name="project" value="LOCAL" />
       <updated>1716557717335</updated>
     </task>
-    <task id="LOCAL-00012" summary="Code metrics">
+    <task id="LOCAL-00012" summary="Speedup code execution">
       <option name="closed" value="true" />
-      <created>1717343500156</created>
+      <created>1717337445209</created>
       <option name="number" value="00012" />
       <option name="presentableId" value="LOCAL-00012" />
       <option name="project" value="LOCAL" />
-      <updated>1717343500157</updated>
+      <updated>1717337445209</updated>
     </task>
-    <task id="LOCAL-00013" summary="Training and testing set">
-      <option name="closed" value="true" />
-      <created>1717429830493</created>
-      <option name="number" value="00013" />
-      <option name="presentableId" value="LOCAL-00013" />
-      <option name="project" value="LOCAL" />
-      <updated>1717429830493</updated>
-    </task>
-    <task id="LOCAL-00014" summary="Code smells">
-      <option name="closed" value="true" />
-      <created>1717430016445</created>
-      <option name="number" value="00014" />
-      <option name="presentableId" value="LOCAL-00014" />
-      <option name="project" value="LOCAL" />
-      <updated>1717430016445</updated>
-    </task>
-    <task id="LOCAL-00015" summary="CSV to ARFF conversion">
-      <option name="closed" value="true" />
-      <created>1717539535399</created>
-      <option name="number" value="00015" />
-      <option name="presentableId" value="LOCAL-00015" />
-      <option name="project" value="LOCAL" />
-      <updated>1717539535399</updated>
-    </task>
-    <task id="LOCAL-00016" summary="Weka result">
-      <option name="closed" value="true" />
-      <created>1717778485960</created>
-      <option name="number" value="00016" />
-      <option name="presentableId" value="LOCAL-00016" />
-      <option name="project" value="LOCAL" />
-      <updated>1717778485960</updated>
-    </task>
-    <task id="LOCAL-00017" summary="Code smells">
-      <option name="closed" value="true" />
-      <created>1717779547479</created>
-      <option name="number" value="00017" />
-      <option name="presentableId" value="LOCAL-00017" />
-      <option name="project" value="LOCAL" />
-      <updated>1717779547479</updated>
-    </task>
-    <task id="LOCAL-00018" summary="Code smells">
-      <option name="closed" value="true" />
-      <created>1717779806086</created>
-      <option name="number" value="00018" />
-      <option name="presentableId" value="LOCAL-00018" />
-      <option name="project" value="LOCAL" />
-      <updated>1717779806086</updated>
-    </task>
-    <task id="LOCAL-00019" summary="Code smells">
-      <option name="closed" value="true" />
-      <created>1717779880843</created>
-      <option name="number" value="00019" />
-      <option name="presentableId" value="LOCAL-00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1717779880843</updated>
-    </task>
-    <task id="LOCAL-00020" summary="Code smells">
-      <option name="closed" value="true" />
-      <created>1717779996117</created>
-      <option name="number" value="00020" />
-      <option name="presentableId" value="LOCAL-00020" />
-      <option name="project" value="LOCAL" />
-      <updated>1717779996118</updated>
-    </task>
-    <task id="LOCAL-00021" summary="Code smells">
-      <option name="closed" value="true" />
-      <created>1717780052194</created>
-      <option name="number" value="00021" />
-      <option name="presentableId" value="LOCAL-00021" />
-      <option name="project" value="LOCAL" />
-      <updated>1717780052194</updated>
-    </task>
-    <task id="LOCAL-00022" summary="Code smells">
-      <option name="closed" value="true" />
-      <created>1717780100810</created>
-      <option name="number" value="00022" />
-      <option name="presentableId" value="LOCAL-00022" />
-      <option name="project" value="LOCAL" />
-      <updated>1717780100810</updated>
-    </task>
-    <option name="localTasksCounter" value="23" />
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="origin/master" />
+                </option>
+              </RecentGroup>
+            </list>
+          </value>
+        </entry>
+      </map>
+    </option>
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/master" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
     </option>
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="Get Versions and Tickets from Jira" />
     <MESSAGE value="Evaluate ColdStart" />
     <MESSAGE value="Proportion" />
@@ -372,12 +748,8 @@
     <MESSAGE value="Couple code smells" />
     <MESSAGE value="Reduce code complexity" />
     <MESSAGE value="Multithreading on extractJavaFiles" />
-    <MESSAGE value="Code metrics" />
-    <MESSAGE value="Training and testing set" />
-    <MESSAGE value="CSV to ARFF conversion" />
-    <MESSAGE value="Weka result" />
-    <MESSAGE value="Code smells" />
-    <option name="LAST_COMMIT_MESSAGE" value="Code smells" />
+    <MESSAGE value="Speedup code execution" />
+    <option name="LAST_COMMIT_MESSAGE" value="Speedup code execution" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

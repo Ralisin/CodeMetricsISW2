@@ -1,9 +1,6 @@
 package it.ralisin.tools;
 
-import it.ralisin.entities.ClassifierEvaluation;
-import it.ralisin.entities.JavaClass;
-import it.ralisin.entities.Release;
-import it.ralisin.entities.Ticket;
+import it.ralisin.entities.*;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -104,7 +101,7 @@ public class CsvTool {
         }
     }
 
-    public void csvAcume(List<JavaClass> javaClassList, String classifier, String filters, int index) {
+    public void csvAcume(List<WekaObject> javaClassList, String classifier, String filters, int index) {
         String filePath = dirPath + ACUME + classifier + "_" + filters + "_" + index + ".csv";
 
         try {
@@ -120,11 +117,11 @@ public class CsvTool {
             writer.newLine();
 
             int id = 1;
-            for (JavaClass javaClass : javaClassList) {
+            for (WekaObject wekaObject : javaClassList) {
                 writer.write(id + ",");
-                writer.write(javaClass.getSize() + ",");
-                writer.write(javaClass.getPredicted() + ",");
-                writer.write(javaClass.getBuggyness());
+                writer.write(wekaObject.size + ",");
+                writer.write(wekaObject.prediction + ",");
+                writer.write(wekaObject.buggyness);
 
                 writer.newLine();
 

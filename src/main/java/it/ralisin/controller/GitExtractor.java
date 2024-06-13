@@ -24,7 +24,7 @@ public class GitExtractor {
     public GitExtractor(String projName, String repoURL) throws GitAPIException, IOException {
         GitFactory gitFactory = new GitFactory(projName, repoURL);
         this.git = gitFactory.getGit();
-        this.repository = gitFactory.getGit().getRepository();
+        this.repository = git.getRepository();
     }
 
     public List<RevCommit> getAllCommits() throws IOException {
@@ -33,9 +33,7 @@ public class GitExtractor {
         // Get all commits
         try {
             Iterable<RevCommit> allCommits = git.log().all().call();
-            for (RevCommit commit : allCommits) {
-                commitList.add(commit);
-            }
+            allCommits.forEach(commitList::add);
         } catch (GitAPIException e) {
             Logger.getAnonymousLogger().log(Level.SEVERE, "Error while extracting commits", e);
         }

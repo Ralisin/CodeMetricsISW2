@@ -33,7 +33,7 @@ public class Metrics {
         // Get ticket list from jira
         List<Ticket> ticketList = jira.extractTicketsList(releaseList);
         TicketsTool.fixInconsistentTickets(ticketList, releaseList);
-        ticketList.sort(Comparator.comparing(Ticket::getCreationDate));
+        ticketList.sort(Comparator.comparing(Ticket::getResolutionDate));
 
         // Do proportion on tickets
         Proportion.proportion(releaseList, ticketList);
@@ -41,7 +41,7 @@ public class Metrics {
 
         csvTool.csvTicketFile(ticketList);
 
-        // Get list of full project commits
+        // Get list of project commits
         logger.log(Level.INFO, "Cloning repository from GitHub");
         GitExtractor gitExtractor = new GitExtractor(projName, gitHubUrl);
         List<RevCommit> commitList = gitExtractor.getAllCommits();
@@ -50,12 +50,7 @@ public class Metrics {
         logger.info( "Linking commits to releases");
         ReleaseTools.linkCommits(commitList, releaseList);
         releaseList.removeIf(release -> release.getCommitList().isEmpty()); // Remove releases with empty commit list
-        for(int i = 1; i <= releaseList.size(); i++) releaseList.get(i - 1).setId(i); // Reassign release id
-
-        // Remove half releases
-        int halfReleases = releaseList.size() / 2;
-        List<Release> halfReleaseList = new ArrayList<>(releaseList);
-        halfReleaseList.removeIf(release -> release.getId() > halfReleases);
+        for(int i = 0; i < releaseList.size(); i++) releaseList.get(i).setId(i + 1); // Reassign release id
 
         // Link tickets to relative commits
         TicketsTool.linkCommits(ticketList, commitList);
@@ -72,16 +67,22 @@ public class Metrics {
 
         logger.info("Evaluating metrics for every javaClass");
         for (Release release : releaseList) {
+            logger.info("Evaluating release " + release.getName());
             for (JavaClass javaClass : release.getJavaClassList()) {
                 MetricEvaluator compMetrics = new MetricEvaluator(javaClass, commitInTicketList, gitExtractor.repository);
                 compMetrics.evaluateMetrics();
             }
         }
 
+        // Remove half releases
+        int halfReleases = releaseList.size() / 2;
+        List<Release> halfReleaseList = new ArrayList<>(releaseList);
+        halfReleaseList.removeIf(release -> release.getId() > halfReleases);
+
         // Walk forward
         logger.info("Generating dataset with WalkForward");
         BugginessEvaluator bugEval = new BugginessEvaluator(gitExtractor.repository);
-        for (int i = 2; i <= halfReleaseList.size(); i++) {
+        for (int i = 3; i <= halfReleaseList.size(); i++) {
             int limitReleaseId = i;
 
             List<Release> walkRelease = halfReleaseList.stream().filter(release -> release.getId() <= limitReleaseId).toList();
@@ -100,13 +101,5 @@ public class Metrics {
         logger.info("Converting CSV files to ARFF files");
         ArffTool arffTool = new ArffTool(projName, SRC_DIR);
         arffTool.csvToArff();
-
-        String trainingFolder = SRC_DIR + projName + "/training/arff/";
-        String testingFolder = SRC_DIR + projName + "/testing/arff/";
-
-        // Train machine learning models
-        logger.info("Weka");
-        Weka weka = new Weka(trainingFolder, testingFolder, releaseList, csvTool);
-        weka.wekaAnalyses();
     }
 }

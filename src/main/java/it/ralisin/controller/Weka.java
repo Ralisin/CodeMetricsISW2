@@ -1,14 +1,10 @@
 package it.ralisin.controller;
 
+import com.opencsv.exceptions.CsvValidationException;
 import it.ralisin.entities.ClassifierEvaluation;
-
-import it.ralisin.entities.JavaClass;
-import it.ralisin.entities.Release;
+import it.ralisin.entities.WekaObject;
 import it.ralisin.tools.CsvTool;
-import weka.attributeSelection.ASEvaluation;
-import weka.attributeSelection.ASSearch;
-import weka.attributeSelection.CfsSubsetEval;
-import weka.attributeSelection.GreedyStepwise;
+import weka.attributeSelection.*;
 import weka.classifiers.Classifier;
 import weka.classifiers.CostMatrix;
 import weka.classifiers.Evaluation;
@@ -18,14 +14,20 @@ import weka.classifiers.meta.CostSensitiveClassifier;
 import weka.classifiers.meta.FilteredClassifier;
 import weka.classifiers.trees.RandomForest;
 import weka.core.Instances;
-import weka.core.converters.ConverterUtils.DataSource;
+import weka.core.converters.ConverterUtils;
+
+import com.opencsv.CSVReader;
 import weka.filters.Filter;
 import weka.filters.MultiFilter;
 import weka.filters.supervised.attribute.AttributeSelection;
-import weka.filters.supervised.instance.SMOTE;
+import weka.filters.supervised.instance.SpreadSubsample;
 
+import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.*;
+import java.nio.file.DirectoryStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -36,60 +38,116 @@ public class Weka {
 
     private final List<ClassifierEvaluation> classifierEvaluations = new ArrayList<>();
 
-    private final List<Release> releaseList;
     private final CsvTool csvTool;
 
-    private final List<Instances> trainingSourceList = new ArrayList<>();
-    private final List<Instances> testingSourceList = new ArrayList<>();
+    private final List<Instances> trainingList = new ArrayList<>();
+    private final List<Instances> testingList = new ArrayList<>();
 
-    public Weka(String trainingDirStr, String testingDirStr, List<Release> releaseList, CsvTool csvTool) throws IOException {
+    private final List<List<WekaObject>> listWekaJavaClassList = new ArrayList<>();
+
+    public Weka(String projName, String srcDir) throws IOException {
+        String trainingDirStr = srcDir + projName + "/training/arff";
+        String testingDirStr = srcDir + projName + "/testing/arff";
+
         Path trainingDir = Paths.get(trainingDirStr);
         Path testingDir = Paths.get(testingDirStr);
 
         if (!Files.exists(trainingDir) || !Files.exists(testingDir))
             throw new IOException("Invalid training/testing directory");
 
-        getInstances(trainingDir, this.trainingSourceList);
-        getInstances(testingDir, this.testingSourceList);
+        int numFilesTraining = filesInFolder(trainingDirStr);
+        int numFilesTesting = filesInFolder(testingDirStr);
+        if(numFilesTraining != numFilesTesting) throw new IOException("Given training and testing set are different");
 
-        if (trainingSourceList.size() != testingSourceList.size() || trainingSourceList.isEmpty())
-            throw new IOException("No arff files found");
+        getInstances(projName, trainingDirStr, numFilesTraining, "trainingSet", trainingList);
+        getInstances(projName, testingDirStr, numFilesTesting, "testingSet", testingList);
 
-        this.releaseList = releaseList;
-        this.csvTool = csvTool;
+        for(int i = 0; i < numFilesTesting; i++) {
+            List<WekaObject> javaClassList = getWekaJavaFiles(projName, srcDir + projName + "/testing/csv", i + 3);
+
+            if (javaClassList.size() != testingList.get(i).size())
+                throw new IOException("Number of instances of WekaObject are different from number of instances of testingList");
+
+            listWekaJavaClassList.add(javaClassList);
+        }
+
+        if(listWekaJavaClassList.size() != numFilesTesting)
+            throw new IOException("Invalid testing csv directory");
+
+        this.csvTool = new CsvTool(projName, srcDir + projName);
     }
 
-    private void getInstances(Path dir, List<Instances> instancesList) {
-        try (DirectoryStream<Path> stream = Files.newDirectoryStream(dir)) {
-            for (Path file : stream) {
-                if (!Files.isDirectory(file)) {
-                    if (!file.toString().endsWith(".arff")) continue;
+    private void getInstances(String projName, String dir, int numFiles, String middleFileName, List<Instances> instancesList) {
+        for(int i = 3; i < numFiles + 3; i++) {
+            String file = dir + "/" + projName + "_" + middleFileName + "_" + i + ".arff";
 
-                    Instances data = loadARFF(file.toString());
+            try {
+                Instances data = loadARFF(file);
+                data.setClassIndex(data.numAttributes() - 1);
 
-                    // Set class index (last attribute)
-                    data.setClassIndex(data.numAttributes() - 1);
-
-                    instancesList.add(data);
-                }
+                instancesList.add(data);
+            } catch (Exception e) {
+                // Ignore loadARFF exception
             }
-        } catch (Exception e) {
-            Logger.getAnonymousLogger().log(Level.INFO, e.getMessage());
         }
     }
 
+    private int filesInFolder(String dir) {
+        int numFiles = 0;
+
+        try (DirectoryStream<Path> stream = Files.newDirectoryStream(Paths.get(dir), "*.arff")) {
+            for (Path file : stream) {
+                if (!Files.isDirectory(file) && file.toString().endsWith(".arff")) {
+                    numFiles++;
+                }
+            }
+        } catch (IOException e) {
+            Logger.getAnonymousLogger().log(Level.SEVERE, "Error reading directory", e);
+        }
+
+        return numFiles;
+    }
+
     private Instances loadARFF(String filePath) throws Exception {
-        DataSource source = new DataSource(filePath);
+        ConverterUtils.DataSource source = new ConverterUtils.DataSource(filePath);
         return source.getDataSet();
+    }
+
+    private List<WekaObject> getWekaJavaFiles(String projName, String dir, int index) {
+        List<WekaObject> wekaJavaClassList = new ArrayList<>();
+
+        String file = dir + "/" + projName + "_testingSet_" + index + ".csv";
+
+        try (CSVReader reader = new CSVReader(new FileReader(file))) {
+            String[] line = reader.readNext(); // Skip first line read
+
+            while ((line = reader.readNext()) != null) {
+                WekaObject wekaJavaClass = new WekaObject();
+                wekaJavaClass.size = Integer.parseInt(line[2]);
+                wekaJavaClass.buggyness = line[line.length-1];
+
+                wekaJavaClassList.add(wekaJavaClass);
+            }
+        } catch (IOException | CsvValidationException e) {
+            Logger.getAnonymousLogger().log(Level.SEVERE, "Error retrieving javaClass data from csv file " + index +  e.getMessage());
+        }
+
+        return wekaJavaClassList;
     }
 
     public void wekaAnalyses() throws Exception {
         Classifier fc;
         ClassifierEvaluation ce;
 
-        for (int i = 0; i < trainingSourceList.size(); i++) {
-            Instances training = trainingSourceList.get(i);
-            Instances testing = testingSourceList.get(i);
+        for (int i = 0; i < trainingList.size(); i++) {
+            Logger.getAnonymousLogger().log(Level.INFO, "training on instance " + (i + 3));
+
+            Instances training = trainingList.get(i);
+            Instances testing = testingList.get(i);
+
+            Filter fs = featureSelection(training);
+            Instances filterTraining = Filter.useFilter(training, fs);
+            Instances filterTesting = Filter.useFilter(testing, fs);
 
             for (Classifier classifier : classifiers) {
                 // Classifier: no featureSelection, no sampling, no costSensitive
@@ -98,8 +156,7 @@ public class Weka {
                 classifierEvaluations.add(ce);
 
                 // Classifier: featureSelection, no sampling, no costSensitive
-                fc = createFilteredClassifier(classifier, featureSelection());
-                ce = evaluateClassifier(fc, training, testing, i, classifier.getClass().getSimpleName(), "featureSelection");
+                ce = evaluateClassifier(classifier, filterTraining, filterTesting, i, classifier.getClass().getSimpleName(), "featureSelection");
                 ce.setClassifierFilters(true, false, false);
                 classifierEvaluations.add(ce);
 
@@ -116,15 +173,14 @@ public class Weka {
                 classifierEvaluations.add(ce);
 
                 // Classifier: featureSelection, sampling, no costSensitive
-                fc = createFilteredClassifier(classifier, featureSelection(), sampling(training));
-                ce = evaluateClassifier(fc, training, testing, i, classifier.getClass().getSimpleName(), "featureSelection_sampling");
+                fc = createFilteredClassifier(classifier, sampling(training));
+                ce = evaluateClassifier(fc, filterTraining, filterTesting, i, classifier.getClass().getSimpleName(), "featureSelection_sampling");
                 ce.setClassifierFilters(true, true, false);
                 classifierEvaluations.add(ce);
 
                 // Classifier: featureSelection, no sampling, costSensitive
                 fc = costSensitive(classifier);
-                fc = createFilteredClassifier(fc, featureSelection());
-                ce = evaluateClassifier(fc, training, testing, i, classifier.getClass().getSimpleName(), "featureSelection_costSensitive");
+                ce = evaluateClassifier(fc, filterTraining, filterTesting, i, classifier.getClass().getSimpleName(), "featureSelection_costSensitive");
                 ce.setClassifierFilters(true, false, true);
                 classifierEvaluations.add(ce);
             }
@@ -146,9 +202,8 @@ public class Weka {
         return filteredClassifier;
     }
 
-    private Filter featureSelection() {
-        // Filter for featureSelection
-        AttributeSelection attributeSelection = new AttributeSelection();
+    private Filter featureSelection(Instances dataset) throws Exception {
+        AttributeSelection featureSelected = new AttributeSelection();
 
         ASEvaluation eval = new CfsSubsetEval(); // Selects subsets of features based on the correlation between the features and the class
             // InfoGainAttributeEval() - Selects subsets of features based on the information gain
@@ -157,25 +212,32 @@ public class Weka {
             // GainRatioAttributeEval() - Evaluates features using ratio gain
             // ChiSquaredAttributeEval() - Evaluates features using the chi-square test
 
-        ASSearch search = new GreedyStepwise(); // Greedy approach to select features
+        ASSearch search = new GreedyStepwise();
             // BestFirst() - Search for the best subset of features using a best-first search
+            // GreedyStepwise() - Greedy approach to select features
             // Ranker() - Rank features according to their scores
             // GeneticSearch() - It uses a genetic algorithm to search for the best subset of features
             // RandomSearch() - Use a random search to find the best subset of features
             // ExhaustiveSearch() - Search exhaustively for all possible combinations of features
 
-        attributeSelection.setEvaluator(eval);
-        attributeSelection.setSearch(search);
+        featureSelected.setEvaluator(eval);
+        featureSelected.setSearch(search);
+        featureSelected.setInputFormat(dataset);
 
-        return attributeSelection;
+        return featureSelected;
     }
 
     private Filter sampling(Instances dataset) throws Exception {
-        // Define resampling
-        SMOTE smote = new SMOTE();
-        smote.setInputFormat(dataset);
+//        SMOTE smote = new SMOTE();
+//        smote.setInputFormat(dataset);
+//
+//        return smote;
 
-        return smote;
+        SpreadSubsample filter = new SpreadSubsample();
+        filter.setDistributionSpread(1.0);
+        filter.setInputFormat(dataset);
+
+        return filter;
     }
 
     private CostSensitiveClassifier costSensitive(Classifier classifier) {
@@ -205,16 +267,14 @@ public class Weka {
     private ClassifierEvaluation evaluateClassifier(Classifier classifier, Instances training, Instances testing, int index, String classifierName, String filters) throws Exception {
         Evaluation eval = trainAndEvaluate(classifier, training, testing);
 
-        List<JavaClass> javaClassList = releaseList.get(index + 2).getJavaClassList();
+        List<WekaObject> javaClassList = listWekaJavaClassList.get(index);
 
-        for(int i = 0; i < javaClassList.size(); i++) {
+        for(int i = 0; i < testing.numInstances(); i++) {
             // Get the prediction distribution
             double[] predictionDistribution = classifier.distributionForInstance(testing.instance(i));
 
             // Take index 1 that is prediction label "yes"
-            double prediction = predictionDistribution[1];
-
-            javaClassList.get(i).setPredicted(prediction);
+            javaClassList.get(i).prediction = predictionDistribution[1];
         }
 
         csvTool.csvAcume(javaClassList, classifierName, filters, index + 2);

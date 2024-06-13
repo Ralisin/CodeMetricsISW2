@@ -3,7 +3,7 @@ Release ID, Filepath, Size, LOC Touched, NR, NFix, NAuth, LOC Added, Max LOC Add
 1,bookkeeper-benchmark/src/main/java/org/apache/bookkeeper/benchmark/TestClient.java,244,1092,18,2,10,697,294,38.72222222222222,302,252,16.77777777777778,no
 1,bookkeeper-server/src/main/java/org/apache/bookkeeper/bookie/Bookie.java,1026,9918,165,23,35,5024,545,30.44848484848485,130,545,0.7878787878787878,yes
 1,bookkeeper-server/src/main/java/org/apache/bookkeeper/bookie/BookieException.java,92,485,19,2,13,428,84,22.526315789473685,371,82,19.526315789473685,yes
-1,bookkeeper-server/src/main/java/org/apache/bookkeeper/bookie/BufferedChannel.java,180,774,20,0,12,536,168,26.8,298,168,14.9,no
+1,bookkeeper-server/src/main/java/org/apache/bookkeeper/bookie/BufferedChannel.java,180,776,21,0,13,537,168,25.571428571428573,298,168,14.19047619047619,no
 1,bookkeeper-server/src/main/java/org/apache/bookkeeper/bookie/EntryLogger.java,471,5776,88,12,28,3541,643,40.23863636363637,1306,487,14.840909090909092,yes
 1,bookkeeper-server/src/main/java/org/apache/bookkeeper/bookie/FileInfo.java,204,1308,40,7,15,943,124,23.575,578,124,14.45,yes
 1,bookkeeper-server/src/main/java/org/apache/bookkeeper/bookie/LedgerCache.java,551,1550,28,4,13,833,536,29.75,116,536,4.142857142857143,yes
@@ -230,7 +230,7 @@ Release ID, Filepath, Size, LOC Touched, NR, NFix, NAuth, LOC Added, Max LOC Add
 2,bookkeeper-server/src/main/java/org/apache/bookkeeper/bookie/BookieException.java,150,485,19,2,13,428,84,22.526315789473685,371,82,19.526315789473685,no
 2,bookkeeper-server/src/main/java/org/apache/bookkeeper/bookie/BookieMXBean.java,31,35,2,0,2,33,33,16.5,31,33,15.5,no
 2,bookkeeper-server/src/main/java/org/apache/bookkeeper/bookie/BookieShell.java,684,9563,170,8,45,6218,684,36.576470588235296,2873,684,16.9,yes
-2,bookkeeper-server/src/main/java/org/apache/bookkeeper/bookie/BufferedChannel.java,180,774,20,0,12,536,168,26.8,298,168,14.9,no
+2,bookkeeper-server/src/main/java/org/apache/bookkeeper/bookie/BufferedChannel.java,180,776,21,0,13,537,168,25.571428571428573,298,168,14.19047619047619,no
 2,bookkeeper-server/src/main/java/org/apache/bookkeeper/bookie/Cookie.java,196,1436,39,3,20,980,195,25.128205128205128,524,195,13.435897435897436,yes
 2,bookkeeper-server/src/main/java/org/apache/bookkeeper/bookie/EntryLogger.java,482,5776,88,12,28,3541,643,40.23863636363637,1306,487,14.840909090909092,yes
 2,bookkeeper-server/src/main/java/org/apache/bookkeeper/bookie/ExitCode.java,40,54,2,1,2,47,40,23.5,40,40,20.0,no
@@ -457,7 +457,7 @@ Release ID, Filepath, Size, LOC Touched, NR, NFix, NAuth, LOC Added, Max LOC Add
 3,bookkeeper-server/src/main/java/org/apache/bookkeeper/bookie/BookieException.java,154,485,19,2,13,428,84,22.526315789473685,371,82,19.526315789473685,yes
 3,bookkeeper-server/src/main/java/org/apache/bookkeeper/bookie/BookieMXBean.java,31,35,2,0,2,33,33,16.5,31,33,15.5,no
 3,bookkeeper-server/src/main/java/org/apache/bookkeeper/bookie/BookieShell.java,928,9563,170,8,45,6218,684,36.576470588235296,2873,684,16.9,no
-3,bookkeeper-server/src/main/java/org/apache/bookkeeper/bookie/BufferedChannel.java,180,774,20,0,12,536,168,26.8,298,168,14.9,no
+3,bookkeeper-server/src/main/java/org/apache/bookkeeper/bookie/BufferedChannel.java,180,776,21,0,13,537,168,25.571428571428573,298,168,14.19047619047619,no
 3,bookkeeper-server/src/main/java/org/apache/bookkeeper/bookie/Cookie.java,260,1436,39,3,20,980,195,25.128205128205128,524,195,13.435897435897436,yes
 3,bookkeeper-server/src/main/java/org/apache/bookkeeper/bookie/EntryLogger.java,551,5776,88,12,28,3541,643,40.23863636363637,1306,487,14.840909090909092,yes
 3,bookkeeper-server/src/main/java/org/apache/bookkeeper/bookie/ExitCode.java,40,54,2,1,2,47,40,23.5,40,40,20.0,no
@@ -784,7 +784,7 @@ Release ID, Filepath, Size, LOC Touched, NR, NFix, NAuth, LOC Added, Max LOC Add
 4,bookkeeper-server/src/main/java/org/apache/bookkeeper/bookie/BookieException.java,157,485,19,2,13,428,84,22.526315789473685,371,82,19.526315789473685,no
 4,bookkeeper-server/src/main/java/org/apache/bookkeeper/bookie/BookieMXBean.java,31,35,2,0,2,33,33,16.5,31,33,15.5,no
 4,bookkeeper-server/src/main/java/org/apache/bookkeeper/bookie/BookieShell.java,981,9563,170,8,45,6218,684,36.576470588235296,2873,684,16.9,no
-4,bookkeeper-server/src/main/java/org/apache/bookkeeper/bookie/BufferedChannel.java,180,774,20,0,12,536,168,26.8,298,168,14.9,no
+4,bookkeeper-server/src/main/java/org/apache/bookkeeper/bookie/BufferedChannel.java,180,776,21,0,13,537,168,25.571428571428573,298,168,14.19047619047619,no
 4,bookkeeper-server/src/main/java/org/apache/bookkeeper/bookie/Cookie.java,262,1436,39,3,20,980,195,25.128205128205128,524,195,13.435897435897436,no
 4,bookkeeper-server/src/main/java/org/apache/bookkeeper/bookie/EntryLogger.java,553,5776,88,12,28,3541,643,40.23863636363637,1306,487,14.840909090909092,no
 4,bookkeeper-server/src/main/java/org/apache/bookkeeper/bookie/ExitCode.java,40,54,2,1,2,47,40,23.5,40,40,20.0,no

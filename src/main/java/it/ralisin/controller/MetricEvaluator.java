@@ -97,13 +97,11 @@ public class MetricEvaluator {
     }
 
     private void churnMetrics(JavaClass javaClass, List<Integer> addedLines, List<Integer> deletedLines) {
-        List<Integer> churnValues = new ArrayList<>();
         int churnSum = 0;
         int maxChurn = 0;
 
         for (int i = 0; i < addedLines.size(); i++) {
             int churn = addedLines.get(i) - deletedLines.get(i);
-            churnValues.add(churn);
 
             churnSum += churn;
             if (churn > maxChurn)
@@ -112,7 +110,7 @@ public class MetricEvaluator {
 
         javaClass.setChurn(churnSum);
         javaClass.setMaxChurn(maxChurn);
-        javaClass.setAvgChurn(1.0 * churnSum / churnValues.size());
+        javaClass.setAvgChurn(1.0 * churnSum / addedLines.size());
     }
 
     private void locTouched(JavaClass javaClass, List<Integer> addedLines, List<Integer> deletedLines) {

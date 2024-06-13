@@ -11,7 +11,7 @@ Release ID, Filepath, Size, LOC Touched, NR, NFix, NAuth, LOC Added, Max LOC Add
 7,bookkeeper-server/src/main/java/org/apache/bookkeeper/bookie/BookieMXBean.java,31,35,2,0,2,33,33,16.5,31,33,15.5,no
 7,bookkeeper-server/src/main/java/org/apache/bookkeeper/bookie/BookieShell.java,1406,9563,170,8,45,6218,684,36.576470588235296,2873,684,16.9,yes
 7,bookkeeper-server/src/main/java/org/apache/bookkeeper/bookie/BookieThread.java,55,96,6,0,4,76,45,12.666666666666666,56,45,9.333333333333334,no
-7,bookkeeper-server/src/main/java/org/apache/bookkeeper/bookie/BufferedChannel.java,204,774,20,0,12,536,168,26.8,298,168,14.9,no
+7,bookkeeper-server/src/main/java/org/apache/bookkeeper/bookie/BufferedChannel.java,204,776,21,0,13,537,168,25.571428571428573,298,168,14.19047619047619,no
 7,bookkeeper-server/src/main/java/org/apache/bookkeeper/bookie/BufferedChannelBase.java,55,80,7,0,6,69,55,9.857142857142858,58,55,8.285714285714286,no
 7,bookkeeper-server/src/main/java/org/apache/bookkeeper/bookie/BufferedReadChannel.java,103,195,6,0,6,162,103,27.0,129,103,21.5,no
 7,bookkeeper-server/src/main/java/org/apache/bookkeeper/bookie/CacheCallback.java,34,41,3,0,3,38,34,12.666666666666666,35,34,11.666666666666666,no
