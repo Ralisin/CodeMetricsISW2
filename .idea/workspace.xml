@@ -4,12 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b9736f61-e96d-4747-a412-d2bfb5b24899" name="Changes" comment="Weka Kappa FIX">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="b9736f61-e96d-4747-a412-d2bfb5b24899" name="Changes" comment="Code smell fix">
       <change beforePath="$PROJECT_DIR$/src/main/java/it/ralisin/controller/Weka.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/controller/Weka.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acumeResult/EAM_NEAM_output.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acumeResult/EAM_NEAM_output.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/weka/wekaResult.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/weka/wekaResult.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/STORM/weka/wekaResult.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/STORM/weka/wekaResult.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/it/ralisin/entities/WekaObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/entities/WekaObject.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -62,7 +59,7 @@
     "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "/home/ralisin/Desktop/CodeMetricsISW2/src/main/resources/BOOKKEEPER/acumeResult",
+    "last_opened_file_path": "/home/ralisin/Desktop/CodeMetricsISW2/src/main/resources/STORM/acumeResult",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -77,8 +74,8 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acumeResult" />
       <recent name="$PROJECT_DIR$/src/main/resources/STORM/acumeResult" />
+      <recent name="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acumeResult" />
     </key>
     <key name="ExtractSuperBase.RECENT_KEYS">
       <recent name="it.ralisin.tools" />
@@ -166,7 +163,7 @@
       <workItem from="1717319974558" duration="767000" />
       <workItem from="1718197414389" duration="33283000" />
       <workItem from="1718269118121" duration="962000" />
-      <workItem from="1718271021311" duration="8284000" />
+      <workItem from="1718271021311" duration="8610000" />
     </task>
     <task id="LOCAL-00001" summary="Get Versions and Tickets from Jira">
       <option name="closed" value="true" />
@@ -280,7 +277,15 @@
       <option name="project" value="LOCAL" />
       <updated>1718286875477</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Code smell fix">
+      <option name="closed" value="true" />
+      <created>1718287807270</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1718287807270</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -339,7 +344,8 @@
     <MESSAGE value="Speedup code execution" />
     <MESSAGE value="Edit Weka configuration" />
     <MESSAGE value="Weka Kappa FIX" />
-    <option name="LAST_COMMIT_MESSAGE" value="Weka Kappa FIX" />
+    <MESSAGE value="Code smell fix" />
+    <option name="LAST_COMMIT_MESSAGE" value="Code smell fix" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

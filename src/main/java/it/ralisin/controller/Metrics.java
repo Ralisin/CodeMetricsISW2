@@ -4,8 +4,11 @@ import it.ralisin.entities.JavaClass;
 import it.ralisin.entities.Release;
 import it.ralisin.entities.Ticket;
 import it.ralisin.tools.*;
+import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.revwalk.RevCommit;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -20,7 +23,7 @@ public class Metrics {
 
     private Metrics() {}
 
-    public static void dataExtraction(String projName, String gitHubUrl) throws Exception {
+    public static void dataExtraction(String projName, String gitHubUrl) throws IOException, URISyntaxException, GitAPIException {
         CsvTool csvTool = new CsvTool(projName, SRC_DIR + projName);
 
         JiraDataExtractor jira = new JiraDataExtractor(projName);

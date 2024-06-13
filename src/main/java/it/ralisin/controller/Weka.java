@@ -20,7 +20,7 @@ import com.opencsv.CSVReader;
 import weka.filters.Filter;
 import weka.filters.MultiFilter;
 import weka.filters.supervised.attribute.AttributeSelection;
-import weka.filters.supervised.instance.SpreadSubsample;
+import weka.filters.supervised.instance.SMOTE;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -133,7 +133,8 @@ public class Weka {
                 wekaJavaClassList.add(wekaJavaClass);
             }
         } catch (IOException | CsvValidationException e) {
-            Logger.getAnonymousLogger().log(Level.SEVERE, "Error retrieving javaClass data from csv file " + index +  e.getMessage());
+            String msg = "Error retrieving javaClass data from csv file " + index +  e.getMessage();
+            Logger.getAnonymousLogger().log(Level.SEVERE, msg);
         }
 
         return wekaJavaClassList;
@@ -143,8 +144,10 @@ public class Weka {
         Classifier fc;
         ClassifierEvaluation ce;
 
+        String msg;
         for (int i = 0; i < trainingList.size(); i++) {
-            Logger.getAnonymousLogger().log(Level.INFO, "training on instance " + (i + 3));
+            msg = "training on instance " + (i + 3);
+            Logger.getAnonymousLogger().log(Level.INFO, msg);
 
             Instances training = trainingList.get(i);
             Instances testing = testingList.get(i);
@@ -232,16 +235,10 @@ public class Weka {
     }
 
     private Filter sampling(Instances dataset) throws Exception {
-//        SMOTE smote = new SMOTE();
-//        smote.setInputFormat(dataset);
-//
-//        return smote;
+        SMOTE smote = new SMOTE();
+        smote.setInputFormat(dataset);
 
-        SpreadSubsample filter = new SpreadSubsample();
-        filter.setDistributionSpread(1.0);
-        filter.setInputFormat(dataset);
-
-        return filter;
+        return smote;
     }
 
     private CostSensitiveClassifier costSensitive(Classifier classifier) {
