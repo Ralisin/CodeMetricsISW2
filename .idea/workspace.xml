@@ -7,6 +7,31 @@
     <list default="true" id="b9736f61-e96d-4747-a412-d2bfb5b24899" name="Changes" comment="Code smell fix">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/it/ralisin/entities/WekaObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/it/ralisin/entities/WekaObject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/IBk_featureSelection_sampling_2.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/IBk_featureSelection_sampling_2.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/IBk_featureSelection_sampling_3.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/IBk_featureSelection_sampling_3.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/IBk_featureSelection_sampling_4.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/IBk_featureSelection_sampling_4.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/IBk_featureSelection_sampling_5.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/IBk_featureSelection_sampling_5.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/IBk_sampling_2.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/IBk_sampling_2.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/IBk_sampling_3.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/IBk_sampling_3.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/IBk_sampling_4.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/IBk_sampling_4.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/IBk_sampling_5.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/IBk_sampling_5.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/NaiveBayes_featureSelection_sampling_2.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/NaiveBayes_featureSelection_sampling_2.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/NaiveBayes_featureSelection_sampling_3.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/NaiveBayes_featureSelection_sampling_3.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/NaiveBayes_featureSelection_sampling_4.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/NaiveBayes_featureSelection_sampling_4.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/NaiveBayes_featureSelection_sampling_5.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/NaiveBayes_featureSelection_sampling_5.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/NaiveBayes_sampling_2.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/NaiveBayes_sampling_2.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/NaiveBayes_sampling_3.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/NaiveBayes_sampling_3.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/NaiveBayes_sampling_4.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/NaiveBayes_sampling_4.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/NaiveBayes_sampling_5.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/NaiveBayes_sampling_5.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/RandomForest_featureSelection_sampling_2.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/RandomForest_featureSelection_sampling_2.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/RandomForest_featureSelection_sampling_3.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/RandomForest_featureSelection_sampling_3.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/RandomForest_featureSelection_sampling_4.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/RandomForest_featureSelection_sampling_4.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/RandomForest_featureSelection_sampling_5.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/RandomForest_featureSelection_sampling_5.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/RandomForest_sampling_2.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/RandomForest_sampling_2.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/RandomForest_sampling_3.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/RandomForest_sampling_3.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/RandomForest_sampling_4.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/RandomForest_sampling_4.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/RandomForest_sampling_5.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/acume/RandomForest_sampling_5.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/weka/wekaResult.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/BOOKKEEPER/weka/wekaResult.csv" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -164,7 +189,7 @@
       <workItem from="1718197414389" duration="33283000" />
       <workItem from="1718269118121" duration="962000" />
       <workItem from="1718271021311" duration="8610000" />
-      <workItem from="1718292668888" duration="209000" />
+      <workItem from="1718292668888" duration="827000" />
     </task>
     <task id="LOCAL-00001" summary="Get Versions and Tickets from Jira">
       <option name="closed" value="true" />
@@ -286,7 +311,15 @@
       <option name="project" value="LOCAL" />
       <updated>1718287807270</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Code smell fix">
+      <option name="closed" value="true" />
+      <created>1718293189263</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1718293189263</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

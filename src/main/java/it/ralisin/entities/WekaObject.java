@@ -5,7 +5,9 @@ public class WekaObject {
     private double prediction;
     private String buggyness;
 
-    public WekaObject() {}
+    public WekaObject() {
+        //
+    }
 
     public int getSize() {
         return size;
