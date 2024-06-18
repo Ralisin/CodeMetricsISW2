@@ -158,8 +158,8 @@ public class CsvTool {
                 writer.write(ce.getRecall() + ",");
                 writer.write(ce.getKappa() + ",");
                 writer.write(ce.getTruePositives() + ",");
-                writer.write(ce.getTrueNegatives() + ",");
                 writer.write(ce.getFalsePositives() + ",");
+                writer.write(ce.getTrueNegatives() + ",");
                 writer.write(ce.getFalseNegatives() + ",");
                 writer.write(ce.getAreaUnderROC() + ",");
                 writer.write(String.valueOf(ce.getfMeasure()));

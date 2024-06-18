@@ -9,11 +9,11 @@ public class Main {
     public static void main(String[] args) throws Exception {
         Weka weka;
 
-        Metrics.dataExtraction("BOOKKEEPER", "https://github.com/Ralisin/bookkeeper");
+//        Metrics.dataExtraction("BOOKKEEPER", "https://github.com/Ralisin/bookkeeper");
         weka = new Weka("BOOKKEEPER", SRC_DIR);
         weka.wekaAnalyses();
 
-        Metrics.dataExtraction("STORM", "https://github.com/Ralisin/storm");
+//        Metrics.dataExtraction("STORM", "https://github.com/Ralisin/storm");
         weka = new Weka("STORM", SRC_DIR);
         weka.wekaAnalyses();
     }

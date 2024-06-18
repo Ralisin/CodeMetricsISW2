@@ -242,8 +242,8 @@ public class Weka {
     }
 
     private CostSensitiveClassifier costSensitive(Classifier classifier) {
-        double wFP = 10.0;
-        double wFN = 1.0;
+        double wFP = 1.0;
+        double wFN = 10.0;
 
         CostSensitiveClassifier csc = new CostSensitiveClassifier();
         csc.setClassifier(classifier);
@@ -302,7 +302,8 @@ public class Weka {
         classifier.buildClassifier(training);
 
         Evaluation eval = new Evaluation(training);
-        eval.crossValidateModel(classifier, testing, 10, new SecureRandom());
+//        eval.crossValidateModel(classifier, testing, 10, new SecureRandom());
+         eval.evaluateModel(classifier, testing);
 
         return eval;
     }
