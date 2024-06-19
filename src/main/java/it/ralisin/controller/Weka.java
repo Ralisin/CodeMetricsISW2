@@ -28,7 +28,6 @@ import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -219,7 +218,7 @@ public class Weka {
             // GainRatioAttributeEval() - Evaluates features using ratio gain
             // ChiSquaredAttributeEval() - Evaluates features using the chi-square test
 
-        ASSearch search = new GreedyStepwise();
+        ASSearch search = new BestFirst();
             // BestFirst() - Search for the best subset of features using a best-first search
             // GreedyStepwise() - Greedy approach to select features
             // Ranker() - Rank features according to their scores
@@ -301,9 +300,14 @@ public class Weka {
     private Evaluation trainAndEvaluate(Classifier classifier, Instances training, Instances testing) throws Exception {
         classifier.buildClassifier(training);
 
-        Evaluation eval = new Evaluation(training);
-//        eval.crossValidateModel(classifier, testing, 10, new SecureRandom());
-         eval.evaluateModel(classifier, testing);
+        Evaluation eval;
+        if (classifier.getClass().getSimpleName().equals("CostSensitiveClassifier")) {
+            CostSensitiveClassifier csc = (CostSensitiveClassifier) classifier;
+            eval = new Evaluation(training, csc.getCostMatrix());
+        } else
+            eval = new Evaluation(testing);
+
+        eval.evaluateModel(classifier, testing);
 
         return eval;
     }
