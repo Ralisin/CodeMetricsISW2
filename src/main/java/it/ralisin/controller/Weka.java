@@ -301,10 +301,9 @@ public class Weka {
         classifier.buildClassifier(training);
 
         Evaluation eval;
-        if (classifier.getClass().getSimpleName().equals("CostSensitiveClassifier")) {
-            CostSensitiveClassifier csc = (CostSensitiveClassifier) classifier;
+        if (classifier instanceof CostSensitiveClassifier csc)
             eval = new Evaluation(training, csc.getCostMatrix());
-        } else
+        else
             eval = new Evaluation(testing);
 
         eval.evaluateModel(classifier, testing);
